@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-./.dots apt-get webdev symlink
+./.dots aptget webdev symlink
