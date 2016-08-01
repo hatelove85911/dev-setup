@@ -40,7 +40,7 @@ function runDots() {
             echo ""
             ./brew.sh
         fi
-        if [ $ARG == "apt-get" ] || [ $ARG == "all" ]; then
+        if [ $ARG == "aptget" ] || [ $ARG == "all" ]; then
             # Run the apt-get.sh Script
             # For a full listing of installed formulae and apps, refer to
             # the commented brew.sh source file directly and tweak it to
