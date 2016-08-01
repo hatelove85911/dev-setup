@@ -1,3 +1,22 @@
+##################################################
+# exports
+##################################################
+[ -r ~/.exports ] && [ -f ~/.exports ] && source ~/.exports;
+
+##################################################
+# nvm
+##################################################
+[ -s "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh" # This loads nvm
+nvm use node
+
+##################################################
+# docker
+##################################################
+# Always start by pointing to the local dev instance on mac os
+if [[  "$OSTYPE" == "darwin"*  ]]; then
+  dmenv dev;
+fi
+
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
 
@@ -18,7 +37,7 @@ ZSH_THEME="avit"
 # DISABLE_AUTO_UPDATE="true"
 
 # Uncomment the following line to change how often to auto-update (in days).
-# export UPDATE_ZSH_DAYS=13
+export UPDATE_ZSH_DAYS=5
 
 # Uncomment the following line to disable colors in ls.
 # DISABLE_LS_COLORS="true"
@@ -49,24 +68,26 @@ DISABLE_AUTO_TITLE="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git)
+plugins=(git tmux vi-mode fasd)
 
 # User configuration
-
 # export PATH="/usr/bin:/bin:/usr/sbin:/sbin:$PATH"
 # export MANPATH="/usr/local/man:$MANPATH"
+if [[  "$OSTYPE" == "darwin"*  ]]; then
+  export PATH=./node_modules/.bin:~/.bin:/usr/local/bin/:"$(brew --prefix coreutils)/libexec/gnubin":$PATH
+elif [[  "$OSTYPE" == "linux"*  ]]; then
+  export PATH=./node_modules/.bin:~/.bin:/usr/bin/:/usr/sbin:$PATH
+fi
+#  ~/.path can be used to extend `$PATH`.
+[ -r ~/.path ] && [ -f ~/.path ] && source ~/.path;
 
 source $ZSH/oh-my-zsh.sh
 
 # You may need to manually set your language environment
-# export LANG=en_US.UTF-8
+export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
+export EDITOR='nvim'
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
@@ -78,7 +99,9 @@ source $ZSH/oh-my-zsh.sh
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
 # For a full list of active aliases, run `alias`.
-#
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
+[ -r ~/.functions ] && [ -f ~/.functions ] && source ~/.functions;
+[ -r ~/.aliases ] && [ -f ~/.aliases ] && source ~/.aliases;
+
+
+# ~/.extra can be used for other settings you don’t want to commit.
+[ -r ~/.extra ] && [ -f ~/.extra ] && source ~/.extra;

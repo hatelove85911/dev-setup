@@ -199,3 +199,9 @@ sudo bash -c 'echo /usr/local/bin/bash >> /etc/shells'
 sudo bash -c 'echo /usr/local/bin/zsh >> /etc/shells'
 # Change to the new shell, prompts for password
 chsh -s /usr/local/bin/zsh
+
+
+
+# vim - plug
+curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs \
+    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim

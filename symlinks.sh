@@ -17,6 +17,3 @@ neovimConfigDir="$HOME/.config/nvim"
 # link vim init.vim Ultisnips into n
 ln -sf $(pwd)/dotfiles/init.vim "$neovimConfigDir"
 ln -sf $(pwd)/dotfiles/Ultisnips "$neovimConfigDir"
-
-
-

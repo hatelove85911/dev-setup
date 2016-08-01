@@ -1,16 +1,3 @@
-if [[  "$OSTYPE" == "darwin"*  ]]; then
-  export PATH=./node_modules/.bin:$HOME/.bin:/usr/local/bin/:"$(brew --prefix coreutils)/libexec/gnubin":$PATH
-elif [[  "$OSTYPE" == "linux"*  ]]; then
-  export PATH=./node_modules/.bin:$HOME/.bin:/usr/local/bin/:$PATH
-fi
-
-# Make neovim the default editor.
-if [[  "$OSTYPE" == "darwin"*  ]]; then
-  export EDITOR='nvim';
-elif [[  "$OSTYPE" == "linux"*  ]]; then
-  export EDITOR='neovim';
-fi
-
 # Enable persistent REPL history for `node`.
 NODE_REPL_HISTORY_FILE=~/.node_history;
 # Allow 32³ entries; the default is 1000.

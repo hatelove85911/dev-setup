@@ -31,6 +31,7 @@ echo "install npm global modules"
 echo "*******************************************************************"
 # install NPM Modules
 npmGlobalModules=(eslint \
+            standard-format \
             standard \
             node-inspector \
             devtool \

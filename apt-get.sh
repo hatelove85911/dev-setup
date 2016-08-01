@@ -24,8 +24,6 @@ sudo add-apt-repository ppa:aacebedo/fasd
 sudo apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
 echo "deb https://apt.dockerproject.org/repo ubuntu-xenial main" | sudo tee /etc/apt/sources.list.d/docker.list
 
-
-
 # update all package info to latest
 sudo apt-get update -y
 # upgrade all existing package to latest
@@ -47,27 +45,28 @@ aptPackages=(neovim \
 
 for p in "${commonPackages[@]}"
 do
-   sudo apt-get install "$p"
+   sudo apt-get install -y "$p"
 done
 
 for p in "${aptPackages[@]}"
 do
-   sudo apt-get install "$p"
+   sudo apt-get install -y "$p"
 done
-
 
 # install heroku toolbelt
 wget -O- https://toolbelt.heroku.com/install-ubuntu.sh | sh
 heroku update
 
-# install antigen
-git clone https://github.com/zsh-users/antigen.git ~/.zsh-antigen
+# install oh my zsh
+[ -e ~/.oh-my-zsh ] && rm -rf ~/.oh-my-zsh
+git clone git://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
+
 
 echo "*******************************************************************"
 echo "Adding the newly installed shell to the list of allowed shells"
 echo "And change default shell to zsh"
 echo "*******************************************************************"
-sudo bash -c 'echo /usr/local/bin/bash >> /etc/shells'
-sudo bash -c 'echo /usr/local/bin/zsh >> /etc/shells'
+sudo bash -c 'echo /usr/bin/bash >> /etc/shells'
+sudo bash -c 'echo /usr/bin/zsh >> /etc/shells'
 # Change to the new shell, prompts for password
-chsh -s /usr/local/bin/zsh
+chsh -s /usr/bin/zsh
