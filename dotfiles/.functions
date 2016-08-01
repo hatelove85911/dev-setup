@@ -244,3 +244,53 @@ function o() {
 function tre() {
     tree -aC -I '.git|node_modules|bower_components' --dirsfirst "$@" | less -FRNX;
 }
+
+##################################################
+# my functions
+##################################################
+onProxy(){
+    echo "enabling proxy"
+    if [[ "$OSTYPE" == "linux"* ]]; then
+      echo "in linux"
+      # apt
+      sudo touch /etc/apt/apt.conf.d/80proxy
+      echo Acquire::http::proxy "\"$proxyaddr\";" | sudo tee /etc/apt/apt.conf.d/80proxy
+      echo Acquire::https::proxy "\"$proxyaddr\";" | sudo tee -a /etc/apt/apt.conf.d/80proxy
+    fi
+
+    # environment 
+    export http_proxy=$proxyaddr
+    export https_proxy=$proxyaddr
+    # npm
+    npm config set http-proxy $proxyaddr
+    npm config set https-proxy $proxyaddr
+    # git
+    git config --global http.proxy $proxyaddr
+    git config --global https.proxy $proxyaddr
+}
+offProxy(){
+    echo "disabling proxy"
+    if [[ "$OSTYPE" == "linux"* ]]; then
+      echo "in linux"
+      # apt
+      sudo rm /etc/apt/apt.conf.d/80proxy
+    fi
+
+    # environment 
+    unset http_proxy
+    unset https_proxy
+    # npm
+    npm config delete http-proxy
+    npm config delete https-proxy
+    # git
+    git config --global --unset http.proxy
+    git config --global --unset https.proxy
+}
+
+dtw(){
+  dt $1 --watch
+}
+
+dmenv () {
+  eval "$(docker-machine env $1)"
+}

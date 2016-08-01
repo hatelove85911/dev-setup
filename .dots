@@ -40,6 +40,19 @@ function runDots() {
             echo ""
             ./brew.sh
         fi
+        if [ $ARG == "apt-get" ] || [ $ARG == "all" ]; then
+            # Run the apt-get.sh Script
+            # For a full listing of installed formulae and apps, refer to
+            # the commented brew.sh source file directly and tweak it to
+            # suit your needs.
+            echo ""
+            echo "------------------------------"
+            echo "Installing apt-get packages."
+            echo "This might awhile to complete."
+            echo "------------------------------"
+            echo ""
+            ./apt-get.sh
+        fi
         if [ $ARG == "osx" ] || [ $ARG == "all" ]; then
             # Run the osx.sh Script
             # I strongly suggest you read through the commented osx.sh
@@ -94,6 +107,14 @@ function runDots() {
             echo "------------------------------"
             echo ""
             ./android.sh
+        fi
+        if [ $ARG == "symlink" ] || [ $ARG == "all" ]; then
+            # Run the android.sh Script
+            echo "------------------------------"
+            echo "symlink dotfiles to $HOME"
+            echo "------------------------------"
+            echo ""
+            ./symlinks.sh
         fi
     done
 

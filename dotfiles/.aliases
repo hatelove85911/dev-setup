@@ -139,3 +139,60 @@ alias afk="/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resource
 
 # Reload the shell (i.e. invoke as a login shell)
 alias reload="exec $SHELL -l"
+
+###############################################################################################
+# my own alias
+################################################################################################
+# set alias for neovim on different platform
+if [[  "$OSTYPE" == "darwin"*  ]]; then
+  alias nv='nvim'
+elif [[  "$OSTYPE" == "linux"*  ]]; then
+  alias nv='neovim'
+fi
+
+# Easier source or edit import rc files
+alias zshrc="nv ~/.zshrc"
+alias szshrc=". ~/.zshrc"
+alias vimrc="nv $HOME/.config/nvim/init.vim" 
+
+# tmux 
+alias td="tmux detach"
+alias tlc="tmux list-commands"
+alias tlk="tmux list-keys"
+alias ti="tmux info"
+alias stmconf="tmux source-file ~/.tmux.conf"
+alias tmconf="nv ~/.tmux.conf"
+
+# git
+alias glg="git lg"
+alias gdt="git difftool"
+alias gdtca="git difftool --cached"
+alias gdth="git difftool HEAD"
+
+alias grs="git reset"
+alias grss="git reset --soft"
+alias grsh="git reset --hard"
+
+# node debug
+alias nd="node"
+alias ndbg="node-debug -p 8090"
+alias dt="devtool"
+
+# docker
+# Short for docker-machine
+alias dm="docker-machine"
+alias dcmp="docker-compose"
+alias dk="docker"
+
+# quick use vim edit file
+alias v="f -e nv"
+alias vv="sf -e nv"
+
+# npm alias
+alias npmls="npm list --depth=0"
+alias npmlsg="npm list -g --depth=0"
+alias npmi="npm i"
+alias npmig="npm i g"
+alias npmcfg="npm config set"
+alias npmcfd="npm config delete"
+

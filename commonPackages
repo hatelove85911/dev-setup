@@ -1,0 +1,17 @@
+commonPackages=(zsh \
+                git \
+                tmux \
+                nginx \
+                mongodb \
+                cmake \
+                ruby \
+                python \
+                python3 \
+                corkscrew \
+                httpie \
+                tree \
+                coreutils \
+                moreutils \
+                findutils \
+                bash \
+                fasd)

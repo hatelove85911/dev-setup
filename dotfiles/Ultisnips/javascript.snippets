@@ -1,0 +1,61 @@
+snippet iife "Immediately-Invoked Function Expression (iife)"
+(function(${1:window}) {
+  ${VISUAL}$0
+}(${2:$1}))
+endsnippet
+
+
+snippet vf "Function assigned to var"
+${1:var }${2:function_name} = function $2(${3}) {
+  ${VISUAL}$0
+
+}
+endsnippet
+
+snippet :, "Object Value JS"
+${1:value_name}: ${0:value}
+endsnippet
+
+snippet vo "object assigned to var"
+${1:var }${2:variable_name} = {
+  $3: $4
+}
+endsnippet
+
+snippet cl "console.log"
+console.log($1)$0
+endsnippet
+
+#############################################
+# es6
+#############################################
+snippet faf "fat arrow function"
+(${1}) => {
+	${2}
+}
+endsnippet
+
+snippet gfn "generator function"
+function* ${1:name}(${2}) {
+	yield ${3};
+}
+endsnippet
+
+snippet class
+class ${1:name} {
+	constructor(${2:arg}) {
+		${3:// init}
+	}
+	${4}
+}
+endsnippet
+
+snippet forof
+for (let ${1:s} of ${2:sequence}) {
+	${3}
+}
+endsnippet
+
+snippet im
+import ${1:foo} from '${2:bar}'
+endsnippet
