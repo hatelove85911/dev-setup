@@ -93,8 +93,8 @@ Plug 'jiangmiao/auto-pairs'
 "" show marks
 "Plug 'kshenoy/vim-signature'
 "
-"" for navigation between items in quick fix or location list easier
-"Plug 'tpope/vim-unimpaired'
+" for navigation between items in quick fix or location list easier
+Plug 'tpope/vim-unimpaired'
 "
 "" snips
 "Plug 'SirVer/ultisnips'
@@ -126,6 +126,12 @@ Plug 'joeytwiddle/sexy_scroller.vim'
 "Plug 'mtth/scratch.vim'
 
 call plug#end()
+
+"command abbrevation for pluginstall, PlugUpdte, PlugUpgrade, PlugClean
+cabbrev pi PlugInstall
+cabbrev pu PlugUpdate
+cabbrev pg PlugUpgrade
+cabbrev pc PlugClean
 
 " use git protocol by default other than https
 "let g:vundle_default_git_proto = 'git'
@@ -201,7 +207,7 @@ au BufRead,BufNewFile *.eslintrc set filetype=json
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:maximizer_set_default_mapping = 0
 
-call submode#enter_with('ctrl_window', 'n', '', '<M-w>', '<Nop>')
+call submode#enter_with('ctrl_window', 'n', '', '<M-w>', '<nop>')
 " call submode#leave_with('ctrl_window', 'n', '', '<Esc>')
 
 " widen or narrow a window
@@ -253,7 +259,10 @@ nmap m [unite]
 
 call unite#filters#matcher_default#use(['matcher_fuzzy'])
 call unite#filters#sorter_default#use(['sorter_rank'])
-let g:unite_source_rec_async_command = ['ag', '--follow', '--nocolor', '--nogroup', '--hidden', '-g', '']
+" call unite#custom#source('file_rec/async', 'ignore_globs',
+" \ split(&wildignore, ','))
+let g:unite_source_rec_async_command = ['ag', '--follow', '--nocolor', '--nogroup', '--hidden', '-g', '',
+      \ '--ignore', ".svn", '--ignore', ".git", '--ignore', "node_modules"]
 
 nnoremap <silent> [unite]b :<C-u>Unite -no-split -buffer-name=buffer -start-insert buffer<cr>
 nnoremap <silent> [unite]f :<C-u>Unite -no-split -buffer-name=files -start-insert file_rec/async:!<cr>
@@ -274,23 +283,19 @@ au Filetype javascript nmap <buffer> <leader>f :%!standard-format -<cr>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " syntastic configuration
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" let g:syntastic_mode_map = { 
-"       \ 'mode': 'passive',
-"       \ 'active_filetypes': ['javascript']}
-" let g:syntastic_javascript_checkers = ["eslint", "standard"]
-" " 0 the error window will be neither opened nor closed
-" " automatically, 1 open and close auto 2 close auto, open manual
-" let g:syntastic_auto_loc_list = 0
-" " when active mode is on, 1 means syntax check will be done
-" " when the file is opened
-" let g:syntastic_check_on_open = 1
-" " when active mode is on, 1 means syntax check will be done
-" " whenever buffer is written to disk
-" let g:syntastic_check_on_wq = 1
+let g:syntastic_mode_map = { 
+      \ 'mode': 'passive',
+      \ 'active_filetypes': ['javascript']}
+let g:syntastic_javascript_checkers = ["eslint", "standard"]
+let gsyntastic_aggregate_errors = 1
+let g:syntastic_auto_loc_list = 0
+nmap <leader>s :SyntasticCheck<cr>
+cabbrev si SyntasticInfo
 
-" nmap <leader>c :SyntasticCheck<cr>
-" nmap <leader>sf :SyntasticInfo<cr>
-" nmap cot :SyntasticToggleMode<cr>
+let g:syntastic_error_symbol = '✗'
+let g:syntastic_style_error_symbol = '🚫'
+let g:syntastic_warning_symbol = '❗'
+let g:syntastic_style_warning_symbol = '⚠'
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " utltsnips
@@ -344,17 +349,17 @@ xnoremap p pgvy
 " for quick switch between two buffer in the same window
 nmap <leader>b :b#<cr>
 " save all
-nmap <c-s> :wa<cr>
-" quit all
-nmap <c-q> :qa<cr>
-" force quit all
-nmap <c-x> :qa!<cr>
-" quite window
-nmap gwq :q<cr>
+nmap <leader>ww :wa<cr>
 " write current file
-nmap gww :w<cr>
+nmap <leader>w :w<cr>
+" quit all
+nmap <leader>qq :qa<cr>
+" quite window
+nmap <leader>q :q<cr>
+" force quit all
+nmap <leader>xx :qa!<cr>
 " force qite current window
-nmap gwx :q!<cr>
+nmap <leader>x :q!<cr>
 " diffget BASE in three merge
 nmap dob :diffget BA<cr>
 " diffget LOCAL in three merge
@@ -377,4 +382,6 @@ imap <c-l> <Esc>la
 " to quickly move to the end of curly braces
 " imap <c-]> <Esc>]}a
 " nmap <c-]> ]}
+" command abbreavtion for source %
+cabbrev sa source %
 
