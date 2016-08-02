@@ -7,10 +7,6 @@ alias ~="cd ~" # `cd` is probably faster to type though
 alias -- -="cd -"
 
 # Shortcuts
-alias d="cd ~/Documents/Dropbox"
-alias dl="cd ~/Downloads"
-alias dt="cd ~/Desktop"
-alias p="cd ~/projects"
 alias g="git"
 alias h="history"
 alias j="jobs"
@@ -144,24 +140,29 @@ alias reload="exec $SHELL -l"
 # my own alias
 ################################################################################################
 # set alias for neovim on different platform
-if [[  "$OSTYPE" == "darwin"*  ]]; then
-  alias nv='nvim'
-elif [[  "$OSTYPE" == "linux"*  ]]; then
-  alias nv='neovim'
-fi
+alias v='nvim'
 
 # Easier source or edit import rc files
-alias zshrc="nv ~/.zshrc"
+alias al="v ~/.aliases"
+alias exp="v ~/.exports"
+alias zshrc="v ~/.zshrc"
 alias szshrc=". ~/.zshrc"
-alias vimrc="nv $HOME/.config/nvim/init.vim" 
+alias vimrc="v $HOME/.config/nvim/init.vim" 
 
 # tmux 
+# tmux alias stolen from zsh tmux plugin
+alias ta='tmux attach -t'
+alias ts='tmux new-session -s'
+alias tl='tmux list-sessions'
+alias tksv='tmux kill-server'
+alias tkss='tmux kill-session -t'
+# tmux alias defined by myself
 alias td="tmux detach"
 alias tlc="tmux list-commands"
 alias tlk="tmux list-keys"
 alias ti="tmux info"
 alias stmconf="tmux source-file ~/.tmux.conf"
-alias tmconf="nv ~/.tmux.conf"
+alias tmconf="v ~/.tmux.conf"
 
 # git
 alias glg="git lg"
@@ -176,6 +177,7 @@ alias grsh="git reset --hard"
 # node debug
 alias nd="node"
 alias ndbg="node-debug -p 8090"
+alias nis="node-inspector"
 alias dt="devtool"
 
 # docker
@@ -184,9 +186,8 @@ alias dm="docker-machine"
 alias dcmp="docker-compose"
 alias dk="docker"
 
-# quick use vim edit file
-alias v="f -e nv"
-alias vv="sf -e nv"
+# fasd interactive file search, selection an edit with vim
+alias vv="sf -e nvim"
 
 # npm alias
 alias npmls="npm list --depth=0"

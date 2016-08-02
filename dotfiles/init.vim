@@ -1,18 +1,7 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " plugins 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-call plug#begin()
-
-" relative number
-Plug 'myusuf3/numbers.vim'
-
-" color scheme
-Plug 'sickill/vim-monokai'
-Plug 'tomasr/molokai'
-Plug 'altercation/vim-colors-solarized'
-
-" multiple line edit
-" Plug 'terryma/vim-multiple-cursors'
+call plug#begin('~/.config/nvim/plugged')
 
 " operate on surroundings
 Plug 'tpope/vim-surround'
@@ -23,7 +12,10 @@ Plug 'scrooloose/nerdtree'
 " git
 Plug 'tpope/vim-fugitive'
 
-""""""""""""""""""""""""""""""""""""""""""""""""""
+" multiple line edit
+Plug 'terryma/vim-multiple-cursors'
+
+"""""""""""""""""""""""""""""""""""""""""""""""""
 " shougo unite
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " quick file finder 
@@ -41,9 +33,6 @@ Plug 'scrooloose/syntastic'
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " html(xml) css javascript related
 """"""""""""""""""""""""""""""""""""""""""""""""""
-" for the autoformat to work for javascript, first need to install a global
-" node modue, npm install -g standard
-Plug 'Chiel92/vim-autoformat' 
 Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
 
 " distinguish json from javascript
@@ -58,9 +47,8 @@ Plug 'mattn/emmet-vim', { 'for': ['xml', 'html'] }
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " text objects depend on kana/vim-textobj-user
 Plug 'kana/vim-textobj-user'
-Plug 'kana/vim-textobj-function'
 Plug 'kana/vim-textobj-line'
-Plug 'sgur/vim-textobj-parameter'  
+Plug 'sgur/vim-textobj-parameter'
 Plug 'beloglazov/vim-textobj-punctuation'
 Plug 'poetic/vim-textobj-javascript'
 " javascript function text object, standalone, indepent of kana/vim-textobj-user
@@ -74,22 +62,20 @@ Plug 'kana/vim-submode'
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " small Plugs
 """"""""""""""""""""""""""""""""""""""""""""""""""
-
-" for cursor shape change in difference terminal
-Plug 'jszakmeister/vim-togglecursor'
-" window manager
+" window maximizer
 Plug 'szw/vim-maximizer'
-" status line
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-" smooth scroll when pressing ctrl+d or ctrl u
-Plug 'joeytwiddle/sexy_scroller.vim'
 " comment out code
 Plug 'tpope/vim-commentary'
 " generate incremental thing, like number, character
 " calutil is needed by visIncr Plug for increamental date 
 Plug 'cskeeters/vim-calutil'
 Plug 'vim-scripts/VisIncr'
+
+" vim calculator
+Plug 'arecarn/crunch.vim'
+
+" auto closing brackets
+Plug 'jiangmiao/auto-pairs'
 
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " temporary disabled Plugs
@@ -109,26 +95,35 @@ Plug 'vim-scripts/VisIncr'
 "
 "" for navigation between items in quick fix or location list easier
 "Plug 'tpope/vim-unimpaired'
+"
+"" snips
+"Plug 'SirVer/ultisnips'
+
+""""""""""""""""""""""""""""""""""""""""""""""""""
+" User interface related, nothing important to function
+""""""""""""""""""""""""""""""""""""""""""""""""""
+" relative number
+Plug 'myusuf3/numbers.vim'
+
+" color scheme
+Plug 'sickill/vim-monokai'
+Plug 'tomasr/molokai'
+Plug 'altercation/vim-colors-solarized'
+
+" for cursor shape change in difference terminal
+Plug 'jszakmeister/vim-togglecursor'
+" status line
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+" smooth scroll when pressing ctrl+d or ctrl u
+Plug 'joeytwiddle/sexy_scroller.vim'
 
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " unused Plugs
 """"""""""""""""""""""""""""""""""""""""""""""""""
 
-"" auto closing brackets
-"Plug 'jiangmiao/auto-pairs'
-"" for preview markdown in browser
-"Plug 'suan/vim-instant-markdown'
-"" vim save session(window, position, layout, open folds)
-"" basically used by tmux resurrent to restore tmux session with vim opened
-"Plug 'tpope/vim-obsession'
-"" camel case motion
-"Plug 'bkad/CamelCaseMotion'
 "" scratch pad
 "Plug 'mtth/scratch.vim'
-"" Vim sugar for the UNIX shell commands that need it the most
-"Plug 'tpope/vim-eunuch'
-"" easy motion( move around super fast )
-"Plug 'Lokaltog/vim-easymotion'
 
 call plug#end()
 
@@ -204,77 +199,77 @@ au BufRead,BufNewFile *.eslintrc set filetype=json
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " window management
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" let g:maximizer_set_default_mapping = 1
+let g:maximizer_set_default_mapping = 0
 
-" call submode#enter_with('ctrl_window', 'n', '', 'gw', '<Nop>')
-" " call submode#leave_with('ctrl_window', 'n', '', '<Esc>')
+call submode#enter_with('ctrl_window', 'n', '', '<M-w>', '<Nop>')
+" call submode#leave_with('ctrl_window', 'n', '', '<Esc>')
 
-" " widen or narrow a window
-" call submode#map('ctrl_window', 'n', '', 'l', '20<c-w>>')
-" call submode#map('ctrl_window', 'n', '', 'h', '20<c-w><')
-" " increase of decrease the hight of a window
-" call submode#map('ctrl_window', 'n', '', '+', '8<c-w>+')
-" call submode#map('ctrl_window', 'n', '', '-', '8<c-w>-')
-" " swap position of window in the horizontal or vertical stack
-" nmap gws <c-w>r
-" nmap gwS <c-w>R
-" " toggle maximization of a window
-" nmap gwo :MaximizerToggle<cr>
-" " move to next/previous window
-" nmap ]w <c-w>w
-" nmap [w <c-w>W
-" " create split window
-" nmap <bar> :vs<cr>
-" nmap - :sp<cr>
+" widen or narrow a window
+call submode#map('ctrl_window', 'n', '', 'l', '20<c-w>>')
+call submode#map('ctrl_window', 'n', '', 'h', '20<c-w><')
+" increase of decrease the hight of a window
+call submode#map('ctrl_window', 'n', '', 'k', '8<c-w>+')
+call submode#map('ctrl_window', 'n', '', 'j', '8<c-w>-')
+" swap position of window in the horizontal or vertical stack
+nmap <M-s> <c-w>r
+" toggle maximization of a window
+nmap <M-o> :MaximizerToggle<cr>
+" move to next/previous window
+nmap ]w <c-w>w
+nmap [w <c-w>W
+" create split window
+nmap <bar> :vs<cr>
+nmap - :sp<cr>
 
-" function! MyRotate()
-"   if winnr('$') == 2
-"     " save the original position, jump to the first window
-"     let initial = winnr()
-"     exe 1 . "wincmd w"
+function! MyRotate()
+  if winnr('$') == 2
+    " save the original position, jump to the first window
+    let initial = winnr()
+    exe 1 . "wincmd w"
 
-"     wincmd l
-"     if winnr() != 1
-"       " succeeded moving to the right window
-"       wincmd J " make it the bot window
-"     else
-"       " cannot move to the right, so we are at the top
-"       wincmd H " make it the left window
-"     endif
+    wincmd l
+    if winnr() != 1
+      " succeeded moving to the right window
+      wincmd J " make it the bot window
+    else
+      " cannot move to the right, so we are at the top
+      wincmd H " make it the left window
+    endif
 
-"     " restore cursor to the initial window
-"     exe initial . "wincmd w"
-"   endif
-" endfunction
-" nmap gwr :call MyRotate()<cr>
+    " restore cursor to the initial window
+    exe initial . "wincmd w"
+  endif
+endfunction
+nmap <M-r> :call MyRotate()<cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " unite
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" nnoremap [unite] <Nop>
-" nmap gu [unite]
+" 1st, map key strokes: [unite] to do nothing, make sure [unite] is reserved
+" for unite plugin usage
+nnoremap [unite] <nop>
+" 2nd, make a key mapping to unite
+nmap m [unite]
 
-" call unite#filters#matcher_default#use(['matcher_fuzzy'])
-" call unite#filters#sorter_default#use(['sorter_rank'])
-" let g:unite_source_rec_async_command = ['ag', '--follow', '--nocolor', '--nogroup', '--hidden', '-g', '']
+call unite#filters#matcher_default#use(['matcher_fuzzy'])
+call unite#filters#sorter_default#use(['sorter_rank'])
+let g:unite_source_rec_async_command = ['ag', '--follow', '--nocolor', '--nogroup', '--hidden', '-g', '']
 
-" nnoremap <silent> [unite]b :<C-u>Unite -no-split -buffer-name=buffer -start-insert buffer<cr>
-" nnoremap <silent> [unite]u :<C-u>Unite -no-split -buffer-name=files -start-insert buffer file_rec/async:!<cr>
-" nnoremap <silent> [unite]a :<C-u>Unite -no-split -buffer-name=all -start-insert buffer file file_rec/async:!<cr>
-" nnoremap <silent> [unite]m :<C-u>Unite -no-split -buffer-name=mru -start-insert file_mru<cr>
-" nnoremap <silent> [unite]f :<C-u>Unite -no-split -buffer-name=file -start-insert file<cr>
-" nnoremap <silent> [unite]y :<C-u>Unite -no-split -buffer-name=yank history/yank<cr>
+nnoremap <silent> [unite]b :<C-u>Unite -no-split -buffer-name=buffer -start-insert buffer<cr>
+nnoremap <silent> [unite]f :<C-u>Unite -no-split -buffer-name=files -start-insert file_rec/async:!<cr>
+nnoremap <silent> [unite]r :<C-u>Unite -no-split -buffer-name=mru -start-insert file_mru<cr>
+nnoremap <silent> [unite]y :<C-u>Unite -no-split -buffer-name=yank history/yank<cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " code formatter
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" nmap <leader>f :Autoformat<cr>
-" au FileType xml let g:formatdef_tidy_xml .= '." --indent-attributes 1"'
-" au FileType xhtml let g:formatdef_tidy_xhtml .= '." --indent-attributes 1"'
-" au FileType html let g:formatdef_htmlbeautify .= '." -A force"'
-" au FileType javascript nmap <buffer> <leader>f :silent !standard % --format<cr>:redraw!<cr>
-" " au FileType javascript let g:formatdef_standard = '"standard --format"' 
-" " let g:formatters_javascript = ['standard']
+nmap <leader>f :Autoformat<cr>
+au Filetype javascript nmap <buffer> <leader>f :%!standard-format -<cr>
+
+" define format program attributes
+" let g:formatdef_tidy_xml .= '." --indent-attributes 1"'
+" let g:formatdef_tidy_xhtml .= '." --indent-attributes 1"'
+" let g:formatdef_htmlbeautify .= '." -A force"'
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " syntastic configuration
@@ -311,21 +306,17 @@ au BufRead,BufNewFile *.eslintrc set filetype=json
 " nmap <leader>se :UltiSnipsEdit<cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" nerdtree
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" nmap <silent> <leader>nd :NERDTreeToggle<cr>
-" let g:NERDTreeShowHidden=1
-" let g:NERDTreeShowLineNumbers=1
+nmap <silent> <leader>nd :NERDTreeToggle<cr>
+let g:NERDTreeShowHidden=1
+let g:NERDTreeShowLineNumbers=1
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " multi-cursor 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" " multi-cursor configuration
-" let g:multi_cursor_exit_from_insert_mode = 0
-" let g:multi_cursor_exit_from_visual_mode = 0
-" nmap <leader>m :MultipleCursorsFind 
-" vmap <leader>m :MultipleCursorsFind 
-
+let g:multi_cursor_exit_from_insert_mode = 0
+"
+nnoremap <silent> <C-m> "zyiw:MultipleCursorsFind <C-R>z<CR>
+vnoremap <silent> <C-m> "zy:MultipleCursorsFind <C-R>z<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " vim-textobj-punctuation configuration

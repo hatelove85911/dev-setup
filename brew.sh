@@ -118,6 +118,10 @@ brew install homebrew/php/php55 --with-gmp
 [ -e ~/.oh-my-zsh ] && rm -rf ~/.oh-my-zsh
 git clone git://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
 
+# install tmux plugin manager
+[ -e ~/.tmux ] && rm -rf ~/.tmux
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+
 # install antigen
 # [ -e ~/.zsh-antigen ] && rm -rf ~/.zsh-antigen
 # git clone https://github.com/zsh-users/antigen.git ~/.zsh-antigen
