@@ -284,9 +284,14 @@ au Filetype json nmap <buffer> <leader>f :%!python -m json.tool<cr>
 let g:syntastic_mode_map = { 
       \ 'mode': 'passive',
       \ 'active_filetypes': ['javascript']}
+" use the latest tidy html5 for html
+let g:syntastic_html_tidy_exec = 'tidy'
+" set javascript checkers
 let g:syntastic_javascript_checkers = ["eslint", "standard"]
+
 let gsyntastic_aggregate_errors = 1
 let g:syntastic_auto_loc_list = 0
+
 nmap <leader>s :SyntasticCheck<cr>
 cabbrev si SyntasticInfo
 
