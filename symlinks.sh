@@ -10,10 +10,22 @@ for file in $(pwd)/dotfiles/.{tmux.conf,exports,aliases,functions,zshenv,zshrc,c
 done;
 unset file;
 
+################################################################################
+# neovim
+################################################################################
 # mkdir $HOME/.config/nvim if it doesn't exists
 neovimConfigDir="$HOME/.config/nvim"
 ! [ -e "$neovimConfigDir" ] && mkdir -p "$neovimConfigDir"
 
-# link vim init.vim Ultisnips into n
+# link vimrc/init.vim  Ultisnips 
 ln -sf $(pwd)/dotfiles/init.vim "$neovimConfigDir"
 ln -sf $(pwd)/dotfiles/Ultisnips "$neovimConfigDir"
+
+################################################################################
+# normal vim
+################################################################################
+normalVimConfigDir="$HOME/.vim"
+! [ -e "$normalVimConfigDir" ] && mkdir -p "$normalVimConfigDir"
+ln -sf $(pwd)/dotfiles/init.vim ~/.vimrc
+ln -sf $(pwd)/dotfiles/Ultisnips ~/.vim
+
