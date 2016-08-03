@@ -8,7 +8,7 @@ alias -- -="cd -"
 
 # Shortcuts
 alias g="git"
-alias h="history"
+alias his="history"
 alias j="jobs"
 
 # Detect which `ls` flavor is in use
@@ -196,4 +196,7 @@ alias npmi="npm i"
 alias npmig="npm i g"
 alias npmcfg="npm config set"
 alias npmcfd="npm config delete"
+
+# alias for httpie
+alias h="http"
 

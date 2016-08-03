@@ -170,3 +170,5 @@
 [url "git://gist.github.com/"]
 
     insteadOf = "gist:"
+[url "https://"]
+	insteadOf = git://

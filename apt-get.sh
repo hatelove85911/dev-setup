@@ -43,6 +43,11 @@ aptPackages=(neovim \
             python3-dev \
             docker-engine)
 
+# remove the old tidy program first, otherwise there's going to error generated when install the new tidy html5
+sudo apt-get remove -y libtidy-0.99-0 tidy
+# download tidy binaries, download to temp file, and install
+URL='http://binaries.html-tidy.org/binaries/tidy-5.2.0/tidy-5.2.0-64bit.deb'; FILE=$(mktemp); wget "$URL" -qO $FILE && sudo dpkg -i $FILE; rm $FILE
+
 for p in "${commonPackages[@]}"
 do
    sudo apt-get install -y "$p"

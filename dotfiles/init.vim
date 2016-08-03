@@ -275,11 +275,6 @@ nnoremap <silent> [unite]y :<C-u>Unite -no-split -buffer-name=yank history/yank<
 nmap <leader>f :Autoformat<cr>
 au Filetype javascript nmap <buffer> <leader>f :%!standard-format -<cr>
 
-" define format program attributes
-" let g:formatdef_tidy_xml .= '." --indent-attributes 1"'
-" let g:formatdef_tidy_xhtml .= '." --indent-attributes 1"'
-" let g:formatdef_htmlbeautify .= '." -A force"'
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " syntastic configuration
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
