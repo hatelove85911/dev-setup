@@ -200,3 +200,6 @@ alias npmcfd="npm config delete"
 # alias for httpie
 alias h="http"
 
+# alias for pretty json file
+alias pj="python -m json.tool"
+

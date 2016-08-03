@@ -272,8 +272,11 @@ nnoremap <silent> [unite]y :<C-u>Unite -no-split -buffer-name=yank history/yank<
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " code formatter
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-nmap <leader>f :Autoformat<cr>
 au Filetype javascript nmap <buffer> <leader>f :%!standard-format -<cr>
+au Filetype html nmap <buffer> <leader>f :%!tidy --show-errors 0 --show-warnings 0 --show-info 0 --quiet 1<cr>
+au Filetype xhtml nmap <buffer> <leader>f :%!tidy --show-errors 0 --show-warnings 0 --show-info 0 --quiet 1<cr>
+au Filetype xml nmap <buffer> <leader>f :%!tidy --show-errors 0 --show-warnings 0 --show-info 0 --quiet 1<cr>
+au Filetype json nmap <buffer> <leader>f :%!python -m json.tool<cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " syntastic configuration
@@ -378,5 +381,5 @@ imap <c-l> <Esc>la
 " imap <c-]> <Esc>]}a
 " nmap <c-]> ]}
 " command abbreavtion for source %
-cabbrev sa source %
+cabbrev sa source ~/.config/nvim/init.vim
 
