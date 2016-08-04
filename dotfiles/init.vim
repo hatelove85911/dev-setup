@@ -25,10 +25,11 @@ Plug 'tpope/vim-fugitive'
 Plug 'terryma/vim-multiple-cursors'
 " for navigation between items in quick fix or location list easier
 Plug 'tpope/vim-unimpaired'
-" snippets
-Plug 'Shougo/neosnippet.vim'
 " completion plugin
 Plug 'Shougo/neocomplete.vim'
+" snippets
+Plug 'Shougo/neosnippet.vim'
+Plug 'Shougo/neosnippet-snippets'
 " Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemote') }
 
 """""""""""""""""""""""""""""""""""""""""""""""""
@@ -69,11 +70,6 @@ Plug 'beloglazov/vim-textobj-punctuation'
 Plug 'poetic/vim-textobj-javascript'
 " javascript function text object, standalone, indepent of kana/vim-textobj-user
 Plug 'thinca/vim-textobj-function-javascript'
-
-""""""""""""""""""""""""""""""""""""""""""""""""""
-" vim submode
-""""""""""""""""""""""""""""""""""""""""""""""""""
-Plug 'kana/vim-submode'
 
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " small Plugs
@@ -217,16 +213,16 @@ au BufRead,BufNewFile *.eslintrc set filetype=json
 " window management
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:maximizer_set_default_mapping = 0
-
-call submode#enter_with('ctrl_window', 'n', '', '<M-w>', '<nop>')
-" call submode#leave_with('ctrl_window', 'n', '', '<Esc>')
-
 " widen or narrow a window
-call submode#map('ctrl_window', 'n', '', 'l', '20<c-w>>')
-call submode#map('ctrl_window', 'n', '', 'h', '20<c-w><')
+" nmap <M-l> 10<c-w>>
+" nmap <M-h> 10<c-w><
+nmap <Right> 10<c-w>>
+nmap <Left> 10<c-w><
 " increase of decrease the hight of a window
-call submode#map('ctrl_window', 'n', '', 'k', '8<c-w>+')
-call submode#map('ctrl_window', 'n', '', 'j', '8<c-w>-')
+" nmap <M-j> 8<c-w>-
+" nmap <M-k> 8<c-w>+
+nmap <Down> 8<c-w>-
+nmap <Up> 8<c-w>+
 " swap position of window in the horizontal or vertical stack
 nmap <M-s> <c-w>r
 " toggle maximization of a window
@@ -234,7 +230,7 @@ nmap <M-o> :MaximizerToggle<cr>
 " move to next/previous window
 nmap ]w <c-w>w
 nmap [w <c-w>W
-" create split window
+
 nmap <bar> :vs<cr>
 nmap - :sp<cr>
 
@@ -312,17 +308,24 @@ let g:syntastic_warning_symbol = '❗'
 let g:syntastic_style_warning_symbol = '⚠'
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" ultisnips
+" neosnippets
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" define where to store the custom snippets created by me
-let g:UltiSnipsSnippetsDir=g:path2Vimhome . "/UltiSnips"
-" define the directory names where ultisnips will go and search for .snippets 
-let g:UltisnipsSnippetDirectories=["UltiSnips"]
-let g:UltiSnipsExpandTrigger="<c-j>"
-let g:UltiSnipsJumpForwardTrigger="<c-j>"
-let g:UltiSnipsJumpBackwardTrigger="<c-k>"
-let g:UltiSnipsEditSplit="vertical"
-nmap <leader>s :UltiSnipsEdit<cr>
+imap <C-j>     <Plug>(neosnippet_expand_or_jump)
+smap <C-j>     <Plug>(neosnippet_expand_or_jump)
+xmap <C-j>     <Plug>(neosnippet_expand_target)
+
+" SuperTab like snippets behavior.
+" "imap <expr><TAB>
+" " \ pumvisible() ? "\<C-n>" :
+" " \ neosnippet#expandable_or_jumpable() ?
+" " \    "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+     \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+
+" For conceal markers.
+if has('conceal')
+  set conceallevel=2 concealcursor=niv
+endif
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 nmap <silent> <leader>nd :NERDTreeToggle<cr>
