@@ -20,6 +20,7 @@ neovimConfigDir="$HOME/.config/nvim"
 # link vimrc/init.vim  Ultisnips 
 ln -sf $(pwd)/dotfiles/init.vim "$neovimConfigDir"
 ln -sf $(pwd)/dotfiles/Ultisnips "$neovimConfigDir"
+ln -sf $(pwd)/dotfiles/neosnips "$neovimConfigDir"
 
 ################################################################################
 # normal vim
@@ -27,5 +28,6 @@ ln -sf $(pwd)/dotfiles/Ultisnips "$neovimConfigDir"
 normalVimConfigDir="$HOME/.vim"
 ! [ -e "$normalVimConfigDir" ] && mkdir -p "$normalVimConfigDir"
 ln -sf $(pwd)/dotfiles/init.vim ~/.vimrc
-ln -sf $(pwd)/dotfiles/Ultisnips ~/.vim
+ln -sf $(pwd)/dotfiles/Ultisnips "$normalVimConfigDir"
+ln -sf $(pwd)/dotfiles/neosnips "$normalVimConfigDir"
 
