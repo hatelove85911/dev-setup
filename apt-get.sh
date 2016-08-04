@@ -58,6 +58,30 @@ do
    sudo apt-get install -y "$p"
 done
 
+# install vim on ubuntu with huge feature set and python lua ruby support
+# the steps are introduced in an online post here:
+# http://www.jacobcmurphy.com/installing-vim-with-lua/
+sudo apt-get remove --purge vim vim-runtime vim-gnome vim-tiny vim-common vim-gui-common
+sudo apt-get build-dep vim
+sudo apt-get install liblua5.2-dev
+sudo mkdir /usr/include/lua
+sudo cp /usr/include/lua5.2/* /usr/include/lua/
+# sudo apt-get install mercurial
+cd ~
+# hg clone https://code.google.com/p/vim/
+git clone https://github.com/vim/vim.git vimRepo
+cd vimRepo
+./configure --with-features=huge \
+--enable-multibyte \
+--disable-netbeans \
+--enable-rubyinterp \
+--with-ruby-command=/usr/bin/ruby \
+--enable-pythoninterp --with-python-config-dir=/usr/lib/python3/dist-packages \
+--enable-luainterp \
+--enable-fail-if-missing
+make
+sudo make install
+
 # install heroku toolbelt
 wget -O- https://toolbelt.heroku.com/install-ubuntu.sh | sh
 heroku update
@@ -69,6 +93,13 @@ git clone git://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
 # install tmux plugin manager
 [ -e ~/.tmux ] && rm -rf ~/.tmux
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+
+# install vim plug, the vim plugin manager
+curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+
+curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs \
+    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
 
 echo "*******************************************************************"
