@@ -140,7 +140,7 @@ alias reload="exec $SHELL -l"
 # my own alias
 ################################################################################################
 # set alias for neovim on different platform
-alias v='nvim'
+alias v='vim'
 
 # Easier source or edit import rc files
 alias al="v ~/.aliases"
@@ -189,7 +189,7 @@ alias dcmp="docker-compose"
 alias dk="docker"
 
 # fasd interactive file search, selection an edit with vim
-alias vv="sf -e nvim"
+alias vv="sf -e vim"
 
 # npm alias
 alias npmls="npm list --depth=0"
