@@ -46,5 +46,25 @@ do
    sudo npm install -g "$module"
 done
 
+echo "*******************************************************************"
+echo "install python packages"
+echo "*******************************************************************"
+# setup virtualenv for python3
+# python virtualenv means it creates a virtual env for certain python version at a path you specified
+# then it will put all the things: bins, libs ... in that location
+# afterwards source /path/to/virtualenv/bin/activate in your shell to activate the virtual env
+# thus everything afterwards will be all put in the path of virutal env
+# pip3 install virtualenv
+# [ -e ~/.virtualenv ] && rm -rf ~/.virtualenv
+# python3 -m virtualenv ~/.virtualenv
+
+# install NPM Modules
+pythonPackages=(cheat \
+            neovim)
+
+for p in "${pythonPackages[@]}"
+do
+   sudo pip3 install -g "$p"
+done
 
 #gem install jekyll
