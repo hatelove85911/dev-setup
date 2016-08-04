@@ -1,19 +1,35 @@
+function! DoRemote(arg)
+  UpdateRemotePlugins
+endfunction
+
+if has('nvim')
+  let g:python3_host_prog = '/usr/bin/python3'
+  let g:path2Vimrc="~/.config/nvim/init.vim"
+  let g:path2Vimhome='~/.config/nvim/plugged'
+else
+  let g:path2Vimrc="~/.vimrc"
+  let g:path2Vimhome='~/.vim/plugged'
+endif
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " plugins 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-call plug#begin('~/.config/nvim/plugged')
-
+call plug#begin(g:path2Vimhome)
 " operate on surroundings
 Plug 'tpope/vim-surround'
-
 " directory tree
 Plug 'scrooloose/nerdtree'
-
 " git
 Plug 'tpope/vim-fugitive'
-
 " multiple line edit
 Plug 'terryma/vim-multiple-cursors'
+" for navigation between items in quick fix or location list easier
+Plug 'tpope/vim-unimpaired'
+" snippets
+Plug 'Shougo/neosnippet.vim'
+" completion plugin
+Plug 'Shougo/neocomplete.vim'
+" Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemote') }
 
 """""""""""""""""""""""""""""""""""""""""""""""""
 " shougo unite
@@ -93,11 +109,6 @@ Plug 'jiangmiao/auto-pairs'
 "" show marks
 "Plug 'kshenoy/vim-signature'
 "
-" for navigation between items in quick fix or location list easier
-Plug 'tpope/vim-unimpaired'
-"
-"" snips
-"Plug 'SirVer/ultisnips'
 
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " User interface related, nothing important to function
@@ -292,7 +303,7 @@ let g:syntastic_javascript_checkers = ["eslint", "standard"]
 let gsyntastic_aggregate_errors = 1
 let g:syntastic_auto_loc_list = 0
 
-nmap <leader>s :SyntasticCheck<cr>
+nmap <leader>c :SyntasticCheck<cr>
 cabbrev si SyntasticInfo
 
 let g:syntastic_error_symbol = '✗'
@@ -301,17 +312,17 @@ let g:syntastic_warning_symbol = '❗'
 let g:syntastic_style_warning_symbol = '⚠'
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" utltsnips
+" ultisnips
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" " define where to store the custom snippets created by me
-" let g:UltiSnipsSnippetsDir="~/.vim/UltiSnips"
-" " define the directory names where ultisnips will go and search for .snippets 
-" let g:UltisnipsSnippetDirectories=["UltiSnips"]
-" let g:UltiSnipsExpandTrigger="<c-j>"
-" let g:UltiSnipsJumpForwardTrigger="<c-j>"
-" let g:UltiSnipsJumpBackwardTrigger="<c-k>"
-" let g:UltiSnipsEditSplit="vertical"
-" nmap <leader>se :UltiSnipsEdit<cr>
+" define where to store the custom snippets created by me
+let g:UltiSnipsSnippetsDir=g:path2Vimhome . "/UltiSnips"
+" define the directory names where ultisnips will go and search for .snippets 
+let g:UltisnipsSnippetDirectories=["UltiSnips"]
+let g:UltiSnipsExpandTrigger="<c-j>"
+let g:UltiSnipsJumpForwardTrigger="<c-j>"
+let g:UltiSnipsJumpBackwardTrigger="<c-k>"
+let g:UltiSnipsEditSplit="vertical"
+nmap <leader>s :UltiSnipsEdit<cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 nmap <silent> <leader>nd :NERDTreeToggle<cr>
@@ -325,6 +336,11 @@ let g:multi_cursor_exit_from_insert_mode = 0
 "
 nnoremap <silent> <C-m> "zyiw:MultipleCursorsFind <C-R>z<CR>
 vnoremap <silent> <C-m> "zy:MultipleCursorsFind <C-R>z<CR>
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" neocomplete
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:neocomplete#enable_at_startup = 1
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " vim-textobj-punctuation configuration
@@ -385,6 +401,6 @@ imap <c-l> <Esc>la
 " to quickly move to the end of curly braces
 " imap <c-]> <Esc>]}a
 " nmap <c-]> ]}
+"
 " command abbreavtion for source %
-cabbrev sa source ~/.config/nvim/init.vim
-
+cabbrev src execute 'source' g:path2Vimrc
