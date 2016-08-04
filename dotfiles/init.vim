@@ -275,6 +275,7 @@ nnoremap <silent> [unite]b :<C-u>Unite -no-split -buffer-name=buffer -start-inse
 nnoremap <silent> [unite]f :<C-u>Unite -no-split -buffer-name=files -start-insert file_rec/async:!<cr>
 nnoremap <silent> [unite]r :<C-u>Unite -no-split -buffer-name=mru -start-insert file_mru<cr>
 nnoremap <silent> [unite]y :<C-u>Unite -no-split -buffer-name=yank history/yank<cr>
+nnoremap <silent> [unite]s :<C-u>Unite -no-split -buffer-name=neosnippet -start-insert neosnippet<cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " code formatter
@@ -310,9 +311,13 @@ let g:syntastic_style_warning_symbol = '⚠'
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " neosnippets
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:neosnippet#snippets_directory = g:path2Vimhome . "/neosnips"
 imap <C-j>     <Plug>(neosnippet_expand_or_jump)
 smap <C-j>     <Plug>(neosnippet_expand_or_jump)
 xmap <C-j>     <Plug>(neosnippet_expand_target)
+nmap <leader>se :NeoSnippetEdit<cr>
+nmap <leader>ss :NeoSnippetSource<cr>
+nmap <leader>sc :NeoSnippetClearMarkers<cr>
 
 " SuperTab like snippets behavior.
 " "imap <expr><TAB>
