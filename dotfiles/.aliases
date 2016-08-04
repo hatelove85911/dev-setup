@@ -147,7 +147,9 @@ alias al="v ~/.aliases"
 alias exp="v ~/.exports"
 alias zshrc="v ~/.zshrc"
 alias szshrc=". ~/.zshrc"
-alias vimrc="v $HOME/.config/nvim/init.vim" 
+# alias vimrc="v $HOME/.config/nvim/init.vim" 
+alias vrc="v $HOME/.vimrc" 
+alias nvrc="v $HOME/.config/nvim/init.vim" 
 
 # tmux 
 # tmux alias stolen from zsh tmux plugin
@@ -201,5 +203,7 @@ alias npmcfd="npm config delete"
 alias h="http"
 
 # alias for pretty json file
+alias python="python3"
+alias pip="pip3"
 alias pj="python -m json.tool"
 
