@@ -21,8 +21,6 @@ Plug 'tpope/vim-surround'
 Plug 'scrooloose/nerdtree'
 " git
 Plug 'tpope/vim-fugitive'
-" multiple line edit
-Plug 'terryma/vim-multiple-cursors'
 " for navigation between items in quick fix or location list easier
 Plug 'tpope/vim-unimpaired'
 " completion plugin
@@ -338,12 +336,64 @@ let g:NERDTreeShowHidden=1
 let g:NERDTreeShowLineNumbers=1
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" multi-cursor 
+" multiline editing
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:multi_cursor_exit_from_insert_mode = 0
-"
-nnoremap <silent> <C-m> "zyiw:MultipleCursorsFind <C-R>z<CR>
-vnoremap <silent> <C-m> "zy:MultipleCursorsFind <C-R>z<CR>
+" small script to apply macro to visually selected lines
+" recommended in online post: 
+" https://medium.com/@schtoeffel/you-don-t-need-more-than-one-cursor-in-vim-2c44117d51db#.y8t7jdgwx
+xnoremap @ :<C-u>call ExecuteMacroOverVisualRange()<CR>
+
+function! ExecuteMacroOverVisualRange()
+  echo "@".getcmdline()
+  execute ":'<,'>normal @".nr2char(getchar())
+endfunction
+
+" replace word under cursor and you can proceed by
+" return to normal mode, type n to go to next occurence, type . to repeat
+" change
+nmap gr *cgn
+
+" replace all occurence of the word under cursor in the whole file or in the selected range with user's input
+function! ReplaceItInNormalMode()
+  let wordUnderCursor = expand('<cword>')
+  call inputsave()
+  let original = input('Enter text to be replaced:', wordUnderCursor)
+  echo original
+  call inputrestore()
+  call inputsave()
+  let replacement = input('Enter replacement:')
+  call inputrestore()
+  execute '%s/'.original.'/'.replacement.'/g'
+endfunction
+function! ReplaceItInVisualMode() range
+  let wordUnderCursor = expand('<cword>')
+  call inputsave()
+  let original = input('Enter text to be replaced:', wordUnderCursor)
+  call inputrestore()
+  call inputsave()
+  let replacement = input('Enter replacement:')
+  call inputrestore()
+  execute "'<,'>s/".original.'/'.replacement.'/g'
+endfunction
+nmap gR :call ReplaceItInNormalMode()<cr>
+vmap gR :call ReplaceItInVisualMode()<cr>
+
+" function! ReplaceInRange() range
+"   let wordUnderCursor = expand('<cword>')
+"   call inputsave()
+"   let original = input('Enter text to be replaced:')
+"   call inputrestore()
+"   call inputsave()
+"   let replacement = input('Enter replacement:')
+"   call inputrestore()
+"   let currentMode = mode()
+"   execute "'<,'>s/".original.'/'.replacement.'/g'
+" endfunction
+" vmap gR :call ReplaceInRange()<cr>
+" vmap gR :call ReplaceIt()<cr>
+
+" replace all occurence of the selected text in visual mode in the whole file
+" with user input
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " neocomplete
@@ -406,6 +456,10 @@ nnoremap 0 ^
 nnoremap g0 0
 " move the cursor to the next next poistion 'xxx|' -> 'xxx'|
 imap <c-l> <Esc>la
+" remap * to not jump to next occurence immediately, instead, stay at where
+" you are, solution posted here:
+" http://stackoverflow.com/a/13682379/2303252
+nnoremap <silent> * :let @/='\<<C-R>=expand("<cword>")<CR>\>'<CR>:set hls<CR>
 " to quickly move to the end of curly braces
 " imap <c-]> <Esc>]}a
 " nmap <c-]> ]}
