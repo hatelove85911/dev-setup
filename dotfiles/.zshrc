@@ -76,7 +76,7 @@ plugins=(git vi-mode fasd)
 if [[  "$OSTYPE" == "darwin"*  ]]; then
   export PATH=./node_modules/.bin:~/.bin:/usr/local/bin/:"$(brew --prefix coreutils)/libexec/gnubin":$PATH
 elif [[  "$OSTYPE" == "linux"*  ]]; then
-  export PATH=./node_modules/.bin:~/.bin:/usr/bin/:/usr/sbin:$PATH
+  export PATH=./node_modules/.bin:~/.bin:~/.local/bin/:/usr/bin/:/usr/sbin:$PATH
 fi
 #  ~/.path can be used to extend `$PATH`.
 [ -r ~/.path ] && [ -f ~/.path ] && source ~/.path;
