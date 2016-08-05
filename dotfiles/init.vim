@@ -5,16 +5,18 @@ endfunction
 if has('nvim')
   let g:python3_host_prog = '/usr/bin/python3'
   let g:path2Vimrc="~/.config/nvim/init.vim"
-  let g:path2Vimhome='~/.config/nvim/plugged'
+  let g:path2VimHome="~/.config/nvim"
+  let g:path2VimplugHome='~/.config/nvim/plugged'
 else
   let g:path2Vimrc="~/.vimrc"
-  let g:path2Vimhome='~/.vim/plugged'
+  let g:path2VimHome="~/.vim"
+  let g:path2VimplugHome='~/.vim/plugged'
 endif
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " plugins 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-call plug#begin(g:path2Vimhome)
+call plug#begin(g:path2VimplugHome)
 " operate on surroundings
 Plug 'tpope/vim-surround'
 " directory tree
@@ -328,7 +330,7 @@ let g:syntastic_style_warning_symbol = '⚠'
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " neosnippets
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:neosnippet#snippets_directory = g:path2Vimhome . "/neosnips"
+let g:neosnippet#snippets_directory = g:path2VimHome . "/neosnips"
 imap <C-j>     <Plug>(neosnippet_expand_or_jump)
 smap <C-j>     <Plug>(neosnippet_expand_or_jump)
 xmap <C-j>     <Plug>(neosnippet_expand_target)
