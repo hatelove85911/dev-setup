@@ -39,7 +39,8 @@ npmGlobalModules=(eslint \
             yeoman-doctor \
             yo \
             hexo \
-            grunt-cli)
+            grunt-cli \
+            git+https://github.com/ramitos/jsctags.git)
 
 for module in "${npmGlobalModules[@]}"
 do
