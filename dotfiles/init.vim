@@ -57,6 +57,12 @@ Plug 'elzr/vim-json', { 'for': 'json' }
 Plug 'sukima/xmledit', { 'for': 'xml' }
 Plug 'mattn/emmet-vim', { 'for': ['xml', 'html'] }
 
+" tern 
+Plug 'ternjs/tern_for_vim', {'do': 'sudo npm install'}
+
+" tagbar
+Plug 'majutsushi/tagbar'
+
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " text object
 """"""""""""""""""""""""""""""""""""""""""""""""""
@@ -72,8 +78,6 @@ Plug 'thinca/vim-textobj-function-javascript'
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " small Plugs
 """"""""""""""""""""""""""""""""""""""""""""""""""
-" window maximizer
-Plug 'szw/vim-maximizer'
 " comment out code
 Plug 'tpope/vim-commentary'
 " generate incremental thing, like number, character
@@ -90,20 +94,10 @@ Plug 'jiangmiao/auto-pairs'
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " temporary disabled Plugs
 """"""""""""""""""""""""""""""""""""""""""""""""""
-
-"" the ultimate code completion Plug
-"Plug 'Valloric/YouCompleteMe'
-"
-"" tern 
-"Plug 'ternjs/tern_for_vim'
-"
-"" tagbar
-"Plug 'majutsushi/tagbar'
 "
 "" show marks
 "Plug 'kshenoy/vim-signature'
 "
-
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " User interface related, nothing important to function
 """"""""""""""""""""""""""""""""""""""""""""""""""
@@ -210,7 +204,11 @@ au BufRead,BufNewFile *.eslintrc set filetype=json
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " window management
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:maximizer_set_default_mapping = 0
+" move between in windows
+nmap <c-j> <c-w>j
+nmap <c-k> <c-w>k
+nmap <c-h> <c-w>h
+nmap <c-l> <c-w>l
 " widen or narrow a window
 " nmap <M-l> 10<c-w>>
 " nmap <M-h> 10<c-w><
@@ -224,7 +222,28 @@ nmap <Up> 8<c-w>+
 " swap position of window in the horizontal or vertical stack
 nmap <M-s> <c-w>r
 " toggle maximization of a window
-nmap <M-o> :MaximizerToggle<cr>
+" the script is copied from here:
+" http://vim.wikia.com/wiki/Maximize_window_and_return_to_previous_split_structure
+" nnoremap <C-W>O :call MaximizeToggle()<CR>
+" nnoremap <C-W>o :call MaximizeToggle()<CR>
+" nnoremap <C-W><C-O> :call MaximizeToggle()<CR>
+nnoremap <leader>o :call MaximizeToggle()<CR>
+
+function! MaximizeToggle()
+  if exists("s:maximize_session")
+    exec "source " . s:maximize_session
+    call delete(s:maximize_session)
+    unlet s:maximize_session
+    let &hidden=s:maximize_hidden_save
+    unlet s:maximize_hidden_save
+  else
+    let s:maximize_hidden_save = &hidden
+    let s:maximize_session = tempname()
+    set hidden
+    exec "mksession! " . s:maximize_session
+    only
+  endif
+endfunction
 " move to next/previous window
 nmap ]w <c-w>w
 nmap [w <c-w>W
@@ -331,9 +350,16 @@ if has('conceal')
 endif
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" nerdtree
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 nmap <silent> <leader>nd :NERDTreeToggle<cr>
 let g:NERDTreeShowHidden=1
 let g:NERDTreeShowLineNumbers=1
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" tagbar
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+nmap <leader>t :TagbarToggle<cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " multiline editing
@@ -347,18 +373,22 @@ function! ExecuteMacroOverVisualRange()
   echo "@".getcmdline()
   execute ":'<,'>normal @".nr2char(getchar())
 endfunction
+" apply macro globally
+cabbrev gq g/./normal @q<HOME><Right><Right><Right>
 
 " replace word under cursor and you can proceed by
 " return to normal mode, type n to go to next occurence, type . to repeat
 " change
 nmap gr *cgn
 
-" replace all occurence of the word under cursor in the whole file or in the selected range with user's input
+" replace all occurence of the word under cursor or user input in the whole file or in the selected range with user's input
 function! ReplaceItInNormalMode()
   let wordUnderCursor = expand('<cword>')
   call inputsave()
   let original = input('Enter text to be replaced:', wordUnderCursor)
-  echo original
+  if original == ""
+    return
+  endif
   call inputrestore()
   call inputsave()
   let replacement = input('Enter replacement:')
@@ -370,6 +400,9 @@ function! ReplaceItInVisualMode() range
   call inputsave()
   let original = input('Enter text to be replaced:', wordUnderCursor)
   call inputrestore()
+  if original == ""
+    return
+  endif
   call inputsave()
   let replacement = input('Enter replacement:')
   call inputrestore()
@@ -378,22 +411,6 @@ endfunction
 nmap gR :call ReplaceItInNormalMode()<cr>
 vmap gR :call ReplaceItInVisualMode()<cr>
 
-" function! ReplaceInRange() range
-"   let wordUnderCursor = expand('<cword>')
-"   call inputsave()
-"   let original = input('Enter text to be replaced:')
-"   call inputrestore()
-"   call inputsave()
-"   let replacement = input('Enter replacement:')
-"   call inputrestore()
-"   let currentMode = mode()
-"   execute "'<,'>s/".original.'/'.replacement.'/g'
-" endfunction
-" vmap gR :call ReplaceInRange()<cr>
-" vmap gR :call ReplaceIt()<cr>
-
-" replace all occurence of the selected text in visual mode in the whole file
-" with user input
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " neocomplete
@@ -445,11 +462,6 @@ nmap dol :diffget LO<cr>
 nmap dor :diffget RE<cr>
 " diffupdate
 nmap dfu :diffupdate<cr>
-" move between in windows
-nmap <c-j> <c-w>j
-nmap <c-k> <c-w>k
-nmap <c-h> <c-w>h
-nmap <c-l> <c-w>l
 " 0 to the start of line
 nnoremap 0 ^
 " g0 to the column 1
@@ -466,3 +478,4 @@ nnoremap <silent> * :let @/='\<<C-R>=expand("<cword>")<CR>\>'<CR>:set hls<CR>
 "
 " command abbreavtion for source %
 cabbrev src execute 'source' g:path2Vimrc
+cabbrev vrc execute 'e'.g:path2Vimrc
