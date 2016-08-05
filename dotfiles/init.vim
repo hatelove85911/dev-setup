@@ -60,7 +60,7 @@ Plug 'sukima/xmledit', { 'for': 'xml' }
 Plug 'mattn/emmet-vim', { 'for': ['xml', 'html'] }
 
 " tern 
-Plug 'ternjs/tern_for_vim', {'do': 'sudo npm install'}
+Plug 'ternjs/tern_for_vim', {'do': 'npm install'}
 
 " tagbar
 Plug 'majutsushi/tagbar'
