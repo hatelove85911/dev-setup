@@ -44,7 +44,7 @@ npmGlobalModules=(eslint \
 
 for module in "${npmGlobalModules[@]}"
 do
-   sudo npm install -g "$module"
+   npm install -g "$module"
 done
 
 echo "*******************************************************************"
