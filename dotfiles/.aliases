@@ -167,15 +167,8 @@ alias stmconf="tmux source-file ~/.tmux.conf"
 alias tmconf="v ~/.tmux.conf"
 
 # git
+alias g="git"
 alias gitcfg="v ~/.gitconfig"
-alias glg="git lg"
-alias gdt="git difftool"
-alias gdtca="git difftool --cached"
-alias gdth="git difftool HEAD"
-
-alias grs="git reset"
-alias grss="git reset --soft"
-alias grsh="git reset --hard"
 
 # node debug
 alias nd="node"

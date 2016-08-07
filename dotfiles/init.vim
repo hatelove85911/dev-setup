@@ -32,6 +32,9 @@ Plug 'Shougo/neosnippet.vim'
 Plug 'Shougo/neosnippet-snippets'
 " Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemote') }
 
+" super substitute
+Plug 'tpope/vim-abolish'
+
 """""""""""""""""""""""""""""""""""""""""""""""""
 " shougo unite
 """"""""""""""""""""""""""""""""""""""""""""""""""
@@ -64,6 +67,8 @@ Plug 'ternjs/tern_for_vim', {'do': 'npm install'}
 
 " tagbar
 Plug 'majutsushi/tagbar'
+" format
+Plug 'Chiel92/vim-autoformat'
 
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " text object
@@ -92,19 +97,15 @@ Plug 'arecarn/crunch.vim'
 
 " auto closing brackets
 Plug 'jiangmiao/auto-pairs'
-
-""""""""""""""""""""""""""""""""""""""""""""""""""
-" temporary disabled Plugs
-""""""""""""""""""""""""""""""""""""""""""""""""""
-"
-"" show marks
-"Plug 'kshenoy/vim-signature'
-"
+" window maximizer
+Plug 'szw/vim-maximizer'
+" scratch buffer
+Plug 'mtth/scratch.vim'
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " User interface related, nothing important to function
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " relative number
-Plug 'myusuf3/numbers.vim'
+" Plug 'myusuf3/numbers.vim'
 
 " color scheme
 Plug 'sickill/vim-monokai'
@@ -123,8 +124,8 @@ Plug 'joeytwiddle/sexy_scroller.vim'
 " unused Plugs
 """"""""""""""""""""""""""""""""""""""""""""""""""
 
-"" scratch pad
-"Plug 'mtth/scratch.vim'
+"" show marks
+"Plug 'kshenoy/vim-signature'
 
 call plug#end()
 
@@ -143,6 +144,8 @@ let mapleader=" "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " general
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" show widemenu
+set wildmenu
 " always show status line
 set laststatus=2
 " no swap file
@@ -175,6 +178,7 @@ set t_ut=
 set t_Co=256
 let g:solarized_termcolors=256
 silent! colorscheme monokai
+set relativenumber
 set number
 set showcmd
 set cursorline
@@ -224,28 +228,9 @@ nmap <Up> 8<c-w>+
 " swap position of window in the horizontal or vertical stack
 nmap <M-s> <c-w>r
 " toggle maximization of a window
-" the script is copied from here:
-" http://vim.wikia.com/wiki/Maximize_window_and_return_to_previous_split_structure
-" nnoremap <C-W>O :call MaximizeToggle()<CR>
-" nnoremap <C-W>o :call MaximizeToggle()<CR>
-" nnoremap <C-W><C-O> :call MaximizeToggle()<CR>
-nnoremap <leader>o :call MaximizeToggle()<CR>
+let g:maximizer_set_default_mapping = 0
+nnoremap coo :MaximizerToggle<cr>
 
-function! MaximizeToggle()
-  if exists("s:maximize_session")
-    exec "source " . s:maximize_session
-    call delete(s:maximize_session)
-    unlet s:maximize_session
-    let &hidden=s:maximize_hidden_save
-    unlet s:maximize_hidden_save
-  else
-    let s:maximize_hidden_save = &hidden
-    let s:maximize_session = tempname()
-    set hidden
-    exec "mksession! " . s:maximize_session
-    only
-  endif
-endfunction
 " move to next/previous window
 nmap ]w <c-w>w
 nmap [w <c-w>W
@@ -279,9 +264,9 @@ nmap <M-r> :call MyRotate()<cr>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 1st, map key strokes: [unite] to do nothing, make sure [unite] is reserved
 " for unite plugin usage
-nnoremap [unite] <nop>
+" nnoremap [unite] <Nop>
 " 2nd, make a key mapping to unite
-nmap m [unite]
+" nmap cu [unite]
 
 call unite#filters#matcher_default#use(['matcher_fuzzy'])
 call unite#filters#sorter_default#use(['sorter_rank'])
@@ -290,20 +275,25 @@ call unite#filters#sorter_default#use(['sorter_rank'])
 let g:unite_source_rec_async_command = ['ag', '--follow', '--nocolor', '--nogroup', '--hidden', '-g', '',
       \ '--ignore', ".svn", '--ignore', ".git", '--ignore', "node_modules"]
 
-nnoremap <silent> [unite]b :<C-u>Unite -no-split -buffer-name=buffer -start-insert buffer<cr>
-nnoremap <silent> [unite]f :<C-u>Unite -no-split -buffer-name=files -start-insert file_rec/async:!<cr>
-nnoremap <silent> [unite]r :<C-u>Unite -no-split -buffer-name=mru -start-insert file_mru<cr>
-nnoremap <silent> [unite]y :<C-u>Unite -no-split -buffer-name=yank history/yank<cr>
-nnoremap <silent> [unite]s :<C-u>Unite -no-split -buffer-name=neosnippet -start-insert neosnippet<cr>
+nnoremap <silent> cub :<C-u>Unite -no-split -buffer-name=buffer -start-insert buffer<cr>
+nnoremap <silent> cuf :<C-u>Unite -no-split -buffer-name=files -start-insert file_rec/async:!<cr>
+nnoremap <silent> cur :<C-u>Unite -no-split -buffer-name=mru -start-insert file_mru<cr>
+nnoremap <silent> cuy :<C-u>Unite -no-split -buffer-name=yank history/yank<cr>
+nnoremap <silent> cus :<C-u>Unite -no-split -buffer-name=neosnippet -start-insert neosnippet<cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " code formatter
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-au Filetype javascript nmap <buffer> <leader>f :%!standard-format -<cr>
-au Filetype html nmap <buffer> <leader>f :%!tidy --show-errors 0 --show-warnings 0 --show-info 0 --quiet 1<cr>
-au Filetype xhtml nmap <buffer> <leader>f :%!tidy --show-errors 0 --show-warnings 0 --show-info 0 --quiet 1<cr>
-au Filetype xml nmap <buffer> <leader>f :%!tidy --show-errors 0 --show-warnings 0 --show-info 0 --quiet 1<cr>
-au Filetype json nmap <buffer> <leader>f :%!python -m json.tool<cr>
+
+
+" commented out temporarily because I'm able to use auto format again in this
+" vim version, 
+"
+" au Filetype javascript nmap <buffer> <leader>f :%!standard-format -<cr>
+" au Filetype html nmap <buffer> <leader>f :%!tidy --show-errors 0 --show-warnings 0 --show-info 0 --quiet 1<cr>
+" au Filetype xhtml nmap <buffer> <leader>f :%!tidy --show-errors 0 --show-warnings 0 --show-info 0 --quiet 1<cr>
+" au Filetype xml nmap <buffer> <leader>f :%!tidy --show-errors 0 --show-warnings 0 --show-info 0 --quiet 1<cr>
+" au Filetype json nmap <buffer> <leader>f :%!python -m json.tool<cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " syntastic configuration
@@ -354,14 +344,17 @@ endif
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " nerdtree
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-nmap <silent> <leader>nd :NERDTreeToggle<cr>
+nmap cot :NERDTreeToggle<cr>
 let g:NERDTreeShowHidden=1
 let g:NERDTreeShowLineNumbers=1
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " tagbar
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-nmap <leader>t :TagbarToggle<cr>
+" use autocommand enter here because unimpaired plugin has a same key mapping
+" for toggle background color, since plugins are loaded after vimrc, we need
+" to use this approach to overwrite back my keymapping
+autocmd VimEnter * nnoremap cob :TagbarToggle<cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " multiline editing
@@ -381,51 +374,74 @@ cabbrev gq g/./normal @q<HOME><Right><Right><Right>
 " replace word under cursor and you can proceed by
 " return to normal mode, type n to go to next occurence, type . to repeat
 " change
-nmap gr *cgn
+nmap cr *cgn
 
 " replace all occurence of the word under cursor or user input in the whole file or in the selected range with user's input
 function! ReplaceItInNormalMode()
   let wordUnderCursor = expand('<cword>')
   call inputsave()
-  let original = input('Enter text to be replaced:', wordUnderCursor)
+  let original = input('target: ', wordUnderCursor)
   if original == ""
     return
   endif
   call inputrestore()
   call inputsave()
-  let replacement = input('Enter replacement:')
+  let replacement = input('replacement: ')
   call inputrestore()
   execute '%s/'.original.'/'.replacement.'/g'
 endfunction
 function! ReplaceItInVisualMode() range
   let wordUnderCursor = expand('<cword>')
   call inputsave()
-  let original = input('Enter text to be replaced:', wordUnderCursor)
+  let original = input('target: ', wordUnderCursor)
   call inputrestore()
   if original == ""
     return
   endif
   call inputsave()
-  let replacement = input('Enter replacement:')
+  let replacement = input('replacement: ')
   call inputrestore()
   execute "'<,'>s/".original.'/'.replacement.'/g'
 endfunction
-nmap gR :call ReplaceItInNormalMode()<cr>
-vmap gR :call ReplaceItInVisualMode()<cr>
+nmap cR :call ReplaceItInNormalMode()<cr>
+vmap cr :call ReplaceItInVisualMode()<cr>
 
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" write quite files key mappings
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+nmap <Bslash>w :w<cr>
+nmap <Bslash>ww :wa<cr>
+nmap <Bslash>q :q<cr>
+nmap <Bslash>qd :q!<cr>
+nmap <Bslash>qq :qa<cr>
+nmap <Bslash>qqd :qa!<cr>
+nmap <Bslash>x :x<cr>
+nmap <Bslash>xd :x!<cr>
+nmap <Bslash>xx :xa<cr>
+nmap <Bslash>xxd :xa!<cr>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " neocomplete
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:neocomplete#enable_at_startup = 1
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" scartch pad
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:scratch_no_mappings = 1
+let g:scratch_horizontal = 0
+let g:scratch_top = 0
+let g:scratch_height = 40
+let g:scratch_persistence_file = '/tmp/scratch.vim'
+nmap gs :Scratch<cr>
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " vim-textobj-punctuation configuration
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " As most of the time, you need to operate on the text until punctuation, I add the following bindings to make it even more convenient to use:
 " Now, you just need to press cu, du, yu, or vu to operate on the text until the closest punctuation.
-xmap u iu
-omap u iu
+" xmap u iu
+" omap u iu
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " some shortcut mapping
@@ -444,18 +460,6 @@ nnoremap V v$h
 xnoremap p pgvy
 " for quick switch between two buffer in the same window
 nmap <leader>b :b#<cr>
-" save all
-nmap <leader>ww :wa<cr>
-" write current file
-nmap <leader>w :w<cr>
-" quit all
-nmap <leader>qq :qa<cr>
-" quite window
-nmap <leader>q :q<cr>
-" force quit all
-nmap <leader>xx :qa!<cr>
-" force qite current window
-nmap <leader>x :q!<cr>
 " diffget BASE in three merge
 nmap dob :diffget BA<cr>
 " diffget LOCAL in three merge
@@ -479,5 +483,6 @@ nnoremap <silent> * :let @/='\<<C-R>=expand("<cword>")<CR>\>'<CR>:set hls<CR>
 " nmap <c-]> ]}
 "
 " command abbreavtion for source %
-cabbrev src execute 'source' g:path2Vimrc
+cabbrev ss execute 'source' g:path2Vimrc
 cabbrev vrc execute 'e'.g:path2Vimrc
+cabbrev zrc e ~/.zshrc<cr>
