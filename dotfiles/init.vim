@@ -14,7 +14,7 @@ else
 endif
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" plugins 
+" plugins
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 call plug#begin(g:path2VimplugHome)
 " operate on surroundings
@@ -38,7 +38,7 @@ Plug 'tpope/vim-abolish'
 """""""""""""""""""""""""""""""""""""""""""""""""
 " shougo unite
 """"""""""""""""""""""""""""""""""""""""""""""""""
-" quick file finder 
+" quick file finder
 " ag is a front end for the silver searcher ag program
 Plug 'rking/ag.vim'
 Plug 'Shougo/vimproc.vim', { 'do': 'make' }
@@ -59,11 +59,11 @@ Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
 " distinguish json from javascript
 Plug 'elzr/vim-json', { 'for': 'json' }
 
-" xml 
+" xml
 Plug 'sukima/xmledit', { 'for': 'xml' }
 Plug 'mattn/emmet-vim', { 'for': ['xml', 'html'] }
 
-" tern 
+" tern
 Plug 'ternjs/tern_for_vim', {'do': 'npm install'}
 
 " tagbar
@@ -89,7 +89,7 @@ Plug 'thinca/vim-textobj-function-javascript'
 " comment out code
 Plug 'tpope/vim-commentary'
 " generate incremental thing, like number, character
-" calutil is needed by visIncr Plug for increamental date 
+" calutil is needed by visIncr Plug for increamental date
 Plug 'cskeeters/vim-calutil'
 Plug 'vim-scripts/VisIncr'
 
@@ -155,12 +155,37 @@ set noswapfile
 set hidden
 " access system clipboard
 if has('unnamedplus')
-  " vmap "+y :!xclip -f -sel clip
-  " map "+p :r!xclip -o -sel clip
   set clipboard=unnamedplus
 else
   set clipboard=unnamed
 endif
+" for fixing the issue of auto indenting
+" the pasted code, see:
+" http://superuser.com/a/437744
+" http://stackoverflow.com/a/21798070
+" https://coderwall.com/p/if9mda/automatically-set-paste-mode-in-vim-when-pasting-in-insert-mode
+function! WrapForTmux(s)
+  if !exists('$TMUX')
+    return a:s
+  endif
+
+  let tmux_start = "\<Esc>Ptmux;"
+  let tmux_end = "\<Esc>\\"
+
+  return tmux_start . substitute(a:s, "\<Esc>", "\<Esc>\<Esc>", 'g') . tmux_end
+endfunction
+
+let &t_SI .= WrapForTmux("\<Esc>[?2004h")
+let &t_EI .= WrapForTmux("\<Esc>[?2004l")
+
+function! XTermPasteBegin()
+  set pastetoggle=<Esc>[201~
+  set paste
+  return ""
+endfunction
+
+inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
+nmap cop :set paste! paste?<cr>
 
 " search ignore case by default
 set ic
@@ -170,7 +195,7 @@ set ic
 " set textwidth=60
 
 " set list charts
-set listchars=trail:·,precedes:«,extends:»,eol:↲,tab:▸\ 
+set listchars=trail:·,precedes:«,extends:»,eol:↲,tab:▸\
 set list
 " disable Background Color Erase (BCE) so that color schemes
 " render properly when inside 256-color tmux and GNU screen.
@@ -286,9 +311,9 @@ nnoremap <silent> cus :<C-u>Unite -no-split -buffer-name=neosnippet -start-inser
 " code formatter
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-
+nmap <leader>f :Autoformat<cr>
 " commented out temporarily because I'm able to use auto format again in this
-" vim version, 
+" vim version,
 "
 " au Filetype javascript nmap <buffer> <leader>f :%!standard-format -<cr>
 " au Filetype html nmap <buffer> <leader>f :%!tidy --show-errors 0 --show-warnings 0 --show-info 0 --quiet 1<cr>
@@ -299,18 +324,38 @@ nnoremap <silent> cus :<C-u>Unite -no-split -buffer-name=neosnippet -start-inser
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " syntastic configuration
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:syntastic_mode_map = { 
+
+" the syntastic built-in toggle command doesn't work
+" even toggle to passive mode, it still do checks when buffer write
+" that's why I write my own toggle funciton
+function! MyOwnSyntasticModeToggle()
+  if b:syntastic_mode == "passive"
+    let b:syntastic_mode = "active"
+    echo "active"
+  else
+    let b:syntastic_mode = "passive"
+    echo "passive"
+    execute "SyntasticReset"
+  endif
+endfunction
+let g:syntastic_mode_map = {
       \ 'mode': 'passive',
       \ 'active_filetypes': ['javascript']}
+" let g:syntastic_mode_map = {
+"       \ 'mode': 'passive',
+"       \ 'active_filetypes': [],
+"       \ 'passive_filetypes': [] }
 " use the latest tidy html5 for html
 let g:syntastic_html_tidy_exec = 'tidy'
 " set javascript checkers
 let g:syntastic_javascript_checkers = ["eslint", "standard"]
 
-let gsyntastic_aggregate_errors = 1
+" let g:syntastic_check_on_wq = 0
+let g:syntastic_aggregate_errors = 1
 let g:syntastic_auto_loc_list = 0
 
 nmap <leader>c :SyntasticCheck<cr>
+nmap cos :call MyOwnSyntasticModeToggle()<cr>
 cabbrev si SyntasticInfo
 
 let g:syntastic_error_symbol = '✗'
@@ -335,7 +380,7 @@ nmap <leader>sc :NeoSnippetClearMarkers<cr>
 " " \ neosnippet#expandable_or_jumpable() ?
 " " \    "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
 smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-     \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+      \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
 
 " For conceal markers.
 if has('conceal')
@@ -361,7 +406,7 @@ autocmd VimEnter * nnoremap cob :TagbarToggle<cr>
 " multiline editing
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " small script to apply macro to visually selected lines
-" recommended in online post: 
+" recommended in online post:
 " https://medium.com/@schtoeffel/you-don-t-need-more-than-one-cursor-in-vim-2c44117d51db#.y8t7jdgwx
 xnoremap @ :<C-u>call ExecuteMacroOverVisualRange()<CR>
 
@@ -456,7 +501,7 @@ nnoremap vv V
 " select to the end of line
 nnoremap V v$h
 " set all lines
-" nnoremap va 
+" nnoremap va
 " for not to lose the yanked text after pasting over selection
 xnoremap p pgvy
 " for quick switch between two buffer in the same window

@@ -42,7 +42,9 @@ aptPackages=(neovim \
             python3-pip \
             python3-dev \
             docker-engine \
-            exuberant-ctags)
+            exuberant-ctags \
+            xclip \
+            xsel)
 
 # remove the old tidy program first, otherwise there's going to error generated when install the new tidy html5
 sudo apt-get remove -y libtidy-0.99-0 tidy
