@@ -42,6 +42,7 @@ Plug 'tpope/vim-abolish'
 " ag is a front end for the silver searcher ag program
 Plug 'rking/ag.vim'
 Plug 'Shougo/vimproc.vim', { 'do': 'make' }
+" Plug 'Shougo/neoinclude.vim'
 Plug 'Shougo/unite.vim' | Plug 'Shougo/neomru.vim' | Plug 'Shougo/neoyank.vim'
 
 """"""""""""""""""""""""""""""""""""""""""""""""""
