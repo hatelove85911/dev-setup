@@ -102,6 +102,8 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'szw/vim-maximizer'
 " scratch buffer
 Plug 'mtth/scratch.vim'
+" swap two region of text easily
+Plug 'tommcdo/vim-exchange'
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " User interface related, nothing important to function
 """"""""""""""""""""""""""""""""""""""""""""""""""
@@ -420,7 +422,7 @@ cabbrev gq g/./normal @q<HOME><Right><Right><Right>
 " replace word under cursor and you can proceed by
 " return to normal mode, type n to go to next occurence, type . to repeat
 " change
-nmap cr *cgn
+autocmd VimEnter * nmap cr *cgn
 
 " replace all occurence of the word under cursor or user input in the whole file or in the selected range with user's input
 function! ReplaceItInNormalMode()
