@@ -88,7 +88,8 @@ brewPackages=(the_silver_searcher \
              docker-machine \
              docker-compose \
              heroku-toolbelt \
-             tidy-html5)
+             tidy-html5 \
+             fzf)
 
 for p in "${commonPackages[@]}"
 do
