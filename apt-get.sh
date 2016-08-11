@@ -89,6 +89,11 @@ sudo make install
 wget -O- https://toolbelt.heroku.com/install-ubuntu.sh | sh
 heroku update
 
+# install fzf
+[ -e ~/.oh-my-zsh ] && rm -rf ~/.oh-my-zsh
+git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+~/.fzf/install
+
 # install oh my zsh
 [ -e ~/.oh-my-zsh ] && rm -rf ~/.oh-my-zsh
 git clone git://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
