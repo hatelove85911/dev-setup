@@ -303,11 +303,12 @@ call unite#filters#sorter_default#use(['sorter_rank'])
 let g:unite_source_rec_async_command = ['ag', '--follow', '--nocolor', '--nogroup', '--hidden', '-g', '',
       \ '--ignore', ".svn", '--ignore', ".git", '--ignore', "node_modules"]
 
-nnoremap <silent> cub :<C-u>Unite -no-split -buffer-name=buffer -start-insert buffer<cr>
-nnoremap <silent> cuf :<C-u>Unite -no-split -buffer-name=files -start-insert file_rec/async:!<cr>
-nnoremap <silent> cur :<C-u>Unite -no-split -buffer-name=mru -start-insert file_mru<cr>
-nnoremap <silent> cuy :<C-u>Unite -no-split -buffer-name=yank history/yank<cr>
-nnoremap <silent> cus :<C-u>Unite -no-split -buffer-name=neosnippet -start-insert neosnippet<cr>
+nnoremap cub :<C-u>Unite -no-split -buffer-name=buffer -start-insert buffer<cr>
+nnoremap cuf :<C-u>Unite -no-split -buffer-name=files -start-insert file_rec/async:!<cr>
+nnoremap cum :<C-u>Unite -no-split -buffer-name=mru -start-insert file_mru<cr>
+nnoremap cuy :<C-u>Unite -no-split -buffer-name=yank history/yank<cr>
+nnoremap cus :<C-u>Unite -no-split -buffer-name=neosnippet -start-insert neosnippet<cr>
+nnoremap cug :<C-u>Unite -no-split -buffer-name=grep -start-insert grep:.<cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " code formatter

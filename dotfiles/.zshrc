@@ -106,3 +106,5 @@ export EDITOR='vim'
 
 # ~/.extra can be used for other settings you don’t want to commit.
 [ -r ~/.extra ] && [ -f ~/.extra ] && source ~/.extra;
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
