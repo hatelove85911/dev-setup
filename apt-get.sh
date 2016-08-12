@@ -42,7 +42,9 @@ aptPackages=(neovim \
             python3-pip \
             python3-dev \
             docker-engine \
-            exuberant-ctags)
+            exuberant-ctags \
+            xclip \
+            xsel)
 
 # remove the old tidy program first, otherwise there's going to error generated when install the new tidy html5
 sudo apt-get remove -y libtidy-0.99-0 tidy
@@ -86,6 +88,11 @@ sudo make install
 # install heroku toolbelt
 wget -O- https://toolbelt.heroku.com/install-ubuntu.sh | sh
 heroku update
+
+# install fzf
+[ -e ~/.oh-my-zsh ] && rm -rf ~/.oh-my-zsh
+git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+~/.fzf/install
 
 # install oh my zsh
 [ -e ~/.oh-my-zsh ] && rm -rf ~/.oh-my-zsh

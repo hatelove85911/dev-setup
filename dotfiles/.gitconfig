@@ -21,6 +21,9 @@
   s = status
   ss = status -s # short format
 
+  # Clone a repository including all submodules
+  cl = clone --recursive
+
   # checkout
   co = checkout
   cob = checkout -b
@@ -37,17 +40,18 @@
   ac = !"git add . && git commit -a"
   acm = !"git add . && git commit -am"
 
+  # push
+  p = push
+
+  # Pull in remote changes for the current repository and all its submodules
+  pl = !"git pull; git submodule foreach git pull origin master"
+
   # Show the diff between the latest commit and the current state
   d = !"git diff-index --quiet HEAD -- || clear; git --no-pager diff --patch-with-stat"
 
   # `git di $number` shows the diff between the state `$number` revisions ago and the current state
   di = !"d() { git diff --patch-with-stat HEAD~$1; }; git diff-index --quiet HEAD -- || clear; d"
 
-  # Pull in remote changes for the current repository and all its submodules
-  p = !"git pull; git submodule foreach git pull origin master"
-
-  # Clone a repository including all submodules
-  cl = clone --recursive
 
   # Commit all changes
   ca = !git add -A && git commit -av

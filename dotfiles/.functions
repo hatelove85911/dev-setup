@@ -217,16 +217,6 @@ function a() {
     fi;
 }
 
-# `v` with no arguments opens the current directory in Vim, otherwise opens the
-# given location
-function v() {
-    if [ $# -eq 0 ]; then
-        vim .;
-    else
-        vim "$@";
-    fi;
-}
-
 # `o` with no arguments opens the current directory, otherwise opens the given
 # location
 function o() {
@@ -293,4 +283,44 @@ dtw(){
 
 dmenv () {
   eval "$(docker-machine env $1)"
+}
+
+# quick find anything
+fa () {
+  local targetDir=${1:="."};
+  find ${targetDir} | fzf;
+}
+
+faa () {
+  local targetDir=${1:="."};
+  local selected="$( find ${targetDir} | fzf )";
+  if [ -f "$selected" ]; then
+    vim "$selected";
+  elif [ -d "$selected" ]; then
+    cd "$selected";
+  else
+    echo "$selected: no action are defined to the file type";
+  fi;
+}
+# quick find file
+ff () {
+  local targetDir=${1:="."};
+  find ${targetDir} -type f | fzf;
+}
+
+ffv () {
+  local targetDir=${1:="."};
+  local selected="$( find ${targetDir} -type f | fzf )";
+  vim "$selected";
+}
+# quick find directory
+fd () {
+  local targetDir=${1:="."};
+  find ${targetDir} -type d | fzf;
+}
+
+fdc () {
+  local targetDir=${1:="."};
+  local selected="$( find ${targetDir} -type d | fzf )";
+  cd "$selected";
 }

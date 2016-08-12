@@ -66,6 +66,8 @@ ToggleProxy(ProxyAddress){
         Mode = 0
     }
 
+    bypassString := "localhost;127.0.0.1;*.local;*.sap.corp;10.*;*.corp.sap;*.co.sap.com;*.sap.biz;<local>"
+
 
     EnvGet, HomeDir, USERPROFILE
     proxyOnScriptPath = "\Dropbox\mymeta\mothership\win\onProxy.ps1"
@@ -80,6 +82,7 @@ ToggleProxy(ProxyAddress){
         RegDelete, HKEY_CURRENT_USER, Software\Microsoft\Windows\CurrentVersion\Internet Settings, AutoConfigURL
         RegWrite,REG_SZ,HKEY_CURRENT_USER,Software\Microsoft\Windows\CurrentVersion\Internet Settings,ProxyServer, %ProxyAddress%
         RegWrite,REG_DWORD,HKEY_CURRENT_USER,Software\Microsoft\Windows\CurrentVersion\Internet Settings,ProxyEnable, 1
+        RegWrite,REG_SZ,HKEY_CURRENT_USER,Software\Microsoft\Windows\CurrentVersion\Internet Settings,ProxyOverride, %bypassString%
 
         Run, powershell.exe -windowstyle hidden %HomeDir%%proxyOnScriptPath% -proxyaddr %ProxyAddress%
         TrayTip Proxy Enabled, %ProxyAddress%, 3
