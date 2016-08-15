@@ -40,6 +40,8 @@ npmGlobalModules=(eslint \
             yo \
             hexo \
             grunt-cli \
+            http-server \
+            json-server \
             git+https://github.com/ramitos/jsctags.git \
             nproxy)
 

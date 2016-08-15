@@ -108,3 +108,8 @@ export EDITOR='vim'
 [ -r ~/.extra ] && [ -f ~/.extra ] && source ~/.extra;
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+stty ixany
+stty ixoff -ixon
+
+LS_COLORS=$LS_COLORS:'ow=34;40:' ; export LS_COLORS
