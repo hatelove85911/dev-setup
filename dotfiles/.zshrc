@@ -111,5 +111,5 @@ export EDITOR='vim'
 
 stty ixany
 stty ixoff -ixon
-
-LS_COLORS=$LS_COLORS:'ow=34;40:' ; export LS_COLORS
+LS_COLORS=$LS_COLORS:'ow=34;40' ; export LS_COLORS
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
