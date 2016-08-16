@@ -332,6 +332,8 @@ nmap <leader>f :Autoformat<cr>
 " even toggle to passive mode, it still do checks when buffer write
 " that's why I write my own toggle funciton
 function! MyOwnSyntasticModeToggle()
+  let b:syntastic_mode = get(b:, "syntastic_mode", "active")
+
   if b:syntastic_mode == "passive"
     let b:syntastic_mode = "active"
     echo "active"
@@ -358,7 +360,7 @@ let g:syntastic_aggregate_errors = 1
 let g:syntastic_auto_loc_list = 0
 
 nmap <leader>c :SyntasticCheck<cr>
-nmap cos :call MyOwnSyntasticModeToggle()<cr>
+autocmd VimEnter * nmap cos :call MyOwnSyntasticModeToggle()<cr>
 cabbrev si SyntasticInfo
 
 let g:syntastic_error_symbol = '✗'
