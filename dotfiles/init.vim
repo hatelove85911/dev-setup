@@ -104,6 +104,8 @@ Plug 'szw/vim-maximizer'
 Plug 'mtth/scratch.vim'
 " swap two region of text easily
 Plug 'tommcdo/vim-exchange'
+" seamless navigation between tmux and vim
+Plug 'christoomey/vim-tmux-navigator'
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " User interface related, nothing important to function
 """"""""""""""""""""""""""""""""""""""""""""""""""
@@ -239,10 +241,10 @@ au BufRead,BufNewFile *.eslintrc set filetype=json
 " window management
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " move between in windows
-nmap <c-j> <c-w>j
-nmap <c-k> <c-w>k
-nmap <c-h> <c-w>h
-nmap <c-l> <c-w>l
+" nmap <c-j> <c-w>j
+" nmap <c-k> <c-w>k
+" nmap <c-h> <c-w>h
+" nmap <c-l> <c-w>l
 " widen or narrow a window
 " nmap <M-l> 10<c-w>>
 " nmap <M-h> 10<c-w><
