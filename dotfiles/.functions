@@ -238,6 +238,18 @@ function tre() {
 ##################################################
 # my functions
 ##################################################
+toggleProxy() {
+  if [ -z "$http_proxy" ]; then
+    echo "enable proxy: $PROXY_ADDR";
+    export http_proxy=$PROXY_ADDR;
+    export https_proxy=$PROXY_ADDR;
+  else
+    echo "disable proxy";
+    unset http_proxy;
+    unset https_proxy;
+  fi;
+}
+
 onProxy(){
     echo "enabling proxy"
     if [[ "$OSTYPE" == "linux"* ]]; then

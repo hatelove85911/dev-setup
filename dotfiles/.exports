@@ -24,3 +24,6 @@ export GREP_OPTIONS='--color=auto';
 
 # NVM_DIR
 export NVM_DIR="$HOME/.nvm"
+
+# compnay proxy
+export PROXY_ADDR="http://proxy.tyo.sap.corp:8080"
