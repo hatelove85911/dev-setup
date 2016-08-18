@@ -201,3 +201,6 @@ alias h="http"
 alias python="python3"
 alias pip="pip3"
 alias pj="python -m json.tool"
+
+# alias to clear 
+alias cl="clear"
