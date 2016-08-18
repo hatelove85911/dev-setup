@@ -68,7 +68,7 @@ ToggleProxy(ProxyAddress){
         Mode = 0
     }
     
-    bypassString := "localhost;127.0.0.1;*.local;*.sap.corp;10.*;*.corp.sap;*.co.sap.com;*.sap.biz;<local>"
+    bypassString := "localhost;127.0.0.1;*.local;*.sap.corp;10.*;*.corp.sap;*.co.sap.com;*.sap.biz;<local>;192.168.*"
     
     EnvGet, HomeDir, USERPROFILE
     proxyOnScriptPath = "\Dropbox\mymeta\mothership\win\onProxy.ps1"
