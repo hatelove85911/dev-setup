@@ -361,10 +361,10 @@ mf () {
   vim "$selected";
 }
 # most used directory
-mds () {
+mdrs () {
  fasd -dl | fzf 
 }
-md () {
+mdr () {
   local selected="$( fasd -dl | fzf )"
   cd "$selected";
 }

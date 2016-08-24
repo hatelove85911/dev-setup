@@ -207,7 +207,7 @@ set list
 set t_ut=
 set t_Co=256
 let g:solarized_termcolors=256
-silent! colorscheme monokai
+silent! colorscheme molokai
 set relativenumber
 set number
 set showcmd
@@ -306,11 +306,12 @@ let g:unite_source_rec_async_command = ['ag', '--follow', '--nocolor', '--nogrou
       \ '--ignore', ".svn", '--ignore', ".git", '--ignore', "node_modules"]
 
 nnoremap cub :<C-u>Unite -no-split -buffer-name=buffer -start-insert buffer<cr>
-nnoremap cuf :<C-u>Unite -no-split -buffer-name=files -start-insert file_rec/async:!<cr>
+nnoremap cul :<C-u>Unite -no-split -buffer-name=files -start-insert file_rec/async:!<cr>
 nnoremap cum :<C-u>Unite -no-split -buffer-name=mru -start-insert file_mru<cr>
 nnoremap cuy :<C-u>Unite -no-split -buffer-name=yank history/yank<cr>
 nnoremap cus :<C-u>Unite -no-split -buffer-name=neosnippet -start-insert neosnippet<cr>
-nnoremap cug :<C-u>Unite -no-split -buffer-name=grep -start-insert grep:.<cr>
+nnoremap cug :<C-u>Unite -no-split -buffer-name=grep -start-insert grep:.:-iR<cr>
+nnoremap cuf :<C-u>Unite -no-split -buffer-name=find -start-insert find:.<cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " code formatter
@@ -398,6 +399,8 @@ endif
 " nerdtree
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 nmap cot :NERDTreeToggle<cr>
+nmap <leader>t :NERDTreeFocus<cr>
+nmap <leader>tt :NERDTreeClose<cr>
 let g:NERDTreeShowHidden=1
 let g:NERDTreeShowLineNumbers=1
 
