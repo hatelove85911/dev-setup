@@ -19,8 +19,6 @@ endif
 call plug#begin(g:path2VimplugHome)
 " operate on surroundings
 Plug 'tpope/vim-surround'
-" directory tree
-Plug 'scrooloose/nerdtree'
 " git
 Plug 'tpope/vim-fugitive'
 " for navigation between items in quick fix or location list easier
@@ -34,6 +32,10 @@ Plug 'Shougo/neosnippet-snippets'
 
 " super substitute
 Plug 'tpope/vim-abolish'
+" file explorer, can be integrated with unite
+Plug 'Shougo/vimfiler.vim'
+" vim shell
+Plug 'Shougo/vimshell.vim'
 
 """""""""""""""""""""""""""""""""""""""""""""""""
 " shougo unite
@@ -44,9 +46,10 @@ Plug 'rking/ag.vim'
 Plug 'Shougo/vimproc.vim', { 'do': 'make' }
 " Plug 'Shougo/neoinclude.vim'
 Plug 'Shougo/unite.vim' | Plug 'Shougo/neomru.vim' | Plug 'Shougo/neoyank.vim'
+Plug 'tsukkee/unite-tag'
 
 """"""""""""""""""""""""""""""""""""""""""""""""""
-" shougo syntastic
+" syntastic
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " syntax checker
 Plug 'scrooloose/syntastic'
@@ -106,6 +109,9 @@ Plug 'mtth/scratch.vim'
 Plug 'tommcdo/vim-exchange'
 " seamless navigation between tmux and vim
 Plug 'christoomey/vim-tmux-navigator'
+" jump to matching xml tags and more, extend % function to not only jump to
+" matching parenthesis, square brackets
+Plug 'tmhedberg/matchit'
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " User interface related, nothing important to function
 """"""""""""""""""""""""""""""""""""""""""""""""""
@@ -230,6 +236,19 @@ set splitright
 
 " ask for confirmation first when quit when there're noname buffer
 set confirm
+
+" print current file name
+cabbrev pfn echo expand('%:t')
+cabbrev pfp echo expand('%:p')
+cabbrev pfr echo @%
+cabbrev pfd echo expand('%:p:h')
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" vim filer
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:vimfiler_as_default_explorer = 1
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " autocommand
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -264,9 +283,6 @@ nnoremap coo :MaximizerToggle<cr>
 " move to next/previous window
 nmap ]w <c-w>w
 nmap [w <c-w>W
-
-nmap <bar> :vs<cr>
-nmap - :sp<cr>
 
 function! MyRotate()
   if winnr('$') == 2
@@ -305,13 +321,15 @@ call unite#filters#sorter_default#use(['sorter_rank'])
 let g:unite_source_rec_async_command = ['ag', '--follow', '--nocolor', '--nogroup', '--hidden', '-g', '',
       \ '--ignore', ".svn", '--ignore', ".git", '--ignore', "node_modules"]
 
-nnoremap cub :<C-u>Unite -no-split -buffer-name=buffer -start-insert buffer<cr>
-nnoremap cul :<C-u>Unite -no-split -buffer-name=files -start-insert file_rec/async:!<cr>
-nnoremap cum :<C-u>Unite -no-split -buffer-name=mru -start-insert file_mru<cr>
-nnoremap cuy :<C-u>Unite -no-split -buffer-name=yank history/yank<cr>
-nnoremap cus :<C-u>Unite -no-split -buffer-name=neosnippet -start-insert neosnippet<cr>
-nnoremap cug :<C-u>Unite -no-split -buffer-name=grep -start-insert grep:.:-iR<cr>
-nnoremap cuf :<C-u>Unite -no-split -buffer-name=find -start-insert find:.<cr>
+nnoremap cub :<C-u>Unite -no-split -buffer-name=uniteBuffer -start-insert buffer<cr>
+nnoremap cur :<C-u>Unite -no-split -buffer-name=uniteFiles -start-insert file_rec/async:!<cr>
+nnoremap cum :<C-u>Unite -no-split -buffer-name=uniteMru -start-insert file_mru<cr>
+nnoremap cuy :<C-u>Unite -no-split -buffer-name=uniteYank history/yank<cr>
+nnoremap cus :<C-u>Unite -no-split -buffer-name=uniteNeosnippet -start-insert neosnippet<cr>
+nnoremap cug :<C-u>Unite -no-split -buffer-name=uniteGrep -start-insert grep:.:-iR<cr>
+nnoremap cuf :<C-u>Unite -no-split -buffer-name=uniteFind -start-insert find:.<cr>
+" nnoremap cuk :<C-u>Unite -no-split -buffer-name=uniteBookmark -start-insert bookmark:~/.vim/.netrwbook<cr>
+" nnoremap cut :<C-u>Unite -no-split -buffer-name=uniteTag -start-insert bookmark<cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " code formatter
@@ -394,15 +412,6 @@ smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
 if has('conceal')
   set conceallevel=2 concealcursor=niv
 endif
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" nerdtree
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-nmap cot :NERDTreeToggle<cr>
-nmap <leader>t :NERDTreeFocus<cr>
-nmap <leader>tt :NERDTreeClose<cr>
-let g:NERDTreeShowHidden=1
-let g:NERDTreeShowLineNumbers=1
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " tagbar
@@ -514,8 +523,6 @@ nnoremap V v$h
 " nnoremap va
 " for not to lose the yanked text after pasting over selection
 xnoremap p pgvy
-" for quick switch between two buffer in the same window
-nmap <leader>b :b#<cr>
 " diffget BASE in three merge
 nmap dob :diffget BA<cr>
 " diffget LOCAL in three merge
