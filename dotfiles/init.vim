@@ -245,9 +245,13 @@ cabbrev pfd echo expand('%:p:h')
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" vim filer
+" vimfiler
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:vimfiler_as_default_explorer = 1
+" Disable netrw.vim
+let g:loaded_netrwPlugin = 1
+
+cabbrev vf VimFiler
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " autocommand
@@ -321,7 +325,7 @@ call unite#filters#sorter_default#use(['sorter_rank'])
 let g:unite_source_rec_async_command = ['ag', '--follow', '--nocolor', '--nogroup', '--hidden', '-g', '',
       \ '--ignore', ".svn", '--ignore', ".git", '--ignore', "node_modules"]
 
-nnoremap cub :<C-u>Unite -no-split -buffer-name=uniteBuffer -start-insert buffer<cr>
+nnoremap cub :<C-u>Unite -no-split -buffer-name=uniteBuffer -start-insert buffer:-<cr>
 nnoremap cur :<C-u>Unite -no-split -buffer-name=uniteFiles -start-insert file_rec/async:!<cr>
 nnoremap cum :<C-u>Unite -no-split -buffer-name=uniteMru -start-insert file_mru<cr>
 nnoremap cuy :<C-u>Unite -no-split -buffer-name=uniteYank history/yank<cr>
