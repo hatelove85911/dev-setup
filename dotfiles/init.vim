@@ -37,6 +37,11 @@ Plug 'Shougo/vimfiler.vim'
 " vim shell
 Plug 'Shougo/vimshell.vim'
 
+" expand selection region
+Plug 'terryma/vim-expand-region'
+" accelerated jk move
+Plug 'rhysd/accelerated-jk'
+
 """""""""""""""""""""""""""""""""""""""""""""""""
 " shougo unite
 """"""""""""""""""""""""""""""""""""""""""""""""""
@@ -77,6 +82,8 @@ Plug 'Chiel92/vim-autoformat'
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " text object
 """"""""""""""""""""""""""""""""""""""""""""""""""
+" targets
+Plug 'wellle/targets.vim'
 " text objects depend on kana/vim-textobj-user
 Plug 'kana/vim-textobj-user'
 Plug 'kana/vim-textobj-line'
@@ -213,7 +220,8 @@ set list
 set t_ut=
 set t_Co=256
 let g:solarized_termcolors=256
-silent! colorscheme molokai
+set background=light
+silent! colorscheme solarized
 set relativenumber
 set number
 set showcmd
@@ -243,6 +251,13 @@ cabbrev pfp echo expand('%:p')
 cabbrev pfr echo @%
 cabbrev pfd echo expand('%:p:h')
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" target
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" set the target text object pair operator: a for a object, i for inner
+" content, A for external object, I for inner content including space at both
+" ends
+let g:targets_aiAI = 'aIAi'
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " vimfiler
@@ -259,6 +274,7 @@ cabbrev vf VimFiler
 "markdown file extension recognization
 au BufRead,BufNewFile *.md set filetype=markdown
 au BufRead,BufNewFile *.eslintrc set filetype=json
+au Filetype help set relativenumber
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " window management
