@@ -21,6 +21,9 @@ neovimConfigDir="$HOME/.config/nvim"
 ln -sf $(pwd)/dotfiles/init.vim "$neovimConfigDir"
 ln -sf $(pwd)/dotfiles/Ultisnips "$neovimConfigDir"
 ln -sf $(pwd)/dotfiles/neosnips "$neovimConfigDir"
+# after plugin
+! [ -e "$neovimConfigDir/after/plugin" ] && mkdir -p "$neovimConfigDir/after/plugin"
+ln -sf  $(pwd)/dotfiles/after/plugin/my.vim "$neovimConfigDir/after/plugin"
 
 ################################################################################
 # normal vim
@@ -30,4 +33,6 @@ normalVimConfigDir="$HOME/.vim"
 ln -sf $(pwd)/dotfiles/init.vim ~/.vimrc
 ln -sf $(pwd)/dotfiles/Ultisnips "$normalVimConfigDir"
 ln -sf $(pwd)/dotfiles/neosnips "$normalVimConfigDir"
-
+# after plugin
+! [ -e "$normalVimConfigDir/after/plugin" ] && mkdir -p "$normalVimConfigDir/after/plugin"
+ln -sf  $(pwd)/dotfiles/after/plugin/my.vim "$normalVimConfigDir/after/plugin"

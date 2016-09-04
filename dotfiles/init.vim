@@ -271,11 +271,25 @@ let g:targets_aiAI = 'aIAi'
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " vimfiler
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" set vimfiler default explorer and disable netrw
 let g:vimfiler_as_default_explorer = 1
 " Disable netrw.vim
 let g:loaded_netrwPlugin = 1
 
+" vim, tmux seamless navigation, put the following mapping
+" in after plugin to overwrite the key mapping done in the vimfiler plugin
+" which use <c-l> to do refresh
+" define new key map <c-r> to do refresh
+au Filetype vimfiler nnoremap <buffer> <c-l> :TmuxNavigateRight<CR>
+au Filetype vimfiler nmap <buffer> <c-p> <Plug>(vimfiler_redraw_screen)
+
 cabbrev vf VimFiler
+nmap <leader>v :VimFiler<CR>
+
+" custom profile
+call vimfiler#custom#profile('default', 'context', {
+      \ 'safe' : 0
+      \ })
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " autocommand
@@ -283,7 +297,8 @@ cabbrev vf VimFiler
 "markdown file extension recognization
 au BufRead,BufNewFile *.md set filetype=markdown
 au BufRead,BufNewFile *.eslintrc set filetype=json
-au Filetype help set relativenumber
+"make relative switch on when open any file type
+au Filetype * set relativenumber
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " window management
@@ -401,7 +416,6 @@ let g:syntastic_aggregate_errors = 1
 let g:syntastic_auto_loc_list = 0
 
 nmap <leader>c :SyntasticCheck<cr>
-autocmd VimEnter * nmap cos :call MyOwnSyntasticModeToggle()<cr>
 cabbrev si SyntasticInfo
 
 let g:syntastic_error_symbol = '✗'
@@ -434,14 +448,6 @@ if has('conceal')
 endif
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" tagbar
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" use autocommand enter here because unimpaired plugin has a same key mapping
-" for toggle background color, since plugins are loaded after vimrc, we need
-" to use this approach to overwrite back my keymapping
-autocmd VimEnter * nnoremap cob :TagbarToggle<cr>
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " multiline editing
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " small script to apply macro to visually selected lines
@@ -455,11 +461,6 @@ function! ExecuteMacroOverVisualRange()
 endfunction
 " apply macro globally
 cabbrev gq g/./normal @q<HOME><Right><Right><Right>
-
-" replace word under cursor and you can proceed by
-" return to normal mode, type n to go to next occurence, type . to repeat
-" change
-autocmd VimEnter * nmap cr *cgn
 
 " replace all occurence of the word under cursor or user input in the whole file or in the selected range with user's input
 function! ReplaceItInNormalMode()
@@ -493,19 +494,6 @@ vmap cr :call ReplaceItInVisualMode()<cr>
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" write quite files key mappings
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-nmap <Bslash>w :w<cr>
-nmap <Bslash>ww :wa<cr>
-nmap <Bslash>q :q<cr>
-nmap <Bslash>qd :q!<cr>
-nmap <Bslash>qq :qa<cr>
-nmap <Bslash>qqd :qa!<cr>
-nmap <Bslash>x :x<cr>
-nmap <Bslash>xd :x!<cr>
-nmap <Bslash>xx :xa<cr>
-nmap <Bslash>xxd :xa!<cr>
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " neocomplete
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:neocomplete#enable_at_startup = 1
@@ -532,15 +520,13 @@ nmap gs :Scratch<cr>
 " some shortcut mapping
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " quick insert semicolon at the end of the line
-nnoremap <leader>; A;<Esc>
+nmap <leader>; A;<Esc>
 "upper case Y to copy from cursor to line end
 nnoremap Y v$hy
 " select the whole line
 nnoremap vv V
 " select to the end of line
 nnoremap V v$h
-" set all lines
-" nnoremap va
 " for not to lose the yanked text after pasting over selection
 xnoremap p pgvy
 " diffget BASE in three merge
@@ -568,4 +554,5 @@ nnoremap <silent> * :let @/='\<<C-R>=expand("<cword>")<CR>\>'<CR>:set hls<CR>
 " command abbreavtion for source %
 cabbrev ss execute 'source' g:path2Vimrc
 cabbrev vrc execute 'e'.g:path2Vimrc
+cabbrev aft execute 'e'.g:path2VimHome.'/after/plugin/my.vim'
 cabbrev zrc e ~/.zshrc<cr>
