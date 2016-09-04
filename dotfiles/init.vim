@@ -87,10 +87,9 @@ Plug 'wellle/targets.vim'
 " text objects depend on kana/vim-textobj-user
 Plug 'kana/vim-textobj-user'
 Plug 'kana/vim-textobj-line'
-Plug 'sgur/vim-textobj-parameter'
-Plug 'beloglazov/vim-textobj-punctuation'
-Plug 'poetic/vim-textobj-javascript'
-" javascript function text object, standalone, indepent of kana/vim-textobj-user
+Plug 'kana/vim-textobj-function'
+" support script for vim-textobj-function for js filetypes
+" it will do nothing unless vim-textobj-function
 Plug 'thinca/vim-textobj-function-javascript'
 
 """"""""""""""""""""""""""""""""""""""""""""""""""
@@ -245,11 +244,21 @@ set splitright
 " ask for confirmation first when quit when there're noname buffer
 set confirm
 
+" accelerate <c-e> and <c-y> a bit
+nnoremap <c-e> 3<c-e>
+nnoremap <c-y> 3<c-y>
+
 " print current file name
 cabbrev pfn echo expand('%:t')
 cabbrev pfp echo expand('%:p')
 cabbrev pfr echo @%
 cabbrev pfd echo expand('%:p:h')
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" accelerated jk
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+nmap j <Plug>(accelerated_jk_gj)
+nmap k <Plug>(accelerated_jk_gk)
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " target
@@ -279,19 +288,10 @@ au Filetype help set relativenumber
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " window management
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" move between in windows
-" nmap <c-j> <c-w>j
-" nmap <c-k> <c-w>k
-" nmap <c-h> <c-w>h
-" nmap <c-l> <c-w>l
 " widen or narrow a window
-" nmap <M-l> 10<c-w>>
-" nmap <M-h> 10<c-w><
 nmap <Right> 10<c-w>>
 nmap <Left> 10<c-w><
 " increase of decrease the hight of a window
-" nmap <M-j> 8<c-w>-
-" nmap <M-k> 8<c-w>+
 nmap <Down> 8<c-w>-
 nmap <Up> 8<c-w>+
 " swap position of window in the horizontal or vertical stack
