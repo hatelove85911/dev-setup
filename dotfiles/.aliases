@@ -207,3 +207,6 @@ alias cl="clear"
 
 # alias to recursively create directory
 alias mdp="mkdir -p"
+
+# force tmux to assume the terminal supports 256 colors
+alias tmux="tmux -2"
