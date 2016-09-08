@@ -4,12 +4,12 @@ endfunction
 
 if has('nvim')
   let g:python3_host_prog = '/usr/bin/python3'
-  let g:path2Vimrc="~/.config/nvim/init.vim"
+  let g:path2Vimrc='~/.config/nvim/init.vim'
   let g:path2VimHome="~/.config/nvim"
   let g:path2VimplugHome='~/.config/nvim/plugged'
 else
-  let g:path2Vimrc="~/.vimrc"
-  let g:path2VimHome="~/.vim"
+  let g:path2Vimrc='~/.vimrc'
+  let g:path2VimHome='~/.vim'
   let g:path2VimplugHome='~/.vim/plugged'
 endif
 
@@ -21,7 +21,8 @@ call plug#begin(g:path2VimplugHome)
 Plug 'tpope/vim-surround'
 " git
 Plug 'tpope/vim-fugitive'
-" for navigation between items in quick fix or location list easier
+" for navigation between items in quick fix or location list easier and toggle
+" option quickly
 Plug 'tpope/vim-unimpaired'
 " completion plugin
 Plug 'Shougo/neocomplete.vim'
@@ -32,8 +33,6 @@ Plug 'Shougo/neosnippet-snippets'
 
 " super substitute
 Plug 'tpope/vim-abolish'
-" file explorer, can be integrated with unite
-Plug 'Shougo/vimfiler.vim'
 " vim shell
 Plug 'Shougo/vimshell.vim'
 
@@ -41,6 +40,16 @@ Plug 'Shougo/vimshell.vim'
 Plug 'terryma/vim-expand-region'
 " accelerated jk move
 Plug 'rhysd/accelerated-jk'
+" vim bookmark
+Plug 'MattesGroeger/vim-bookmarks'
+" line diff
+Plug 'AndrewRadev/linediff.vim'
+" tagbar
+Plug 'majutsushi/tagbar'
+" easy tag
+Plug 'xolox/vim-misc'
+Plug 'xolox/vim-easytags'
+Plug 'ludovicchabant/vim-gutentags'
 
 """""""""""""""""""""""""""""""""""""""""""""""""
 " shougo unite
@@ -49,9 +58,13 @@ Plug 'rhysd/accelerated-jk'
 " ag is a front end for the silver searcher ag program
 Plug 'rking/ag.vim'
 Plug 'Shougo/vimproc.vim', { 'do': 'make' }
-" Plug 'Shougo/neoinclude.vim'
 Plug 'Shougo/unite.vim' | Plug 'Shougo/neomru.vim' | Plug 'Shougo/neoyank.vim'
+Plug 'Shougo/neoinclude.vim'
 Plug 'tsukkee/unite-tag'
+" file explorer, can be integrated with unite
+Plug 'Shougo/vimfiler.vim'
+" unite session
+Plug 'Shougo/unite-session'
 
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " syntastic
@@ -74,8 +87,6 @@ Plug 'mattn/emmet-vim', { 'for': ['xml', 'html'] }
 " tern
 Plug 'ternjs/tern_for_vim', {'do': 'npm install'}
 
-" tagbar
-Plug 'majutsushi/tagbar'
 " format
 Plug 'Chiel92/vim-autoformat'
 
@@ -121,9 +132,6 @@ Plug 'tmhedberg/matchit'
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " User interface related, nothing important to function
 """"""""""""""""""""""""""""""""""""""""""""""""""
-" relative number
-" Plug 'myusuf3/numbers.vim'
-
 " color scheme
 Plug 'sickill/vim-monokai'
 Plug 'tomasr/molokai'
@@ -140,10 +148,6 @@ Plug 'joeytwiddle/sexy_scroller.vim'
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " unused Plugs
 """"""""""""""""""""""""""""""""""""""""""""""""""
-
-"" show marks
-"Plug 'kshenoy/vim-signature'
-
 call plug#end()
 
 "command abbrevation for pluginstall, PlugUpdte, PlugUpgrade, PlugClean
@@ -255,6 +259,21 @@ cabbrev pfr echo @%
 cabbrev pfd echo expand('%:p:h')
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" easytags
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:easytags_dynamic_files=1
+let g:easytags_on_cursorhold=1
+let g:easytags_updatetime_min=4000
+let g:easytags_auto_update=1
+let g:easytags_async=1
+let g:easytags_by_filetype='~/tagfiles'
+let g:easytags_languages = {
+\   'javascript': {
+\     'cmd': 'jsctags',
+\       'args': ['-f']
+\   }
+\}
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " accelerated jk
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 nmap j <Plug>(accelerated_jk_gj)
@@ -269,27 +288,16 @@ nmap k <Plug>(accelerated_jk_gk)
 let g:targets_aiAI = 'aIAi'
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" vimfiler
+" neoinclude
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" set vimfiler default explorer and disable netrw
-let g:vimfiler_as_default_explorer = 1
-" Disable netrw.vim
-let g:loaded_netrwPlugin = 1
+let g:neoinclude#ctags_commands = {
+    \ '_' : 'ctags',
+    \ 'javascript' : 'jsctags'
+    \ }
 
-" vim, tmux seamless navigation, put the following mapping
-" in after plugin to overwrite the key mapping done in the vimfiler plugin
-" which use <c-l> to do refresh
-" define new key map <c-r> to do refresh
-au Filetype vimfiler nnoremap <buffer> <c-l> :TmuxNavigateRight<CR>
-au Filetype vimfiler nmap <buffer> <c-p> <Plug>(vimfiler_redraw_screen)
-
-cabbrev vf VimFiler
-nmap <leader>v :VimFiler<CR>
-
-" custom profile
-call vimfiler#custom#profile('default', 'context', {
-      \ 'safe' : 0
-      \ })
+let g:neoinclude#ctags_arguments = {
+    \ 'javascript' : '-f'
+    \ }
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " autocommand
@@ -356,15 +364,50 @@ call unite#filters#sorter_default#use(['sorter_rank'])
 let g:unite_source_rec_async_command = ['ag', '--follow', '--nocolor', '--nogroup', '--hidden', '-g', '',
       \ '--ignore', ".svn", '--ignore', ".git", '--ignore', "node_modules"]
 
-nnoremap cub :<C-u>Unite -no-split -buffer-name=uniteBuffer -start-insert buffer:-<cr>
-nnoremap cur :<C-u>Unite -no-split -buffer-name=uniteFiles -start-insert file_rec/async:!<cr>
-nnoremap cum :<C-u>Unite -no-split -buffer-name=uniteMru -start-insert file_mru<cr>
-nnoremap cuy :<C-u>Unite -no-split -buffer-name=uniteYank history/yank<cr>
-nnoremap cus :<C-u>Unite -no-split -buffer-name=uniteNeosnippet -start-insert neosnippet<cr>
-nnoremap cug :<C-u>Unite -no-split -buffer-name=uniteGrep -start-insert grep:.:-iR<cr>
-nnoremap cuf :<C-u>Unite -no-split -buffer-name=uniteFind -start-insert find:.<cr>
-" nnoremap cuk :<C-u>Unite -no-split -buffer-name=uniteBookmark -start-insert bookmark:~/.vim/.netrwbook<cr>
-" nnoremap cut :<C-u>Unite -no-split -buffer-name=uniteTag -start-insert bookmark<cr>
+call unite#custom#profile('default', 'context', {
+    \   'no_split': 1,
+    \   'start_insert': 1
+    \ })
+
+nnoremap cub :<C-u>Unite -buffer-name=uniteBuffer buffer:-<cr>
+nnoremap cur :<C-u>Unite -buffer-name=uniteFiles file_rec/async:!<cr>
+nnoremap cum :<C-u>Unite -buffer-name=uniteMru file_mru<cr>
+nnoremap cuy :<C-u>Unite -buffer-name=uniteYank -no-start-insert history/yank<cr>
+nnoremap cup :<C-u>Unite -buffer-name=uniteNeosnippet neosnippet<cr>
+" nnoremap cug :<C-u>Unite -buffer-name=uniteGrep grep:.:-iR<cr>
+" nnoremap cuf :<C-u>Unite -buffer-name=uniteFind find:.<cr>
+nnoremap cuk :<C-u>Unite -buffer-name=uniteBookmark -no-start-insert vim_bookmarks<cr>
+nnoremap cut :<C-u>Unite -buffer-name=uniteTag tag/include<cr>
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" vimfiler
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" set vimfiler default explorer and disable netrw
+let g:vimfiler_as_default_explorer = 1
+" Disable netrw.vim
+let g:loaded_netrwPlugin = 1
+
+" vim, tmux seamless navigation, put the following mapping
+" in after plugin to overwrite the key mapping done in the vimfiler plugin
+" which use <c-l> to do refresh
+" define new key map <c-r> to do refresh
+au Filetype vimfiler nnoremap <buffer> <c-l> :TmuxNavigateRight<CR>
+au Filetype vimfiler nmap <buffer> <c-p> <Plug>(vimfiler_redraw_screen)
+
+" custom profile
+call vimfiler#custom#profile('default', 'context', {
+      \ 'safe' : 0,
+      \ 'auto_cd': 1
+      \ })
+
+nmap <leader>v :VimFilerCurrentDir<CR>
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" unite-session
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+nnoremap cus :<C-u>Unite -buffer-name=uniteSession -no-start-insert session<cr>
+cabbrev us UniteSessionSave
+let g:unite_source_session_enable_auto_save = 1
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " code formatter
