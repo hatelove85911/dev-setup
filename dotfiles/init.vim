@@ -27,15 +27,15 @@ Plug 'tpope/vim-unimpaired'
 " completion plugin
 Plug 'Shougo/neocomplete.vim'
 " snippets
-Plug 'Shougo/neosnippet.vim'
-Plug 'Shougo/neosnippet-snippets'
+Plug 'SirVer/ultisnips'
+" Plug 'Shougo/neosnippet.vim'
+" Plug 'Shougo/neosnippet-snippets'
 " Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemote') }
 
 " super substitute
 Plug 'tpope/vim-abolish'
 " vim shell
 Plug 'Shougo/vimshell.vim'
-
 " expand selection region
 Plug 'terryma/vim-expand-region'
 " accelerated jk move
@@ -46,9 +46,7 @@ Plug 'MattesGroeger/vim-bookmarks'
 Plug 'AndrewRadev/linediff.vim'
 " tagbar
 Plug 'majutsushi/tagbar'
-" easy tag
-Plug 'xolox/vim-misc'
-Plug 'xolox/vim-easytags'
+" automatic tags generation
 Plug 'ludovicchabant/vim-gutentags'
 
 """""""""""""""""""""""""""""""""""""""""""""""""
@@ -133,9 +131,10 @@ Plug 'tmhedberg/matchit'
 " User interface related, nothing important to function
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " color scheme
-Plug 'sickill/vim-monokai'
+Plug 'crusoexia/vim-monokai'
 Plug 'tomasr/molokai'
 Plug 'altercation/vim-colors-solarized'
+Plug 'jonathanfilip/vim-lucius'
 
 " for cursor shape change in difference terminal
 Plug 'jszakmeister/vim-togglecursor'
@@ -224,7 +223,7 @@ set t_ut=
 set t_Co=256
 let g:solarized_termcolors=256
 set background=light
-silent! colorscheme solarized
+silent! colorscheme lucius
 set relativenumber
 set number
 set showcmd
@@ -259,20 +258,17 @@ cabbrev pfr echo @%
 cabbrev pfd echo expand('%:p:h')
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" easytags
+" tagbar
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:easytags_dynamic_files=1
-let g:easytags_on_cursorhold=1
-let g:easytags_updatetime_min=4000
-let g:easytags_auto_update=1
-let g:easytags_async=1
-let g:easytags_by_filetype='~/tagfiles'
-let g:easytags_languages = {
-\   'javascript': {
-\     'cmd': 'jsctags',
-\       'args': ['-f']
-\   }
-\}
+nmap cot :TagbarToggle<CR>
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" gutentags
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:gutentags_project_root = ['.gutenProjectRoot']
+let g:gutentags_cache_dir = '~/tagfiles'
+let g:gutentags_exclude = ['.git','.svn','.hg','min','vendor','\*.min.\*','\*.map','\*.swp','\*.bak','\*.pyc','\*.class','\*.sln','\*.Master','\*.csproj','\*.csproj.user','\*.cache','\*.dll','\*.pdb','tags','cscope.\*','\*.tar.\*','node_modules','bower_components', 'build', 'dist']
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " accelerated jk
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -361,23 +357,25 @@ call unite#filters#matcher_default#use(['matcher_fuzzy'])
 call unite#filters#sorter_default#use(['sorter_rank'])
 " call unite#custom#source('file_rec/async', 'ignore_globs',
 " \ split(&wildignore, ','))
-let g:unite_source_rec_async_command = ['ag', '--follow', '--nocolor', '--nogroup', '--hidden', '-g', '',
-      \ '--ignore', ".svn", '--ignore', ".git", '--ignore', "node_modules"]
+
+let g:unite_source_rec_async_command = ['ag', '--nocolor', '--nogroup', '--hidden', '-g', '',
+      \ '--ignore', '.svn', '--ignore', '.git', '--ignore', 'node_modules', '--ignore', 'build', '.']
 
 call unite#custom#profile('default', 'context', {
     \   'no_split': 1,
-    \   'start_insert': 1
+    \   'start_insert': 1,
+    \   'quit' : 1
     \ })
 
 nnoremap cub :<C-u>Unite -buffer-name=uniteBuffer buffer:-<cr>
-nnoremap cur :<C-u>Unite -buffer-name=uniteFiles file_rec/async:!<cr>
+nnoremap cur :<C-u>Unite -buffer-name=uniteFiles file_rec/async:.<cr>
 nnoremap cum :<C-u>Unite -buffer-name=uniteMru file_mru<cr>
 nnoremap cuy :<C-u>Unite -buffer-name=uniteYank -no-start-insert history/yank<cr>
-nnoremap cup :<C-u>Unite -buffer-name=uniteNeosnippet neosnippet<cr>
-" nnoremap cug :<C-u>Unite -buffer-name=uniteGrep grep:.:-iR<cr>
-" nnoremap cuf :<C-u>Unite -buffer-name=uniteFind find:.<cr>
+nnoremap cug :<C-u>Unite -buffer-name=uniteGrep grep:.:-iR<cr>
+nnoremap cuf :<C-u>Unite -buffer-name=uniteFind find:.<cr>
 nnoremap cuk :<C-u>Unite -buffer-name=uniteBookmark -no-start-insert vim_bookmarks<cr>
-nnoremap cut :<C-u>Unite -buffer-name=uniteTag tag/include<cr>
+nnoremap cuc :<C-u>Unite -buffer-name=uniteTag tag:%<cr>
+nnoremap cut :<C-u>Unite -buffer-name=uniteTag tag<cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " vimfiler
@@ -391,8 +389,8 @@ let g:loaded_netrwPlugin = 1
 " in after plugin to overwrite the key mapping done in the vimfiler plugin
 " which use <c-l> to do refresh
 " define new key map <c-r> to do refresh
-au Filetype vimfiler nnoremap <buffer> <c-l> :TmuxNavigateRight<CR>
-au Filetype vimfiler nmap <buffer> <c-p> <Plug>(vimfiler_redraw_screen)
+au Filetype vimfiler,unite nnoremap <buffer> <c-l> :TmuxNavigateRight<CR>
+au Filetype vimfiler,unite nmap <buffer> <c-p> <Plug>(vimfiler_redraw_screen)
 
 " custom profile
 call vimfiler#custom#profile('default', 'context', {
@@ -400,7 +398,9 @@ call vimfiler#custom#profile('default', 'context', {
       \ 'auto_cd': 1
       \ })
 
-nmap <leader>v :VimFilerCurrentDir<CR>
+nnoremap yv :<C-u>VimFiler "file_rec/async"<cr>
+nnoremap yvb :<C-u>VimFilerBufferDir "file_rec/async"<cr>
+nnoremap yvc :<C-u>VimFilerCurrentDir "file_rec/async"<cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " unite-session
@@ -465,31 +465,6 @@ let g:syntastic_error_symbol = '✗'
 let g:syntastic_style_error_symbol = '🚫'
 let g:syntastic_warning_symbol = '❗'
 let g:syntastic_style_warning_symbol = '⚠'
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" neosnippets
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:neosnippet#snippets_directory = g:path2VimHome . "/neosnips"
-imap <C-j>     <Plug>(neosnippet_expand_or_jump)
-smap <C-j>     <Plug>(neosnippet_expand_or_jump)
-xmap <C-j>     <Plug>(neosnippet_expand_target)
-nmap <leader>se :NeoSnippetEdit<cr>
-nmap <leader>ss :NeoSnippetSource<cr>
-nmap <leader>sc :NeoSnippetClearMarkers<cr>
-
-" SuperTab like snippets behavior.
-" "imap <expr><TAB>
-" " \ pumvisible() ? "\<C-n>" :
-" " \ neosnippet#expandable_or_jumpable() ?
-" " \    "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-      \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-
-" For conceal markers.
-if has('conceal')
-  set conceallevel=2 concealcursor=niv
-endif
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " multiline editing
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -534,12 +509,63 @@ function! ReplaceItInVisualMode() range
 endfunction
 nmap cR :call ReplaceItInNormalMode()<cr>
 vmap cr :call ReplaceItInVisualMode()<cr>
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" ultisnips
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:UltiSnipsSnippetsDir = g:path2VimHome . "/UltiSnips"
+let g:UltiSnipsSnippetDirectories=["UltiSnips"]
 
+let g:UltiSnipsExpandTrigger = '<c-j>'
+let g:UltiSnipsJumpForwardTrigger = '<c-j>'
+let g:UltiSnipsJumpBackwardTrigger = '<c-k>'
+
+nmap cp :UltiSnipsEdit<cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " neocomplete
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:acp_enableAtStartup = 0
 let g:neocomplete#enable_at_startup = 1
+" Use smartcase.
+let g:neocomplete#enable_smart_case = 1
+
+" <C-h>, <BS>: close popup and delete backword char.
+inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
+inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
+"
+" undo complete 
+inoremap <expr><c-g> neocomplete#undo_completion()
+" complete common string
+inoremap <expr><c-l> neocomplete#complete_common_string()
+
+inoremap <silent> <cr> <C-r>=<SID>my_cr_function()<CR>
+function! s:my_cr_function()
+  " return (pumvisible() ? "\<C-y>" : "" ) . "\<CR>"
+  " For no inserting <CR> key.
+  return pumvisible() ? "\<C-y>" : "\<CR>"
+endfunction
+
+au Filetype javascript setlocal omnifunc=tern#Complete
+au FileType css setlocal omnifunc=csscomplete#CompleteCSS
+au FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+au FileType python setlocal omnifunc=pythoncomplete#Complete
+au FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+
+
+" Enable heavy omni completion.
+if !exists('g:neocomplete#sources#omni#input_patterns')
+  let g:neocomplete#sources#omni#input_patterns = {}
+endif
+if !exists('g:neocomplete#force_omni_input_patterns')
+  let g:neocomplete#force_omni_input_patterns = {}
+endif
+"let g:neocomplete#sources#omni#input_patterns.php =
+"\ '[^. \t]->\%(\h\w*\)\?\|\h\w*::\%(\h\w*\)\?'
+"let g:neocomplete#sources#omni#input_patterns.c =
+"\ '[^.[:digit:] *\t]\%(\.\|->\)\%(\h\w*\)\?'
+"let g:neocomplete#sources#omni#input_patterns.cpp =
+"\ '[^.[:digit:] *\t]\%(\.\|->\)\%(\h\w*\)\?\|\h\w*::\%(\h\w*\)\?'
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " scartch pad
@@ -572,6 +598,17 @@ nnoremap vv V
 nnoremap V v$h
 " for not to lose the yanked text after pasting over selection
 xnoremap p pgvy
+" exchange J and gJ, to make J join lines without producint space
+nnoremap J gJ
+nnoremap gJ J
+" define a map to switch to previous active buffer 
+nmap gb :b#<CR>
+" define some map to facilitate buffer write and window quit
+nmap <c-s> :w<CR>
+nmap <c-q> :q<CR>
+nmap <c-n> :bn<CR>
+nmap <c-p> :bp<CR>
+
 " diffget BASE in three merge
 nmap dob :diffget BA<cr>
 " diffget LOCAL in three merge
@@ -590,6 +627,19 @@ imap <c-l> <Esc>la
 " you are, solution posted here:
 " http://stackoverflow.com/a/13682379/2303252
 nnoremap <silent> * :let @/='\<<C-R>=expand("<cword>")<CR>\>'<CR>:set hls<CR>
+" Search for selected text, forwards or backwards. similar to above solution
+" the get visual_selection function is got from here:
+" http://stackoverflow.com/a/6271254/2303252
+function! s:get_visual_selection()
+  " Why is this not a built-in Vim script function?!
+  let [lnum1, col1] = getpos("'<")[1:2]
+  let [lnum2, col2] = getpos("'>")[1:2]
+  let lines = getline(lnum1, lnum2)
+  let lines[-1] = lines[-1][: col2 - (&selection == 'inclusive' ? 1 : 2)]
+  let lines[0] = lines[0][col1 - 1:]
+  return join(lines, "\n")
+endfunction
+vnoremap <silent> * :<c-u>let @/='<C-R>=<SID>get_visual_selection()<CR>'<CR>:<c-u>set hls<CR>
 " to quickly move to the end of curly braces
 " imap <c-]> <Esc>]}a
 " nmap <c-]> ]}
