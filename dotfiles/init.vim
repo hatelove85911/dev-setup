@@ -24,13 +24,11 @@ Plug 'tpope/vim-fugitive'
 " for navigation between items in quick fix or location list easier and toggle
 " option quickly
 Plug 'tpope/vim-unimpaired'
-" completion plugin
-Plug 'Shougo/neocomplete.vim'
+" neocomplete vim 
+Plug 'Shougo/neco-vim'
 " snippets
 Plug 'SirVer/ultisnips'
-" Plug 'Shougo/neosnippet.vim'
-" Plug 'Shougo/neosnippet-snippets'
-" Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemote') }
+Plug 'honza/vim-snippets'
 
 " super substitute
 Plug 'tpope/vim-abolish'
@@ -44,10 +42,8 @@ Plug 'rhysd/accelerated-jk'
 Plug 'MattesGroeger/vim-bookmarks'
 " line diff
 Plug 'AndrewRadev/linediff.vim'
-" tagbar
-Plug 'majutsushi/tagbar'
-" automatic tags generation
-Plug 'ludovicchabant/vim-gutentags'
+" simple note
+Plug 'mrtazz/simplenote.vim'
 
 """""""""""""""""""""""""""""""""""""""""""""""""
 " shougo unite
@@ -57,12 +53,33 @@ Plug 'ludovicchabant/vim-gutentags'
 Plug 'rking/ag.vim'
 Plug 'Shougo/vimproc.vim', { 'do': 'make' }
 Plug 'Shougo/unite.vim' | Plug 'Shougo/neomru.vim' | Plug 'Shougo/neoyank.vim'
-Plug 'Shougo/neoinclude.vim'
 Plug 'tsukkee/unite-tag'
+Plug 'Shougo/unite-outline'
 " file explorer, can be integrated with unite
 Plug 'Shougo/vimfiler.vim'
 " unite session
 Plug 'Shougo/unite-session'
+" unite help
+Plug 'Shougo/unite-help'
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" shougo neocomplete
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" completion plugin
+Plug 'Shougo/neocomplete.vim'
+" Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemote') }
+" calculator source for neocomplete
+Plug 'hrsh7th/vim-neco-calc'
+" neocomplete syntax source
+Plug 'Shougo/neco-syntax'
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" tags
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" tagbar
+Plug 'majutsushi/tagbar'
+" automatic tags generation
+Plug 'ludovicchabant/vim-gutentags'
+" find project root
+Plug 'dbakker/vim-projectroot'
 
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " syntastic
@@ -88,11 +105,12 @@ Plug 'ternjs/tern_for_vim', {'do': 'npm install'}
 " format
 Plug 'Chiel92/vim-autoformat'
 
+" js library syntax
+Plug 'othree/javascript-libraries-syntax.vim'
+
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " text object
 """"""""""""""""""""""""""""""""""""""""""""""""""
-" targets
-Plug 'wellle/targets.vim'
 " text objects depend on kana/vim-textobj-user
 Plug 'kana/vim-textobj-user'
 Plug 'kana/vim-textobj-line'
@@ -100,7 +118,14 @@ Plug 'kana/vim-textobj-function'
 " support script for vim-textobj-function for js filetypes
 " it will do nothing unless vim-textobj-function
 Plug 'thinca/vim-textobj-function-javascript'
-
+" for any type of quote
+Plug 'beloglazov/vim-textobj-quotes'
+" url
+Plug 'mattn/vim-textobj-url'
+" parameters
+Plug 'sgur/vim-textobj-parameter'
+" html xml attrbutes
+Plug 'whatyouhide/vim-textobj-xmlattr'
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " small Plugs
 """"""""""""""""""""""""""""""""""""""""""""""""""
@@ -135,6 +160,12 @@ Plug 'crusoexia/vim-monokai'
 Plug 'tomasr/molokai'
 Plug 'altercation/vim-colors-solarized'
 Plug 'jonathanfilip/vim-lucius'
+Plug 'vim-scripts/Wombat'
+Plug 'chriskempson/vim-tomorrow-theme'
+Plug 'tpope/vim-vividchalk'
+Plug 'junegunn/seoul256.vim'
+Plug 'gosukiwi/vim-atom-dark'
+Plug 'yearofmoo/Vim-Darkmate'
 
 " for cursor shape change in difference terminal
 Plug 'jszakmeister/vim-togglecursor'
@@ -222,8 +253,8 @@ set list
 set t_ut=
 set t_Co=256
 let g:solarized_termcolors=256
-set background=light
-silent! colorscheme lucius
+colorscheme vividchalk
+set background=dark
 set relativenumber
 set number
 set showcmd
@@ -247,6 +278,12 @@ set splitright
 " ask for confirmation first when quit when there're noname buffer
 set confirm
 
+" add kspell to complete
+set complete+=U
+set complete+=k
+" don't show mode in command line area, I have mode shown in status line
+set noshowmode
+
 " accelerate <c-e> and <c-y> a bit
 nnoremap <c-e> 3<c-e>
 nnoremap <c-y> 3<c-y>
@@ -258,14 +295,9 @@ cabbrev pfr echo @%
 cabbrev pfd echo expand('%:p:h')
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" tagbar
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-nmap cot :TagbarToggle<CR>
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " gutentags
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:gutentags_project_root = ['.gutenProjectRoot']
+let g:gutentags_project_root = ['.projectRoot']
 let g:gutentags_cache_dir = '~/tagfiles'
 let g:gutentags_exclude = ['.git','.svn','.hg','min','vendor','\*.min.\*','\*.map','\*.swp','\*.bak','\*.pyc','\*.class','\*.sln','\*.Master','\*.csproj','\*.csproj.user','\*.cache','\*.dll','\*.pdb','tags','cscope.\*','\*.tar.\*','node_modules','bower_components', 'build', 'dist']
 
@@ -274,26 +306,6 @@ let g:gutentags_exclude = ['.git','.svn','.hg','min','vendor','\*.min.\*','\*.ma
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 nmap j <Plug>(accelerated_jk_gj)
 nmap k <Plug>(accelerated_jk_gk)
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" target
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" set the target text object pair operator: a for a object, i for inner
-" content, A for external object, I for inner content including space at both
-" ends
-let g:targets_aiAI = 'aIAi'
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" neoinclude
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:neoinclude#ctags_commands = {
-    \ '_' : 'ctags',
-    \ 'javascript' : 'jsctags'
-    \ }
-
-let g:neoinclude#ctags_arguments = {
-    \ 'javascript' : '-f'
-    \ }
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " autocommand
@@ -373,9 +385,15 @@ nnoremap cum :<C-u>Unite -buffer-name=uniteMru file_mru<cr>
 nnoremap cuy :<C-u>Unite -buffer-name=uniteYank -no-start-insert history/yank<cr>
 nnoremap cug :<C-u>Unite -buffer-name=uniteGrep grep:.:-iR<cr>
 nnoremap cuf :<C-u>Unite -buffer-name=uniteFind find:.<cr>
-nnoremap cuk :<C-u>Unite -buffer-name=uniteBookmark -no-start-insert vim_bookmarks<cr>
 nnoremap cuc :<C-u>Unite -buffer-name=uniteTag tag:%<cr>
 nnoremap cut :<C-u>Unite -buffer-name=uniteTag tag<cr>
+nnoremap cul :<C-u>Unite -buffer-name=uniteLine line<cr>
+nnoremap cuo :<C-u>Unite -buffer-name=uniteOutline outline<cr>
+nnoremap cup :<C-u>Unite -buffer-name=uniteSnippet ultisnips<cr>
+nnoremap cuh :<C-u>Unite -buffer-name=uniteHelp help<cr>
+
+au Filetype unite nnoremap <buffer> <c-l> :TmuxNavigateRight<CR>
+au Filetype unite nmap <buffer> <c-p> <Plug>(unite_redraw)|
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " vimfiler
@@ -389,8 +407,8 @@ let g:loaded_netrwPlugin = 1
 " in after plugin to overwrite the key mapping done in the vimfiler plugin
 " which use <c-l> to do refresh
 " define new key map <c-r> to do refresh
-au Filetype vimfiler,unite nnoremap <buffer> <c-l> :TmuxNavigateRight<CR>
-au Filetype vimfiler,unite nmap <buffer> <c-p> <Plug>(vimfiler_redraw_screen)
+au Filetype vimfiler nnoremap <buffer> <c-l> :TmuxNavigateRight<CR>
+au Filetype vimfiler nmap <buffer> <c-p> <Plug>(vimfiler_redraw_screen)
 
 " custom profile
 call vimfiler#custom#profile('default', 'context', {
@@ -515,11 +533,20 @@ vmap cr :call ReplaceItInVisualMode()<cr>
 let g:UltiSnipsSnippetsDir = g:path2VimHome . "/UltiSnips"
 let g:UltiSnipsSnippetDirectories=["UltiSnips"]
 
-let g:UltiSnipsExpandTrigger = '<c-j>'
-let g:UltiSnipsJumpForwardTrigger = '<c-j>'
-let g:UltiSnipsJumpBackwardTrigger = '<c-k>'
+let g:UltiSnipsExpandTrigger = '<tab>'
+let g:UltiSnipsJumpForwardTrigger = '<tab>'
+let g:UltiSnipsJumpBackwardTrigger = '<s-tab>'
 
 nmap cp :UltiSnipsEdit<cr>
+
+" function! UltiSnipsCallUnite()
+"   Unite ultisnips
+"   return ''
+" endfunction
+
+" " inoremap <silent> cup <C-R>=(pumvisible()? "\<LT>C-E>":"")<CR><C-R>=UltiSnipsCallUnite()<CR>
+" nnoremap <silent> cup a<C-R>=(pumvisible()? "\<LT>C-E>":"")<CR><C-R>=UltiSnipsCallUnite()<CR>
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " neocomplete
@@ -528,29 +555,66 @@ let g:acp_enableAtStartup = 0
 let g:neocomplete#enable_at_startup = 1
 " Use smartcase.
 let g:neocomplete#enable_smart_case = 1
+" auto close preview window
+let g:neocomplete#enable_auto_close_preview = 1
+" when using fugitive plugin, there'll be issue when writing commit message if
+" you turned on auto_close_preview window
+" refer to the github issue for details:
+" https://github.com/Shougo/neocomplcache.vim/issues/424
+autocmd FileType gitcommit let b:neocomplcache_enable_auto_close_preview = 0 
+" to use echo doc to view api
+" set completeopt-=preview
 
 " <C-h>, <BS>: close popup and delete backword char.
-inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
 inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
-"
-" undo complete 
-inoremap <expr><c-g> neocomplete#undo_completion()
-" complete common string
-inoremap <expr><c-l> neocomplete#complete_common_string()
 
-inoremap <silent> <cr> <C-r>=<SID>my_cr_function()<CR>
-function! s:my_cr_function()
-  " return (pumvisible() ? "\<C-y>" : "" ) . "\<CR>"
-  " For no inserting <CR> key.
-  return pumvisible() ? "\<C-y>" : "\<CR>"
-endfunction
+" <TAB>: completion.
+" disbaled tab, the reason is that using tab for both utlisnips and
+" neocomplete is inconvenient, when you want to expand ultisnips, you must use
+" <c-y> to close popup first, that's why I only assign tab to ultisnips
+" inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<C-R>=UltiSnips#ExpandSnippetOrJump()<CR>"
+" inoremap <expr><s-TAB>  pumvisible() ? "\<C-p>" : "\<C-R>=UltiSnips#JumpBackwards()<CR>"
+
+" there're three option to close the popup menu: enter, esc, space
+" compaired the 3 options, finally I give up all of them and just choose to
+" use <c-y> to close popup
+" because those keys are very important, when you're typing and press them,
+" you'll expect them to be effective immdediately, otherwise it's going to
+" impact your speed, with the below configuration in the way, it'll take the
+" first key stroke to close the popup and the second one to effect, that's
+" unacceptable
+" but I leave the configuraton still here, just in case for furture reference
+
+" inoremap <silent> <esc> <C-r>=<SID>my_esc_function()<esc>
+" function! s:my_esc_function()
+"   " return (pumvisible() ? "\<C-y>" : "" ) . "\<esc>"
+"   " For no inserting <esc> key.
+"   return pumvisible() ? "\<C-y>" : "\<esc>"
+" endfunction
+"
+" inoremap <silent> <cr> <C-r>=<SID>my_cr_function()<CR>
+" function! s:my_cr_function()
+"   " return (pumvisible() ? "\<C-y>" : "" ) . "\<CR>"
+"   " For no inserting <CR> key.
+"   return pumvisible() ? "\<C-y>" : "\<CR>"
+" endfunction
+"
+" set g:AutoPairsMapSpace to zero to disable auto-pairs' keymap
+" and remap <space> to my own keymapping
+" let g:AutoPairsMapSpace = 0
+" inoremap <silent> <space> <C-r>=<SID>my_space_function()<cr>
+" function! s:my_space_function()
+"   " return (pumvisible() ? "\<C-y>" : "" ) . "\<space>"
+"   " For no inserting <space> key.
+"   " return pumvisible() ? "\<C-y>" : "\<space>"
+"   return pumvisible() ? "\<C-y>" : AutoPairsSpace()
+" endfunction
 
 au Filetype javascript setlocal omnifunc=tern#Complete
 au FileType css setlocal omnifunc=csscomplete#CompleteCSS
 au FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
 au FileType python setlocal omnifunc=pythoncomplete#Complete
 au FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-
 
 " Enable heavy omni completion.
 if !exists('g:neocomplete#sources#omni#input_patterns')
@@ -573,21 +637,15 @@ endif
 let g:scratch_no_mappings = 1
 let g:scratch_horizontal = 0
 let g:scratch_top = 0
-let g:scratch_height = 40
+let g:scratch_height = 100
 let g:scratch_persistence_file = '/tmp/scratch.vim'
 nmap gs :Scratch<cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" vim-textobj-punctuation configuration
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" As most of the time, you need to operate on the text until punctuation, I add the following bindings to make it even more convenient to use:
-" Now, you just need to press cu, du, yu, or vu to operate on the text until the closest punctuation.
-" xmap u iu
-" omap u iu
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " some shortcut mapping
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" toggle tagbar
+nmap cot :TagbarToggle<CR>
 " quick insert semicolon at the end of the line
 nmap <leader>; A;<Esc>
 "upper case Y to copy from cursor to line end
@@ -609,6 +667,9 @@ nmap <c-q> :q<CR>
 nmap <c-n> :bn<CR>
 nmap <c-p> :bp<CR>
 
+"vmap dil for diffline
+vmap dil :Linediff<CR>
+
 " diffget BASE in three merge
 nmap dob :diffget BA<cr>
 " diffget LOCAL in three merge
@@ -621,8 +682,6 @@ nmap dfu :diffupdate<cr>
 nnoremap 0 ^
 " g0 to the column 1
 nnoremap g0 0
-" move the cursor to the next next poistion 'xxx|' -> 'xxx'|
-imap <c-l> <Esc>la
 " remap * to not jump to next occurence immediately, instead, stay at where
 " you are, solution posted here:
 " http://stackoverflow.com/a/13682379/2303252
@@ -640,10 +699,10 @@ function! s:get_visual_selection()
   return join(lines, "\n")
 endfunction
 vnoremap <silent> * :<c-u>let @/='<C-R>=<SID>get_visual_selection()<CR>'<CR>:<c-u>set hls<CR>
-" to quickly move to the end of curly braces
-" imap <c-]> <Esc>]}a
-" nmap <c-]> ]}
-"
+
+" map ctrl + space to trigger auto completion
+inoremap <Nul> <c-x>
+
 " command abbreavtion for source %
 cabbrev ss execute 'source' g:path2Vimrc
 cabbrev vrc execute 'e'.g:path2Vimrc
