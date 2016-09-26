@@ -1,19 +1,13 @@
+snippet fun "function" w
+function ${1:name}(${2}) {
+  ${3}
+}${0}
+endsnippet
+
 snippet iife "Immediately-Invoked Function Expression (iife)"
 (function(${1:window}) {
   ${VISUAL}$0
 }(${2:$1}))
-endsnippet
-
-
-snippet vf "Function assigned to var"
-${1:var }${2:function_name} = function $2(${3}) {
-  ${VISUAL}$0
-
-}
-endsnippet
-
-snippet :, "Object Value JS"
-${1:value_name}: ${0:value}
 endsnippet
 
 snippet vo "object assigned to var"
@@ -22,7 +16,7 @@ ${1:var }${2:variable_name} = {
 }
 endsnippet
 
-snippet cl "console.log"
+snippet clg "console.log"
 console.log($1)$0
 endsnippet
 
@@ -56,6 +50,6 @@ for (let ${1:s} of ${2:sequence}) {
 }
 endsnippet
 
-snippet im
+snippet imp
 import ${1:foo} from '${2:bar}'
 endsnippet
