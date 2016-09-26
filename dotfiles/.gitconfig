@@ -175,7 +175,6 @@
   # merge tool use vimdiff
   tool = vimdiff
   conflictstyle = diff3
-  ff = no
 [mergetool]
   prompt = no
   keepBackup = false
