@@ -283,6 +283,8 @@ set complete+=U
 set complete+=k
 " don't show mode in command line area, I have mode shown in status line
 set noshowmode
+" auto read if file is changed outside vim but not changed inside vim yet
+set autoread
 
 " accelerate <c-e> and <c-y> a bit
 nnoremap <c-e> 3<c-e>
@@ -432,10 +434,11 @@ let g:unite_source_session_enable_auto_save = 1
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 nmap <leader>f :Autoformat<cr>
-" commented out temporarily because I'm able to use auto format again in this
-" vim version,
-"
-" au Filetype javascript nmap <buffer> <leader>f :%!standard-format -<cr>
+" use eslint --fix for javascript code formatter
+au FileType javascript nmap <buffer> <leader>f :silent execute "!eslint --fix -o /dev/null %" <bar> redraw! <bar> SyntasticCheck<cr>
+
+" let g:formatdef_jsbeautify_javascript = '"js-beautify -s 2 -a"'
+" au Filetype javascript nmap <buffer> <leader>s :%!standard-format -<cr>
 " au Filetype html nmap <buffer> <leader>f :%!tidy --show-errors 0 --show-warnings 0 --show-info 0 --quiet 1<cr>
 " au Filetype xhtml nmap <buffer> <leader>f :%!tidy --show-errors 0 --show-warnings 0 --show-info 0 --quiet 1<cr>
 " au Filetype xml nmap <buffer> <leader>f :%!tidy --show-errors 0 --show-warnings 0 --show-info 0 --quiet 1<cr>
@@ -470,7 +473,7 @@ let g:syntastic_mode_map = {
 " use the latest tidy html5 for html
 let g:syntastic_html_tidy_exec = 'tidy'
 " set javascript checkers
-let g:syntastic_javascript_checkers = ["eslint", "standard"]
+let g:syntastic_javascript_checkers = ["eslint"]
 
 " let g:syntastic_check_on_wq = 0
 let g:syntastic_aggregate_errors = 1
