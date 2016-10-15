@@ -1,0 +1,38 @@
+snippet <%
+abbr javalet
+alias java jl
+    <%${1:TARGET}%>${0}
+
+snippet <%=
+abbr javalet expression
+alias javae je
+    <%=${1:TARGET}%>${0}
+
+snippet jif
+abbr java if
+    <% if (${1:condition}) {%>
+      ${2:TARGET}
+    <% } %>
+    ${0}
+
+snippet jife
+abbr java if else
+    <% if (${1:condition}) {%>
+      ${2}
+    <% } else { %>
+      ${3}
+    <% } %>
+    ${0}
+
+snippet smrfs
+abbr smrf inline js
+alias js
+    <smrf:script>
+      ${1}
+    </smrf:script>
+    ${0}
+
+snippet smrfsrc
+abbr smrf js src
+alias jss
+  <smrf:script src="${1:TARGET}"/>${0}

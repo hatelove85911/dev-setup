@@ -1,0 +1,120 @@
+snippet fun
+options word
+    function ${1}(${2}) {
+        ${3}
+        }${0}
+
+snippet sap.ui.define.component
+alias sudc
+    sap.ui.define([
+        'sap/ui/core/UIComponent',
+        'sap/m/routing/Router',
+        'sap/ui/model/odata/ODatamodel'
+        'sap/ui/model/json/JSONModel',
+    ], function (UIComponent, Router, ODatamodel, JSONModel){
+        'use strict'
+        
+  return UIComponent.extend('${1}.Component', {
+    metadata: {
+      name: '$1',
+      version: '0.1.0',
+      includes: [],
+      dependencies: {
+        libs: ['sap.m'],
+        components: []
+      },
+      // rootView: {
+      //   type: 'JS',
+      //   viewName: '$1.view.Main'
+      // },
+      rootView: '$1.view.App',
+      config: {
+        resourceBundle: 'i18n/i18n.properties',
+        serviceConfig: {
+          name: '$1',
+          serviceUrl: '${2}' // last slash important, must be there
+        }
+      },
+      routing: {
+        config: {
+          routerClass: Router,
+          viewType: 'XML',
+          viewPath: '$1.view',
+          targetAggregation: 'pages',
+          clearTarget: false
+        },
+        routes: [
+          {
+            pattern: '',
+            name: 'Main',
+            view: 'Main',
+            targetControl: 'idAppControl'
+          }
+        ]
+      }
+    },
+    init: function () {
+      UIComponent.prototype.init.apply(this, arguments)
+
+      var mConfig = this.getMetadata().getConfig()
+
+      // always use absolute paths relative to our own component
+      // (relative paths will fail if running in the Fiori Launchpad)
+      // check for BSP environment and set reuse library path
+      var rootPath
+      (function () {
+        var iIndex = window.location.pathname.indexOf('/ui5_ui5/')
+        rootPath = iIndex !== -1 ? mConfig.appConfig.rootPath : jQuery.sap.getModulePath('$1')
+      }())
+
+      // set i18n model
+      var i18nModel = new sap.ui.model.resource.ResourceModel({
+        bundleUrl: [rootPath, mConfig.resourceBundle].join('/')
+      })
+      this.setModel(i18nModel, 'i18n')
+
+      // Create and set domain model to the component
+      var sServiceUrl = mConfig.serviceConfig.serviceUrl
+
+      // Mock Server
+      var isResponderOn = function (){
+        if(this.getComponentData()) {
+          var responderOnParam = jQuery.sap.getObject('startupParameters.responderOn', undefined, this.getComponentData())
+          if(responderOnParam) {
+            var responderOn = responderOnParam[0]
+          }
+        }
+        return jQuery.sap.getUriParameters().get('responderOn') === 'true' || responderOn === 'true'
+      }.bind(this)
+
+      if (isResponderOn()) {
+        jQuery.sap.require('sap.ui.core.util.MockServer')
+        var oMockServer = new sap.ui.core.util.MockServer({
+          rootUri: sServiceUrl
+        })
+        var sMetadataUrl = rootPath + '/model/metadata.xml'
+        var sMockdataBaseUrl = rootPath + '/model/'
+        oMockServer.simulate(sMetadataUrl, sMockdataBaseUrl)
+        oMockServer.start()
+      }
+
+      var oModel = new ODataModel(sServiceUrl, true)
+      this.setModel(oModel)
+
+      // set device model
+      var deviceModel = new JSONModel({
+        isTouch: sap.ui.Device.support.touch,
+        isNoTouch: !sap.ui.Device.support.touch,
+        isPhone: sap.ui.Device.system.phone,
+        isNoPhone: !sap.ui.Device.system.phone,
+        listMode: sap.ui.Device.system.phone ? 'None' : 'SingleSelectMaster',
+        listItemType: sap.ui.Device.system.phone ? 'Active' : 'Inactive'
+      })
+      deviceModel.setDefaultBindingMode('OneWay')
+      this.setModel(deviceModel, 'device')
+
+      this.getRouter().initialize()
+    }
+  })
+
+    })

@@ -173,9 +173,8 @@
   # Include summaries of merged commits in newly created merge commit messages
   log = true
   # merge tool use vimdiff
-  tool = vimdiff
+	tool = vimdiff
   conflictstyle = diff3
-  ff = no
 [mergetool]
   prompt = no
   keepBackup = false

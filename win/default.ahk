@@ -29,9 +29,8 @@ Mode = 0
 ;;;;;;;;;;;Esc to Capslock;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;Caps lock to Esc and control;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 $Escape::CapsLock
-
-
 ;SetCapsLockState, AlwaysOff
 Capslock::
 Send {LControl Down}
@@ -42,6 +41,7 @@ if ( A_PriorKey = "CapsLock" )
     Send {Esc}
 }
 return
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;toggle proxy for critical applications;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -63,12 +63,13 @@ ToggleProxy(ProxyAddress){
     } else if (Mode = 1) {
         Mode = 2
     } else if (Mode = 2){
+        Mode = 3
+    } else if (Mode = 3){
         Mode = 0
     }
-
-    bypassString := "localhost;127.0.0.1;*.local;*.sap.corp;10.*;*.corp.sap;*.co.sap.com;*.sap.biz;<local>"
-
-
+    
+    bypassString := "localhost;127.0.0.1;*.local;*.sap.corp;10.*;*.corp.sap;*.co.sap.com;*.sap.biz;<local>;192.168.*"
+    
     EnvGet, HomeDir, USERPROFILE
     proxyOnScriptPath = "\Dropbox\mymeta\mothership\win\onProxy.ps1"
     proxyOffScriptPath = "\Dropbox\mymeta\mothership\win\offProxy.ps1"
@@ -82,7 +83,7 @@ ToggleProxy(ProxyAddress){
         RegDelete, HKEY_CURRENT_USER, Software\Microsoft\Windows\CurrentVersion\Internet Settings, AutoConfigURL
         RegWrite,REG_SZ,HKEY_CURRENT_USER,Software\Microsoft\Windows\CurrentVersion\Internet Settings,ProxyServer, %ProxyAddress%
         RegWrite,REG_DWORD,HKEY_CURRENT_USER,Software\Microsoft\Windows\CurrentVersion\Internet Settings,ProxyEnable, 1
-        RegWrite,REG_SZ,HKEY_CURRENT_USER,Software\Microsoft\Windows\CurrentVersion\Internet Settings,ProxyOverride, %bypassString%
+    RegWrite,REG_SZ,HKEY_CURRENT_USER,Software\Microsoft\Windows\CurrentVersion\Internet Settings,ProxyOverride, %bypassString%
 
         Run, powershell.exe -windowstyle hidden %HomeDir%%proxyOnScriptPath% -proxyaddr %ProxyAddress%
         TrayTip Proxy Enabled, %ProxyAddress%, 3
@@ -91,8 +92,19 @@ ToggleProxy(ProxyAddress){
         RegWrite,REG_DWORD,HKEY_CURRENT_USER,Software\Microsoft\Windows\CurrentVersion\Internet Settings,ProxyEnable, 0
         Run, powershell.exe -windowstyle hidden %HomeDir%%proxyOnScriptPath% -proxyaddr %ProxyAddress%
         TrayTip Corporate Proxy, http://proxy:8083, 3
-    }    
+    } else if (Mode = 3) {
+    nproxyAddr := "http://192.168.175.130:8989"
+        RegDelete, HKEY_CURRENT_USER, Software\Microsoft\Windows\CurrentVersion\Internet Settings, AutoConfigURL
+        RegWrite,REG_SZ,HKEY_CURRENT_USER,Software\Microsoft\Windows\CurrentVersion\Internet Settings,ProxyServer, %nproxyAddr%
+        RegWrite,REG_DWORD,HKEY_CURRENT_USER,Software\Microsoft\Windows\CurrentVersion\Internet Settings,ProxyEnable, 1
+    RegWrite,REG_SZ,HKEY_CURRENT_USER,Software\Microsoft\Windows\CurrentVersion\Internet Settings,ProxyOverride, %bypassString%
 
+        Run, powershell.exe -windowstyle hidden %HomeDir%%proxyOnScriptPath% -proxyaddr %nproxyAddr%
+        TrayTip Proxy Enabled, %nproxyAddr%, 3
+    }   
+
+    dllcall("wininet\InternetSetOptionW","int","0","int","39","int","0","int","0")
+    dllcall("wininet\InternetSetOptionW","int","0","int","37","int","0","int","0")
     Return
 }
 

@@ -69,12 +69,12 @@ function fs() {
 }
 
 # Use Git’s colored diff when available
-hash git &>/dev/null;
-if [ $? -eq 0 ]; then
-    function diff() {
-        git diff --no-index --color-words "$@";
-    }
-fi;
+# hash git &>/dev/null;
+# if [ $? -eq 0 ]; then
+#     function diff() {
+#         git diff --no-index --color-words "$@";
+#     }
+# fi;
 
 # Create a data URL from a file
 function dataurl() {
@@ -238,6 +238,18 @@ function tre() {
 ##################################################
 # my functions
 ##################################################
+toggleProxy() {
+  if [ -z "$http_proxy" ]; then
+    echo "enable proxy: $PROXY_ADDR";
+    export http_proxy=$PROXY_ADDR;
+    export https_proxy=$PROXY_ADDR;
+  else
+    echo "disable proxy";
+    unset http_proxy;
+    unset https_proxy;
+  fi;
+}
+
 onProxy(){
     echo "enabling proxy"
     if [[ "$OSTYPE" == "linux"* ]]; then
@@ -286,12 +298,13 @@ dmenv () {
 }
 
 # quick find anything
-fa () {
+
+fas () {
   local targetDir=${1:="."};
   find ${targetDir} | fzf;
 }
 
-faa () {
+fa () {
   local targetDir=${1:="."};
   local selected="$( find ${targetDir} | fzf )";
   if [ -f "$selected" ]; then
@@ -303,24 +316,55 @@ faa () {
   fi;
 }
 # quick find file
-ff () {
+ffs () {
   local targetDir=${1:="."};
   find ${targetDir} -type f | fzf;
 }
 
-ffv () {
+ff () {
   local targetDir=${1:="."};
   local selected="$( find ${targetDir} -type f | fzf )";
   vim "$selected";
 }
 # quick find directory
-fd () {
+fds () {
   local targetDir=${1:="."};
   find ${targetDir} -type d | fzf;
 }
 
-fdc () {
+fd () {
   local targetDir=${1:="."};
   local selected="$( find ${targetDir} -type d | fzf )";
+  cd "$selected";
+}
+
+# most used anything and take action
+mas () {
+ fasd -al | fzf 
+}
+ma () {
+  local selected="$( fasd -al | fzf )"
+  if [ -f "$selected" ]; then
+    vim "$selected";
+  elif [ -d "$selected" ]; then
+    cd "$selected";
+  else
+    echo "$selected: no action are defined to the file type";
+  fi;
+}
+# most used file
+mfs () {
+ fasd -fl | fzf 
+}
+mf () {
+  local selected="$( fasd -fl | fzf )"
+  vim "$selected";
+}
+# most used directory
+mdrs () {
+ fasd -dl | fzf 
+}
+mdr () {
+  local selected="$( fasd -dl | fzf )"
   cd "$selected";
 }
