@@ -43,7 +43,9 @@ npmGlobalModules=(eslint \
             http-server \
             json-server \
             git+https://github.com/ramitos/jsctags.git \
-            nproxy)
+            nproxy \
+            vue-cli \
+            js-beautify)
 
 for module in "${npmGlobalModules[@]}"
 do

@@ -106,7 +106,16 @@ Plug 'ternjs/tern_for_vim', {'do': 'npm install'}
 Plug 'Chiel92/vim-autoformat'
 
 " js library syntax
-Plug 'othree/javascript-libraries-syntax.vim'
+" Plug 'othree/javascript-libraries-syntax.vim'
+
+" vue syntax
+Plug 'posva/vim-vue'
+
+" fix my js
+Plug 'ruanyl/vim-fixmyjs'
+
+" jsx
+Plug 'mxw/vim-jsx'
 
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " text object
@@ -315,6 +324,8 @@ nmap k <Plug>(accelerated_jk_gk)
 "markdown file extension recognization
 au BufRead,BufNewFile *.md set filetype=markdown
 au BufRead,BufNewFile *.eslintrc set filetype=json
+au BufRead,BufNewFile *.vue set filetype=vue
+au BufRead,BufNewFile *.vue let b:current_syntax = "vue"
 "make relative switch on when open any file type
 au Filetype * set relativenumber
 
@@ -434,10 +445,12 @@ let g:unite_source_session_enable_auto_save = 1
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 nmap <leader>f :Autoformat<cr>
-" use eslint --fix for javascript code formatter
-au FileType javascript nmap <buffer> <leader>f :silent execute "!eslint --fix -o /dev/null %" <bar> redraw! <bar> SyntasticCheck<cr>
+let g:formatdef_jsbeautify_javascript = '"js-beautify -s 2 -a"'
+au FileType javascript nmap <buffer> <leader>x :Autoformat <bar> :Fixmyjs<CR>
 
-" let g:formatdef_jsbeautify_javascript = '"js-beautify -s 2 -a"'
+" vue beautify
+" let g:formatters_vue = ['htmlbeautify_vue']
+" let g:formatdef_htmlbeautify_vue = '"htmlbeautify -s 2 -a -I -A -U []"'
 " au Filetype javascript nmap <buffer> <leader>s :%!standard-format -<cr>
 " au Filetype html nmap <buffer> <leader>f :%!tidy --show-errors 0 --show-warnings 0 --show-info 0 --quiet 1<cr>
 " au Filetype xhtml nmap <buffer> <leader>f :%!tidy --show-errors 0 --show-warnings 0 --show-info 0 --quiet 1<cr>
