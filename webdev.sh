@@ -4,8 +4,6 @@ echo "*******************************************************************"
 echo "webdev.sh"
 echo "*******************************************************************"
 # Install packages for web development
-
-# Ask for the administrator password upfront.
 sudo -v
 
 # Keep-alive: update existing `sudo` time stamp until the script has finished.
@@ -45,7 +43,9 @@ npmGlobalModules=(eslint \
             git+https://github.com/ramitos/jsctags.git \
             nproxy \
             vue-cli \
-            js-beautify)
+            js-beautify \
+            cnpm \
+            yarn)
 
 for module in "${npmGlobalModules[@]}"
 do
