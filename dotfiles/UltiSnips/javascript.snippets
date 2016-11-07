@@ -53,3 +53,52 @@ endsnippet
 snippet imp
 import ${1:foo} from '${2:bar}'
 endsnippet
+
+snippet sfun "es6 short function"
+${1}(${2}) {
+  ${3}
+}${0}
+endsnippet
+
+#############################################
+# meteor
+#############################################
+snippet publish "meteor publish" b
+import {Meteor} from 'meteor/meteor'
+import {${1}} from '../${2}'
+
+Meteor.publish('${3:publication name}', function(${4}){
+  ${0}
+})
+endsnippet
+
+snippet method "meteor method" b
+import {Meteor} from 'meteor/meteor'
+import {${1}} from './${2}'
+
+Meteor.methods({
+  '${3:method name}'(${4}) {
+    ${0}
+  }
+})
+endsnippet
+
+snippet collection "meteor collection" b
+import {Meteor} from 'meteor/meteor'
+import {Mongo} from 'meteor/mongo'
+import {check} from 'meteor/check'
+import {SimpleSchema} from 'meteor/aldeed:simple-schema'
+import {Collection2} from 'meteor/aldeed:collection2'
+import {CollectionHelpers} from 'meteor/dburles:collection-helpers'
+
+export const ${1} = new Mongo.Collection('${2:collection name}')${0}
+endsnippet
+
+#############################################
+# jsx
+#############################################
+snippet /// "jsx comment"
+{/*
+${1}
+/*}${0}
+endsnippet

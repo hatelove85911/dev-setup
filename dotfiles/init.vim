@@ -77,7 +77,7 @@ Plug 'Shougo/neco-syntax'
 " tagbar
 Plug 'majutsushi/tagbar'
 " automatic tags generation
-Plug 'ludovicchabant/vim-gutentags'
+" Plug 'ludovicchabant/vim-gutentags'
 " find project root
 Plug 'dbakker/vim-projectroot'
 
@@ -135,6 +135,8 @@ Plug 'mattn/vim-textobj-url'
 Plug 'sgur/vim-textobj-parameter'
 " html xml attrbutes
 Plug 'whatyouhide/vim-textobj-xmlattr'
+" indent
+Plug 'kana/vim-textobj-indent'
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " small Plugs
 """"""""""""""""""""""""""""""""""""""""""""""""""
@@ -296,8 +298,8 @@ set noshowmode
 set autoread
 
 " accelerate <c-e> and <c-y> a bit
-nnoremap <c-e> 3<c-e>
-nnoremap <c-y> 3<c-y>
+" nnoremap <c-e> 3<c-e>
+" nnoremap <c-y> 3<c-y>
 
 " print current file name
 cabbrev pfn echo expand('%:t')
@@ -305,12 +307,36 @@ cabbrev pfp echo expand('%:p')
 cabbrev pfr echo @%
 cabbrev pfd echo expand('%:p:h')
 
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" emmet
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:user_emmet_install_global = 1
+" au Filetype * EmmetInstall
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" expand region
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Extend the global default
+call expand_region#custom_text_objects({
+      \ 'a''' :0,
+      \ 'a""' :0,
+      \ 'a]' :1,
+      \ 'ab' :1,
+      \ 'aB' :1,
+      \ 'ii' :0,
+      \ 'ai' :0,
+      \ 'if' :1,
+      \ 'af' :1,
+      \ })
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " gutentags
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:gutentags_project_root = ['.projectRoot']
-let g:gutentags_cache_dir = '~/tagfiles'
-let g:gutentags_exclude = ['.git','.svn','.hg','min','vendor','\*.min.\*','\*.map','\*.swp','\*.bak','\*.pyc','\*.class','\*.sln','\*.Master','\*.csproj','\*.csproj.user','\*.cache','\*.dll','\*.pdb','tags','cscope.\*','\*.tar.\*','node_modules','bower_components', 'build', 'dist']
+" let g:gutentags_project_root = ['.projectRoot']
+" let g:gutentags_cache_dir = '~/tagfiles'
+" let g:gutentags_exclude = ['.git','.svn','.hg','min','vendor','\*.min.\*','\*.map','\*.swp','\*.bak','\*.pyc','\*.class','\*.sln','\*.Master','\*.csproj','\*.csproj.user','\*.cache','\*.dll','\*.pdb','tags','cscope.\*','\*.tar.\*','node_modules','bower_components', 'build', 'dist']
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " accelerated jk
@@ -349,23 +375,23 @@ nmap ]w <c-w>w
 nmap [w <c-w>W
 
 function! MyRotate()
-  if winnr('$') == 2
-    " save the original position, jump to the first window
-    let initial = winnr()
-    exe 1 . "wincmd w"
+if winnr('$') == 2
+  " save the original position, jump to the first window
+  let initial = winnr()
+  exe 1 . "wincmd w"
 
-    wincmd l
-    if winnr() != 1
-      " succeeded moving to the right window
-      wincmd J " make it the bot window
-    else
-      " cannot move to the right, so we are at the top
-      wincmd H " make it the left window
-    endif
-
-    " restore cursor to the initial window
-    exe initial . "wincmd w"
+  wincmd l
+  if winnr() != 1
+    " succeeded moving to the right window
+    wincmd J " make it the bot window
+  else
+    " cannot move to the right, so we are at the top
+    wincmd H " make it the left window
   endif
+
+  " restore cursor to the initial window
+  exe initial . "wincmd w"
+endif
 endfunction
 nmap <M-r> :call MyRotate()<cr>
 
@@ -384,13 +410,13 @@ call unite#filters#sorter_default#use(['sorter_rank'])
 " \ split(&wildignore, ','))
 
 let g:unite_source_rec_async_command = ['ag', '--nocolor', '--nogroup', '--hidden', '-g', '',
-      \ '--ignore', '.svn', '--ignore', '.git', '--ignore', 'node_modules', '--ignore', 'build', '.']
+    \ '--ignore', '.svn', '--ignore', '.git', '--ignore', 'node_modules', '--ignore', 'build', '.']
 
 call unite#custom#profile('default', 'context', {
-    \   'no_split': 1,
-    \   'start_insert': 1,
-    \   'quit' : 1
-    \ })
+  \   'no_split': 1,
+  \   'start_insert': 1,
+  \   'quit' : 1
+  \ })
 
 nnoremap cub :<C-u>Unite -buffer-name=uniteBuffer buffer:-<cr>
 nnoremap cur :<C-u>Unite -buffer-name=uniteFiles file_rec/async:.<cr>
@@ -425,9 +451,9 @@ au Filetype vimfiler nmap <buffer> <c-p> <Plug>(vimfiler_redraw_screen)
 
 " custom profile
 call vimfiler#custom#profile('default', 'context', {
-      \ 'safe' : 0,
-      \ 'auto_cd': 1
-      \ })
+    \ 'safe' : 0,
+    \ 'auto_cd': 1
+    \ })
 
 nnoremap yv :<C-u>VimFiler "file_rec/async"<cr>
 nnoremap yvb :<C-u>VimFilerBufferDir "file_rec/async"<cr>
@@ -465,20 +491,20 @@ au FileType javascript nmap <buffer> <leader>x :Autoformat <bar> :Fixmyjs<CR>
 " even toggle to passive mode, it still do checks when buffer write
 " that's why I write my own toggle funciton
 function! MyOwnSyntasticModeToggle()
-  let b:syntastic_mode = get(b:, "syntastic_mode", "active")
+let b:syntastic_mode = get(b:, "syntastic_mode", "active")
 
-  if b:syntastic_mode == "passive"
-    let b:syntastic_mode = "active"
-    echo "active"
-  else
-    let b:syntastic_mode = "passive"
-    echo "passive"
-    execute "SyntasticReset"
-  endif
+if b:syntastic_mode == "passive"
+  let b:syntastic_mode = "active"
+  echo "active"
+else
+  let b:syntastic_mode = "passive"
+  echo "passive"
+  execute "SyntasticReset"
+endif
 endfunction
 let g:syntastic_mode_map = {
-      \ 'mode': 'passive',
-      \ 'active_filetypes': ['javascript']}
+    \ 'mode': 'passive',
+    \ 'active_filetypes': ['javascript']}
 " let g:syntastic_mode_map = {
 "       \ 'mode': 'passive',
 "       \ 'active_filetypes': [],
@@ -508,8 +534,8 @@ let g:syntastic_style_warning_symbol = '⚠'
 xnoremap @ :<C-u>call ExecuteMacroOverVisualRange()<CR>
 
 function! ExecuteMacroOverVisualRange()
-  echo "@".getcmdline()
-  execute ":'<,'>normal @".nr2char(getchar())
+echo "@".getcmdline()
+execute ":'<,'>normal @".nr2char(getchar())
 endfunction
 " apply macro globally
 cabbrev gq g/./normal @q<HOME><Right><Right><Right>
@@ -528,6 +554,7 @@ function! ReplaceItInNormalMode()
   call inputrestore()
   execute '%s/'.original.'/'.replacement.'/g'
 endfunction
+
 function! ReplaceItInVisualMode() range
   let wordUnderCursor = expand('<cword>')
   call inputsave()
@@ -541,6 +568,7 @@ function! ReplaceItInVisualMode() range
   call inputrestore()
   execute "'<,'>s/".original.'/'.replacement.'/g'
 endfunction
+
 nmap cR :call ReplaceItInNormalMode()<cr>
 vmap cr :call ReplaceItInVisualMode()<cr>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -675,13 +703,13 @@ xnoremap p pgvy
 " exchange J and gJ, to make J join lines without producint space
 nnoremap J gJ
 nnoremap gJ J
+" buffer write and quit
+nmap <leader>w :w<CR>
+nmap <leader>q :q<CR>
+nmap <leader>ww :wa<CR>
+nmap <leader>qq :qa<CR>
 " define a map to switch to previous active buffer 
 nmap gb :b#<CR>
-" define some map to facilitate buffer write and window quit
-nmap <c-s> :w<CR>
-nmap <c-q> :q<CR>
-nmap <c-n> :bn<CR>
-nmap <c-p> :bp<CR>
 
 "vmap dil for diffline
 vmap dil :Linediff<CR>
