@@ -473,6 +473,7 @@ let g:unite_source_session_enable_auto_save = 1
 nmap <leader>f :Autoformat<cr>
 let g:formatdef_jsbeautify_javascript = '"js-beautify -s 2 -a"'
 au FileType javascript nmap <buffer> <leader>x :Autoformat <bar> :Fixmyjs<CR>
+au FileType javascript set ft=javascript.jsx
 
 " vue beautify
 " let g:formatters_vue = ['htmlbeautify_vue']
