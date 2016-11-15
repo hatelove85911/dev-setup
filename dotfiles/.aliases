@@ -169,8 +169,35 @@ alias tmconf="v ~/.tmux.conf"
 
 # git
 alias g="git"
-alias gitcfg="v ~/.gitconfig"
-alias gdtrc="git diff-tree --no-commit-id --name-only -r"
+alias gcfg="v ~/.gitconfig"
+alias gdftr="git diff-tree --no-commit-id --name-only -r"
+alias gc="git commit"
+alias gcm="git commit -m"
+alias gco="git checkout"
+alias gcob="git checkout -b"
+alias gcl="git clone"
+alias ga="git add"
+alias gaa="git add ."
+alias gam="git add -u"
+alias gaA="git add -A"
+alias gdf="git diff"
+alias gdfs="git diff --staged"
+alias gdt="git difftool"
+alias gs="git status"
+alias gm="git merge"
+alias gsh="git show"
+alias gr="git reset"
+alias grh="git reset --hard"
+alias gl="git log"
+alias glg="git log --branches --remotes --tags --graph --decorate --date=short --oneline"
+alias gll="git log --oneline"
+alias gb="git branch"
+alias gba="git branch -a"
+alias gbD="git branch -D"
+alias gbr="git branch -M"
+alias gph="git push"
+alias gphf="git push --force"
+alias gpl="git pull"
 
 # node debug
 alias nd="node"
@@ -211,3 +238,9 @@ alias mdp="mkdir -p"
 
 # force tmux to assume the terminal supports 256 colors
 alias tmux="tmux -2"
+
+# check which process occupying port
+alias ponp="netstat -nlp | grep"
+
+
+

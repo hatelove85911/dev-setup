@@ -23,7 +23,7 @@ endsnippet
 #############################################
 # es6
 #############################################
-snippet faf "fat arrow function"
+snippet ffn "fat arrow function"
 (${1}) => {
 	${2}
 }
@@ -54,7 +54,7 @@ snippet imp
 import ${1:foo} from '${2:bar}'
 endsnippet
 
-snippet sfun "es6 short function"
+snippet sfn "es6 short function"
 ${1}(${2}) {
   ${3}
 }${0}
@@ -93,7 +93,18 @@ import {CollectionHelpers} from 'meteor/dburles:collection-helpers'
 
 export const ${1} = new Mongo.Collection('${2:collection name}')${0}
 endsnippet
+#############################################
+# react
+#############################################
+snippet impr "import react" b
+import React from 'react'
+${0}
+endsnippet
 
+snippet imprd "import react-dom" b
+import ReactDOM from 'react-dom'
+${0}
+endsnippet
 #############################################
 # jsx
 #############################################
