@@ -89,7 +89,8 @@ brewPackages=(the_silver_searcher \
              docker-compose \
              heroku-toolbelt \
              tidy-html5 \
-             fzf)
+             fzf \
+             reattach-to-user-namespace)
 
 for p in "${commonPackages[@]}"
 do
