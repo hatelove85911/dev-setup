@@ -187,9 +187,12 @@ alias gdfs="git diff --staged"
 alias gdt="git difftool"
 alias gs="git status"
 alias gm="git merge"
+alias gmsf="git merge --squash --no-commit --ff"
 alias gsh="git show"
 alias gr="git reset"
 alias grh="git reset --hard"
+alias grb="git rebase"
+alias grbi="git rebase -i"
 alias gl="git log"
 alias glg="git log --branches --remotes --tags --graph --decorate --date=short --oneline"
 alias gll="git log --oneline"
@@ -243,6 +246,9 @@ alias tmux="tmux -2"
 
 # check which process occupying port
 alias ponp="netstat -nlp | grep"
+
+# SFS teamcity login
+alias tclogin="java -jar ~/tcc.jar login --host http://teamcity.successfactors.com --user i056958"
 
 
 
