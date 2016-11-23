@@ -163,6 +163,8 @@ Plug 'christoomey/vim-tmux-navigator'
 " jump to matching xml tags and more, extend % function to not only jump to
 " matching parenthesis, square brackets
 Plug 'tmhedberg/matchit'
+" search for .lvimrc 
+Plug 'embear/vim-localvimrc'
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " User interface related, nothing important to function
 """"""""""""""""""""""""""""""""""""""""""""""""""
