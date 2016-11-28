@@ -71,6 +71,8 @@ Plug 'Shougo/neocomplete.vim'
 Plug 'hrsh7th/vim-neco-calc'
 " neocomplete syntax source
 Plug 'Shougo/neco-syntax'
+" codi
+Plug 'metakirby5/codi.vim'
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " tags
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -308,6 +310,7 @@ cabbrev pfn echo expand('%:t')
 cabbrev pfp echo expand('%:p')
 cabbrev pfr echo @%
 cabbrev pfd echo expand('%:p:h')
+
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " local vimrc
@@ -577,6 +580,9 @@ endfunction
 
 nmap cR :call ReplaceItInNormalMode()<cr>
 vmap cr :call ReplaceItInVisualMode()<cr>
+
+" do substitution in selected area
+cabbrev sis s/\%V
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " ultisnips
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
