@@ -103,6 +103,34 @@ snippet imprd "import react-dom" b
 import ReactDOM from 'react-dom'
 ${0}
 endsnippet
+
+
+snippet rcomp "react component" b
+class ${1} extends Component {
+  init() {
+  }
+  render() {
+    return (
+      ${2}
+    )
+  }
+}
+endsnippet
+#############################################
+# redux
+#############################################
+snippet reducer "redux reducer" b
+const ${1} = (state, action) => {
+  switch (action.type){
+    case '${2}':
+      ${3}
+      break
+    default:
+      return state
+  }
+}
+endsnippet
+
 #############################################
 # jsx
 #############################################
