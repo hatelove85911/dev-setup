@@ -701,6 +701,8 @@ nmap gs :Scratch<cr>
 " some shortcut mapping
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " toggle tagbar
+nmap coe :set expandtab!<CR>:set expandtab?<CR>
+" toggle expansion
 nmap cot :TagbarToggle<CR>
 " quick insert semicolon at the end of the line
 nmap <leader>; A;<Esc>
