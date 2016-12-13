@@ -99,7 +99,7 @@ Plug 'elzr/vim-json', { 'for': 'json' }
 
 " xml
 Plug 'sukima/xmledit', { 'for': 'xml' }
-Plug 'mattn/emmet-vim', { 'for': ['xml', 'html'] }
+Plug 'mattn/emmet-vim'
 
 " tern
 Plug 'ternjs/tern_for_vim', {'do': 'npm install'}
