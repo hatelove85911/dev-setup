@@ -99,7 +99,7 @@ Plug 'elzr/vim-json', { 'for': 'json' }
 
 " xml
 Plug 'sukima/xmledit', { 'for': 'xml' }
-Plug 'mattn/emmet-vim', { 'for': ['xml', 'html'] }
+Plug 'mattn/emmet-vim'
 
 " tern
 Plug 'ternjs/tern_for_vim', {'do': 'npm install'}
@@ -705,6 +705,8 @@ nmap gs :Scratch<cr>
 " some shortcut mapping
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " toggle tagbar
+nmap coe :set expandtab!<CR>:set expandtab?<CR>
+" toggle expansion
 nmap cot :TagbarToggle<CR>
 " quick insert semicolon at the end of the line
 nmap <leader>; A;<Esc>
