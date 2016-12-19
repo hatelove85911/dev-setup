@@ -167,6 +167,8 @@ Plug 'christoomey/vim-tmux-navigator'
 Plug 'tmhedberg/matchit'
 " search for .lvimrc 
 Plug 'embear/vim-localvimrc'
+" toggle quickfix or location list window
+Plug 'Valloric/ListToggle'
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " User interface related, nothing important to function
 """"""""""""""""""""""""""""""""""""""""""""""""""
@@ -268,7 +270,7 @@ set list
 set t_ut=
 set t_Co=256
 let g:solarized_termcolors=256
-colorscheme vividchalk
+colorscheme solarized
 set background=dark
 set relativenumber
 set number
@@ -311,6 +313,12 @@ cabbrev pfp echo expand('%:p')
 cabbrev pfr echo @%
 cabbrev pfd echo expand('%:p:h')
 
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" toggle quickfix or location list
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:lt_location_list_toggle_map = 'cok'
+let g:lt_quickfix_list_toggle_map = 'coq'
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " local vimrc
@@ -703,7 +711,7 @@ nmap gs :Scratch<cr>
 " toggle tagbar
 nmap coe :set expandtab!<CR>:set expandtab?<CR>
 " toggle expansion
-nmap cot :TagbarToggle<CR>
+" nmap cot :TagbarToggle<CR>
 " quick insert semicolon at the end of the line
 nmap <leader>; A;<Esc>
 "upper case Y to copy from cursor to line end
