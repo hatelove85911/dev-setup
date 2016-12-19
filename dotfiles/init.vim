@@ -736,6 +736,9 @@ nmap gb :b#<CR>
 "vmap dil for diffline
 vmap dil :Linediff<CR>
 
+" visual map for diffput and diffget
+vmap dp :diffput<cr>
+vmap do :diffget<cr>
 " diffget BASE in three merge
 nmap dob :diffget BA<cr>
 " diffget LOCAL in three merge
