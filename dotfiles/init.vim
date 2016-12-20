@@ -169,6 +169,8 @@ Plug 'tmhedberg/matchit'
 Plug 'embear/vim-localvimrc'
 " toggle quickfix or location list window
 Plug 'Valloric/ListToggle'
+" create simutenous keymapping
+Plug 'kana/vim-arpeggio'
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " User interface related, nothing important to function
 """"""""""""""""""""""""""""""""""""""""""""""""""
@@ -268,10 +270,10 @@ set list
 " render properly when inside 256-color tmux and GNU screen.
 " see also http://snk.tuxfamily.org/log/vim-256color-bce.html
 set t_ut=
-set t_Co=256
-let g:solarized_termcolors=256
-colorscheme solarized
+" set t_Co=256
+" let g:solarized_termcolors=256
 set background=dark
+colorscheme solarized
 set relativenumber
 set number
 set showcmd
@@ -314,9 +316,31 @@ cabbrev pfr echo @%
 cabbrev pfd echo expand('%:p:h')
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" codi
+" airline
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-nmap coe :Codi!!<CR>
+let g:airline#extensions#quickfix#quickfix_text = 'Quickfix'
+let g:airline#extensions#quickfix#location_text = 'Location'
+let g:airline#extensions#branch#enabled = 1
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" fugitive
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+autocmd BufReadPost fugitive://* set bufhidden=delete
+" go to parent tree when editing git object
+autocmd BufReadPost fugitive://*
+  \ if fugitive#buffer().type() =~# '^\%(tree\|blob\)$' |
+  \   nnoremap <buffer> .. :edit %:h<CR> |
+  \ endif
+
+nmap cjs :Gstatus<cr>
+nmap cjc :Gcommit<cr>
+nmap cjl :Glog 
+nmap cjd :Gdiff<cr>
+nmap cjg :Ggrep 
+nmap cje :Gedit 
+nmap cjr :Gread 
+nmap cjw :Gwrite 
+nmap cjb :Gblame<cr>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " toggle quickfix or location list
@@ -328,12 +352,6 @@ let g:lt_quickfix_list_toggle_map = 'coq'
 " local vimrc
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:localvimrc_ask = 0
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" emmet
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:user_emmet_install_global = 1
-" au Filetype * EmmetInstall
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " expand region
@@ -714,6 +732,7 @@ nmap gs :Scratch<cr>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " toggle tagbar
 nmap coe :set expandtab!<CR>:set expandtab?<CR>
+
 " toggle expansion
 " nmap cot :TagbarToggle<CR>
 " quick insert semicolon at the end of the line
