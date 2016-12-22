@@ -318,6 +318,7 @@ cabbrev pfd echo expand('%:p:h')
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " airline
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:airline_powerline_fonts=1
 let g:airline#extensions#quickfix#quickfix_text = 'Quickfix'
 let g:airline#extensions#quickfix#location_text = 'Location'
 let g:airline#extensions#branch#enabled = 1
@@ -332,15 +333,15 @@ autocmd BufReadPost fugitive://*
   \   nnoremap <buffer> .. :edit %:h<CR> |
   \ endif
 
-nmap cjs :Gstatus<cr>
-nmap cjc :Gcommit<cr>
-nmap cjl :Glog 
-nmap cjd :Gdiff<cr>
-nmap cjg :Ggrep 
-nmap cje :Gedit 
-nmap cjr :Gread 
-nmap cjw :Gwrite 
-nmap cjb :Gblame<cr>
+nmap cis :Gstatus<cr>
+nmap cic :Gcommit<cr>
+nmap cil :Glog 
+nmap cid :Gdiff<cr>
+nmap cig :Ggrep 
+nmap cie :Gedit 
+nmap cir :Gread 
+nmap ciw :Gwrite 
+nmap cib :Gblame<cr>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " toggle quickfix or location list
