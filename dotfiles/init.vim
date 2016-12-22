@@ -318,6 +318,7 @@ cabbrev pfd echo expand('%:p:h')
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " airline
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:airline_powerline_fonts=1
 let g:airline#extensions#quickfix#quickfix_text = 'Quickfix'
 let g:airline#extensions#quickfix#location_text = 'Location'
 let g:airline#extensions#branch#enabled = 1
