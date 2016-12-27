@@ -2,6 +2,17 @@ function! DoRemote(arg)
   UpdateRemotePlugins
 endfunction
 
+let s:mycolors = ['solarized', 'vividchalk', 'molokai']
+let s:colorIndex = 0
+function! s:NextColor()
+    let s:colorIndex = s:colorIndex + 1
+	if s:colorIndex > 2
+		let s:colorIndex = 0
+    endif
+    echo s:mycolors[s:colorIndex]
+    execute 'colorscheme ' . s:mycolors[s:colorIndex]
+endfunction
+
 if has('nvim')
   let g:python3_host_prog = '/usr/bin/python3'
   let g:path2Vimrc='~/.config/nvim/init.vim'
@@ -739,7 +750,8 @@ nmap gs :Scratch<cr>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " toggle tagbar
 nmap coe :set expandtab!<CR>:set expandtab?<CR>
-
+" cycle through my favorite colorschemes
+nmap yc :call <SID>NextColor()<CR>
 " toggle expansion
 " nmap cot :TagbarToggle<CR>
 " quick insert semicolon at the end of the line
