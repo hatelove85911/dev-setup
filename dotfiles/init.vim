@@ -609,14 +609,15 @@ let g:syntastic_style_warning_symbol = '⚠'
 " small script to apply macro to visually selected lines
 " recommended in online post:
 " https://medium.com/@schtoeffel/you-don-t-need-more-than-one-cursor-in-vim-2c44117d51db#.y8t7jdgwx
-xnoremap @ :<C-u>call ExecuteMacroOverVisualRange()<CR>
+" xnoremap @ :<C-u>call ExecuteMacroOverVisualRange()<CR>
+"
 
-function! ExecuteMacroOverVisualRange()
-echo "@".getcmdline()
-execute ":'<,'>normal @".nr2char(getchar())
-endfunction
-" apply macro globally
-cabbrev gq g/./normal @q<HOME><Right><Right><Right>
+" function! ExecuteMacroOverVisualRange()
+" echo "@".getcmdline()
+" execute ":'<,'>normal @".nr2char(getchar())
+" endfunction
+" " apply macro globally
+" cabbrev gq g/./normal @q<HOME><Right><Right><Right>
 
 " replace all occurence of the word under cursor or user input in the whole file or in the selected range with user's input
 function! ReplaceItInNormalMode()
@@ -628,7 +629,7 @@ function! ReplaceItInNormalMode()
   endif
   call inputrestore()
   call inputsave()
-  let replacement = input('replacement: ')
+  let replacement = input('replacement: ', wordUnderCursor)
   call inputrestore()
   execute '%s/'.original.'/'.replacement.'/g'
 endfunction
@@ -642,13 +643,13 @@ function! ReplaceItInVisualMode() range
     return
   endif
   call inputsave()
-  let replacement = input('replacement: ')
+  let replacement = input('replacement: ', wordUnderCursor)
   call inputrestore()
   execute "'<,'>s/".original.'/'.replacement.'/g'
 endfunction
 
-nmap cR :call ReplaceItInNormalMode()<cr>
-vmap cr :call ReplaceItInVisualMode()<cr>
+nmap cr :call ReplaceItInNormalMode()<cr>
+vmap cv :call ReplaceItInVisualMode()<cr>
 
 " do substitution in selected area
 cabbrev sis s/\%V
