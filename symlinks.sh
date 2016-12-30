@@ -5,7 +5,7 @@
 # Ask for the administrator password upfront.
 sudo -v
 
-for file in $(pwd)/dotfiles/.{tmux.conf,exports,aliases,functions,zshenv,zshrc,ctags,cheat,gitconfig,bin,curlrc,wgetrc}; do
+for file in $(pwd)/dotfiles/.{tmux.conf,exports,aliases,functions,zshenv,zshrc,ctags,cheat,gitconfig,bin,curlrc,wgetrc,i3}; do
     ln -sf "$file" ~;
 done;
 unset file;
@@ -36,3 +36,9 @@ ln -sf $(pwd)/dotfiles/neosnips "$normalVimConfigDir"
 # after plugin
 ! [ -e "$normalVimConfigDir/after/plugin" ] && mkdir -p "$normalVimConfigDir/after/plugin"
 ln -sf  $(pwd)/dotfiles/after/plugin/my.vim "$normalVimConfigDir/after/plugin"
+
+################################################################################
+# i3
+################################################################################
+# soft link .i3 both in ~/.i3 directory and ~/.config/.i3
+ln -sf $(pwd)/dotfiles/.i3 "$HOME/.config/"
