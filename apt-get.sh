@@ -16,8 +16,6 @@ echo "*******************************************************************"
 sudo add-apt-repository ppa:nginx/stable
 #tmux ppa
 sudo add-apt-repository ppa:pi-rho/dev
-#neovim
-sudo add-apt-repository ppa:neovim-ppa/unstable
 #fasd
 sudo add-apt-repository ppa:aacebedo/fasd
 #docker engine
@@ -34,7 +32,7 @@ echo "install apt packages"
 echo "*******************************************************************"
 source ./commonPackages
 
-aptPackages=(neovim \
+aptPackages=(chromium \
             silversearcher-ag \
             sed \
             python-pip \
@@ -46,6 +44,7 @@ aptPackages=(neovim \
             xclip \
             xsel \
             i3 \
+            shadowsocks-qt5 \
             rofi \
             compton)
 
@@ -72,9 +71,7 @@ sudo apt-get build-dep vim
 sudo apt-get install liblua5.2-dev
 sudo mkdir /usr/include/lua
 sudo cp /usr/include/lua5.2/* /usr/include/lua/
-# sudo apt-get install mercurial
 cd ~
-# hg clone https://code.google.com/p/vim/
 git clone https://github.com/vim/vim.git vimRepo
 cd vimRepo
 ./configure --with-features=huge \
@@ -108,10 +105,6 @@ git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 # install vim plug, the vim plugin manager
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-
-curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs \
-    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-
 
 echo "*******************************************************************"
 echo "Adding the newly installed shell to the list of allowed shells"

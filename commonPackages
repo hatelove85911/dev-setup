@@ -7,7 +7,6 @@ commonPackages=(zsh \
                 ruby \
                 python \
                 python3 \
-                corkscrew \
                 httpie \
                 tree \
                 coreutils \
