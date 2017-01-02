@@ -48,6 +48,7 @@ aptPackages=(chromium \
             python3-dev \
             docker-engine \
             shutter \
+            feh \
             exuberant-ctags \
             xclip \
             xsel)
