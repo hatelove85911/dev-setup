@@ -1,6 +1,7 @@
 commonPackages=(zsh \
                 git \
                 tmux \
+                meld \
                 nginx \
                 mongodb \
                 cmake \
