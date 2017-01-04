@@ -119,6 +119,8 @@ Plug 'ruanyl/vim-fixmyjs'
 " jsx
 Plug 'mxw/vim-jsx'
 
+" html5
+Plug 'othree/html5.vim'
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " text object
 """"""""""""""""""""""""""""""""""""""""""""""""""
