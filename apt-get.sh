@@ -16,8 +16,6 @@ echo "*******************************************************************"
 sudo add-apt-repository ppa:nginx/stable
 #tmux ppa
 sudo add-apt-repository ppa:pi-rho/dev
-#neovim
-sudo add-apt-repository ppa:neovim-ppa/unstable
 #fasd
 sudo add-apt-repository ppa:aacebedo/fasd
 #docker engine
@@ -32,9 +30,16 @@ sudo apt-get dist-upgrade -y
 echo "*******************************************************************"
 echo "install apt packages"
 echo "*******************************************************************"
+sudo apt-get remove --purge vim vim-runtime vim-gnome vim-tiny vim-common vim-gui-common
+
 source ./commonPackages
 
-aptPackages=(neovim \
+aptPackages=(chromium \
+            vim-gtk \
+            i3 \
+            gnome-terminal \
+            nvpy \
+            shadowsocks-qt5 \
             silversearcher-ag \
             sed \
             python-pip \
@@ -42,10 +47,11 @@ aptPackages=(neovim \
             python3-pip \
             python3-dev \
             docker-engine \
+            shutter \
+            feh \
             exuberant-ctags \
             xclip \
-            xsel \
-            xpra)
+            xsel)
 
 # remove the old tidy program first, otherwise there's going to error generated when install the new tidy html5
 sudo apt-get remove -y libtidy-0.99-0 tidy
@@ -61,30 +67,6 @@ for p in "${aptPackages[@]}"
 do
    sudo apt-get install -y "$p"
 done
-
-# install vim on ubuntu with huge feature set and python lua ruby support
-# the steps are introduced in an online post here:
-# http://www.jacobcmurphy.com/installing-vim-with-lua/
-sudo apt-get remove --purge vim vim-runtime vim-gnome vim-tiny vim-common vim-gui-common
-sudo apt-get build-dep vim
-sudo apt-get install liblua5.2-dev
-sudo mkdir /usr/include/lua
-sudo cp /usr/include/lua5.2/* /usr/include/lua/
-# sudo apt-get install mercurial
-cd ~
-# hg clone https://code.google.com/p/vim/
-git clone https://github.com/vim/vim.git vimRepo
-cd vimRepo
-./configure --with-features=huge \
---enable-multibyte \
---disable-netbeans \
---enable-rubyinterp \
---with-ruby-command=/usr/bin/ruby \
---enable-pythoninterp --with-python-config-dir=/usr/lib/python3/dist-packages \
---enable-luainterp \
---enable-fail-if-missing
-make
-sudo make install
 
 # install heroku toolbelt
 wget -O- https://toolbelt.heroku.com/install-ubuntu.sh | sh
@@ -107,9 +89,10 @@ git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
-curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs \
-    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-
+# install powerline fonts
+[ -e ~/Downloads/powerlinefonts ] && rm -rf ~/Downloads/powerlinefonts
+git clone https://github.com/powerline/fonts.git ~/Downloads/powerlinefonts
+bash ~/Downloads/powerlinefonts/install.sh
 
 echo "*******************************************************************"
 echo "Adding the newly installed shell to the list of allowed shells"

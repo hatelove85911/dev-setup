@@ -2,6 +2,17 @@ function! DoRemote(arg)
   UpdateRemotePlugins
 endfunction
 
+let s:mycolors = ['solarized', 'vividchalk', 'molokai']
+let s:colorIndex = 0
+function! s:NextColor()
+    let s:colorIndex = s:colorIndex + 1
+	if s:colorIndex > 2
+		let s:colorIndex = 0
+    endif
+    echo s:mycolors[s:colorIndex]
+    execute 'colorscheme ' . s:mycolors[s:colorIndex]
+endfunction
+
 if has('nvim')
   let g:python3_host_prog = '/usr/bin/python3'
   let g:path2Vimrc='~/.config/nvim/init.vim'
@@ -327,10 +338,30 @@ let g:SimplenoteVertical=1
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " airline
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"powerline font
 let g:airline_powerline_fonts=1
 let g:airline#extensions#quickfix#quickfix_text = 'Quickfix'
 let g:airline#extensions#quickfix#location_text = 'Location'
 let g:airline#extensions#branch#enabled = 1
+" tabline
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#show_buffers = 1
+let g:airline#extensions#tabline#buffers_label = 'b'
+let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
+
+" enable buffer index and quick select buffer
+let g:airline#extensions#tabline#buffer_idx_mode = 1
+nmap <leader>1 <Plug>AirlineSelectTab1
+nmap <leader>2 <Plug>AirlineSelectTab2
+nmap <leader>3 <Plug>AirlineSelectTab3
+nmap <leader>4 <Plug>AirlineSelectTab4
+nmap <leader>5 <Plug>AirlineSelectTab5
+nmap <leader>6 <Plug>AirlineSelectTab6
+nmap <leader>7 <Plug>AirlineSelectTab7
+nmap <leader>8 <Plug>AirlineSelectTab8
+nmap <leader>9 <Plug>AirlineSelectTab9
+nmap <leader>h <Plug>AirlineSelectPrevTab
+nmap <leader>l <Plug>AirlineSelectNextTab
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " fugitive
@@ -580,14 +611,15 @@ let g:syntastic_style_warning_symbol = '⚠'
 " small script to apply macro to visually selected lines
 " recommended in online post:
 " https://medium.com/@schtoeffel/you-don-t-need-more-than-one-cursor-in-vim-2c44117d51db#.y8t7jdgwx
-xnoremap @ :<C-u>call ExecuteMacroOverVisualRange()<CR>
+" xnoremap @ :<C-u>call ExecuteMacroOverVisualRange()<CR>
+"
 
-function! ExecuteMacroOverVisualRange()
-echo "@".getcmdline()
-execute ":'<,'>normal @".nr2char(getchar())
-endfunction
-" apply macro globally
-cabbrev gq g/./normal @q<HOME><Right><Right><Right>
+" function! ExecuteMacroOverVisualRange()
+" echo "@".getcmdline()
+" execute ":'<,'>normal @".nr2char(getchar())
+" endfunction
+" " apply macro globally
+" cabbrev gq g/./normal @q<HOME><Right><Right><Right>
 
 " replace all occurence of the word under cursor or user input in the whole file or in the selected range with user's input
 function! ReplaceItInNormalMode()
@@ -599,7 +631,7 @@ function! ReplaceItInNormalMode()
   endif
   call inputrestore()
   call inputsave()
-  let replacement = input('replacement: ')
+  let replacement = input('replacement: ', wordUnderCursor)
   call inputrestore()
   execute '%s/'.original.'/'.replacement.'/g'
 endfunction
@@ -613,13 +645,13 @@ function! ReplaceItInVisualMode() range
     return
   endif
   call inputsave()
-  let replacement = input('replacement: ')
+  let replacement = input('replacement: ', wordUnderCursor)
   call inputrestore()
   execute "'<,'>s/".original.'/'.replacement.'/g'
 endfunction
 
-nmap cR :call ReplaceItInNormalMode()<cr>
-vmap cr :call ReplaceItInVisualMode()<cr>
+nmap cr :call ReplaceItInNormalMode()<cr>
+vmap cv :call ReplaceItInVisualMode()<cr>
 
 " do substitution in selected area
 cabbrev sis s/\%V
@@ -742,7 +774,8 @@ nmap gs :Scratch<cr>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " toggle tagbar
 nmap coe :set expandtab!<CR>:set expandtab?<CR>
-
+" cycle through my favorite colorschemes
+nmap yc :call <SID>NextColor()<CR>
 " toggle expansion
 " nmap cot :TagbarToggle<CR>
 " quick insert semicolon at the end of the line

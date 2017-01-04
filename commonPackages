@@ -1,13 +1,13 @@
 commonPackages=(zsh \
                 git \
                 tmux \
+                meld \
                 nginx \
                 mongodb \
                 cmake \
                 ruby \
                 python \
                 python3 \
-                corkscrew \
                 httpie \
                 tree \
                 coreutils \

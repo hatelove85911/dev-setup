@@ -148,7 +148,11 @@ alias exp="v ~/.exports"
 alias zrc="v ~/.zshrc"
 alias szrc=". ~/.zshrc"
 alias fun="v ~/.functions"
-# alias vimrc="v $HOME/.config/nvim/init.vim" 
+alias i3="v ~/.config/.i3/config"
+alias yarnrc="v ~/.yarnrc"
+alias npmrc="v ~/.npmrc"
+alias snrc="v ~/.simplenoterc"
+alias nvpy="v ~/.nvpy.cfg"
 alias vrc="v $HOME/.vimrc" 
 alias nvrc="v $HOME/.config/nvim/init.vim" 
 
@@ -253,6 +257,3 @@ alias ponp="netstat -nlp | grep"
 
 # SFS teamcity login
 alias tclogin="java -jar ~/tcc.jar login --host http://teamcity.successfactors.com --user i056958"
-
-
-
