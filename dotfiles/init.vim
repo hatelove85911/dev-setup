@@ -332,7 +332,13 @@ cabbrev pfd echo expand('%:p:h')
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 source ~/.simplenoterc
 
+nmap yal :SimplenoteList<cr>
+nmap yau :SimplenoteUpdate<cr>
+nmap yat :SimplenoteTrash<cr>
+nmap yad :SimplenoteDelete<cr>
+nmap yan :SimplenoteNew<cr>
 let g:SimplenoteVertical=1
+let g:SimplenoteSingleWindow=1
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " airline
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""

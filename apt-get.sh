@@ -68,6 +68,12 @@ do
    sudo apt-get install -y "$p"
 done
 
+# install xcape
+git clone https://github.com/alols/xcape.git ~/Downloads/xcape
+cd ~/Downloads/xcape
+make
+sudo make install
+
 # install heroku toolbelt
 wget -O- https://toolbelt.heroku.com/install-ubuntu.sh | sh
 heroku update
