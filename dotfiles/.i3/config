@@ -220,3 +220,10 @@ bindsym $mod+c mode "$mode_capture"
 exec ss-qt5
 exec chromium-browser --proxy-server="socks5://127.0.0.1:1080"
 exec --no-startup-id feh --bg-scale ~/dev-setup/wallpaper.png
+
+# my keyboard setting
+exec setxkbmap -option ctrl:nocaps
+exec xcape
+
+# make i3 fullscreen in virtual machine
+exec --no-startup-id vmware-user

@@ -49,6 +49,8 @@ aptPackages=(chromium \
             docker-engine \
             shutter \
             feh \
+            fcitx \
+            fcitx-googlepinyin \
             exuberant-ctags \
             xclip \
             xsel)
