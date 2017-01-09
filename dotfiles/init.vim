@@ -284,7 +284,7 @@ set t_ut=
 " set t_Co=256
 " let g:solarized_termcolors=256
 set background=dark
-colorscheme solarized
+colorscheme vividchalk
 set relativenumber
 set number
 set showcmd
