@@ -70,16 +70,16 @@ bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
 # split in horizontal orientation
-bindsym $mod+- split h
+bindsym $mod+backslash split h
 
 # split in vertical orientation
-bindsym $mod+\ split v
+bindsym $mod+minus split v
 
 # enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen toggle
 
 # default layout
-workspace_layout stacking
+workspace_layout tabbed
 
 # change container layout (stacked, tabbed, toggle split)
 bindsym $mod+s layout stacking
@@ -175,6 +175,7 @@ bar {
 ####################################################################################################
 # default workspace for applciations
 assign [class="Chromium-browser"] $workspace1
+assign [class="Google-chrome"] $workspace1
 assign [class="shadowsocks-qt5"] $workspace1
 
 # keybindings
@@ -182,7 +183,7 @@ bindsym $mod+n workspace next
 bindsym $mod+p workspace prev
 bindsym $mod+o exec i3-input -F 'rename workspace to "%s"' -P 'New name for this workspace: '
 bindsym $mod+shift+q i3-exit
-bindsym $mod+b exec chromium-browser --proxy-server="socks5://127.0.0.1:1080"
+bindsym $mod+b exec google-chrome --proxy-server="socks5://127.0.0.1:1080"
 
 # lock scripts
 set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (Shift+s) shutdown
@@ -218,12 +219,6 @@ bindsym $mod+c mode "$mode_capture"
 
 # startup programs
 exec ss-qt5
-exec chromium-browser --proxy-server="socks5://127.0.0.1:1080"
+exec google-chrome --proxy-server="socks5://127.0.0.1:1080"
 exec --no-startup-id feh --bg-scale ~/dev-setup/wallpaper.png
-
-# my keyboard setting
-exec setxkbmap -option ctrl:nocaps
-exec xcape
-
-# make i3 fullscreen in virtual machine
-exec --no-startup-id vmware-user
+exec genpac ~/.genpac_config.ini

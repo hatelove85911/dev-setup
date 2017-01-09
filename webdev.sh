@@ -52,3 +52,15 @@ for module in "${npmGlobalModules[@]}"
 do
    npm install -g "$module"
 done
+
+
+echo "*******************************************************************"
+echo "install pip modules
+echo "*******************************************************************"
+pipModules=(genpac \
+            ConfigParser)
+
+for module in "${pipModules[@]}"
+do
+   pip install "$module"
+done
