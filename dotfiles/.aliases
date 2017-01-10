@@ -245,7 +245,6 @@ alias pip="pip3"
 alias pj="python -m json.tool"
 
 # grep
-alias grepp="grep -irP -e"
 
 # alias to clear 
 alias cl="clear"
