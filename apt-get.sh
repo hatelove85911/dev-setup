@@ -39,6 +39,7 @@ aptPackages=(chromium \
             i3 \
             gnome-terminal \
             nvpy \
+            dconf-cli \
             shadowsocks-qt5 \
             silversearcher-ag \
             sed \
@@ -70,20 +71,23 @@ do
    sudo apt-get install -y "$p"
 done
 
+####################################################################################################
 # install xcape
+####################################################################################################
 git clone https://github.com/alols/xcape.git ~/Downloads/xcape
 cd ~/Downloads/xcape
 make
 sudo make install
 
-# install heroku toolbelt
-wget -O- https://toolbelt.heroku.com/install-ubuntu.sh | sh
-heroku update
-
-# install fzf
+####################################################################################################
+# fzf
+####################################################################################################
 git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
 ~/.fzf/install
 
+####################################################################################################
+# oh my zsh
+####################################################################################################
 # install oh my zsh
 [ -e ~/.oh-my-zsh ] && rm -rf ~/.oh-my-zsh
 git clone git://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
@@ -91,14 +95,36 @@ git clone git://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
 # install agnosterzak zsh theme
 wget https://raw.githubusercontent.com/zakaziko99/agnosterzak-ohmyzsh-theme/master/agnosterzak.zsh-theme -O ~/.oh-my-zsh/themes/agnosterzak.zsh-theme
 
+####################################################################################################
+# solarized
+####################################################################################################
+# download gnome solarized theme, set gnome terminal preferences manually
+git clone https://github.com/Anthony25/gnome-terminal-colors-solarized.git ~/Downloads/gnome-terminal-colors-solarized
+cd ~/Downloads/gnome-terminal-colors-solarized
+./install.sh
+
+# install solarized dir colors
+git clone https://github.com/seebi/dircolors-solarized ~/dircolors-solarized
+cp ~/dircolors-solarized/dircolors.256dark ~/.dir_colors
+rm -rf ~/dircolors-solarized
+
+####################################################################################################
+# tmux plugin managerj
+####################################################################################################
 # install tmux plugin manager
 [ -e ~/.tmux ] && rm -rf ~/.tmux
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
+####################################################################################################
+# vim plugin manager
+####################################################################################################
 # install vim plug, the vim plugin manager
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
+####################################################################################################
+# powerline fonts
+####################################################################################################
 # install powerline fonts
 [ -e ~/Downloads/powerlinefonts ] && rm -rf ~/Downloads/powerlinefonts
 git clone https://github.com/powerline/fonts.git ~/Downloads/powerlinefonts
