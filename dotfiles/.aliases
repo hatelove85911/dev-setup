@@ -155,6 +155,7 @@ alias snrc="v ~/.simplenoterc"
 alias nvpy="v ~/.nvpy.cfg"
 alias vrc="v $HOME/.vimrc" 
 alias nvrc="v $HOME/.config/nvim/init.vim" 
+alias pacr="v $HOME/.pacconfig/user_rule"
 
 # tmux 
 # tmux alias stolen from zsh tmux plugin
@@ -260,3 +261,6 @@ alias ponp="netstat -nlp | grep"
 
 # SFS teamcity login
 alias tclogin="java -jar ~/tcc.jar login --host http://teamcity.successfactors.com --user i056958"
+
+# unity control center to open in i3
+alias ucc="XDG_CURRENT_DESKTOP=Unity unity-control-center"

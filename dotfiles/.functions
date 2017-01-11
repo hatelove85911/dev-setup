@@ -363,10 +363,10 @@ mf () {
   
 }
 # most used directory
-mds () {
+mdrs () {
  fasd -dl | fzf 
 }
-md () {
+mdr () {
   local selected="$( fasd -dl | fzf )"
   [ ! -z "$selected"  ] && cd "$selected";
 }
