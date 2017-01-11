@@ -109,7 +109,11 @@ export EDITOR='vim'
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-stty ixany
-stty ixoff -ixon
-LS_COLORS=$LS_COLORS:'ow=34;40' ; export LS_COLORS
-zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+
+eval `dircolors $HOME/.dir_colors`
+
+# stty ixany
+# stty ixoff -ixon
+# LS_COLORS=$LS_COLORS:'ow=34;40' ; export LS_COLORS
+# zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
