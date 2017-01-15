@@ -285,8 +285,8 @@ set list
 set t_ut=
 " set t_Co=256
 " let g:solarized_termcolors=256
-set background=dark
-colorscheme solarized
+" set background=dark
+colorscheme molokai
 set relativenumber
 set number
 set showcmd
@@ -328,13 +328,18 @@ cabbrev pfp echo expand('%:p')
 cabbrev pfr echo @%
 cabbrev pfd echo expand('%:p:h')
 
-
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " simplenote
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 source ~/.simplenoterc
 
+nmap yal :SimplenoteList<cr>
+nmap yau :SimplenoteUpdate<cr>
+nmap yat :SimplenoteTrash<cr>
+nmap yad :SimplenoteDelete<cr>
+nmap yan :SimplenoteNew<cr>
 let g:SimplenoteVertical=1
+let g:SimplenoteSingleWindow=1
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " airline
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""

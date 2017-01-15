@@ -30,3 +30,6 @@ export PROXY_ADDR="http://proxy.wdf.sap.corp:8080"
 
 # android home
 export ANDROID_HOME="/home/admin/android"
+
+# reduce lag to 0.2s when entering vi mode by esc
+export KEYTIMEOUT=2

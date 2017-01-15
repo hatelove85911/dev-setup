@@ -21,3 +21,6 @@ export MANPAGER='less -X';
 
 # Always enable colored `grep` output.
 export GREP_OPTIONS='--color=auto';
+
+# set default TERM environment variable
+export TERM='xterm-256color'

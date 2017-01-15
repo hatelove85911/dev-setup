@@ -24,7 +24,7 @@ export ZSH=$HOME/.oh-my-zsh
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-ZSH_THEME="avit"
+ZSH_THEME="agnosterzak"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -68,7 +68,7 @@ DISABLE_AUTO_TITLE="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(vi-mode fasd)
+plugins=(vi-mode fasd history-substring-search)
 
 # User configuration
 # export PATH="/usr/bin:/bin:/usr/sbin:/sbin:$PATH"
@@ -109,7 +109,11 @@ export EDITOR='vim'
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-stty ixany
-stty ixoff -ixon
-LS_COLORS=$LS_COLORS:'ow=34;40' ; export LS_COLORS
-zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+
+eval `dircolors $HOME/.dir_colors`
+
+# stty ixany
+# stty ixoff -ixon
+# LS_COLORS=$LS_COLORS:'ow=34;40' ; export LS_COLORS
+# zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
