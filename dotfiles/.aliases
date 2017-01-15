@@ -264,3 +264,8 @@ alias tclogin="java -jar ~/tcc.jar login --host http://teamcity.successfactors.c
 
 # unity control center to open in i3
 alias ucc="XDG_CURRENT_DESKTOP=Unity unity-control-center"
+
+# alias to coreutils' gnu ls
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  alias ls="gls --color=auto"
+fi
