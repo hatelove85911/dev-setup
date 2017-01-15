@@ -636,7 +636,7 @@ function! ReplaceItInNormalMode()
   endif
   call inputrestore()
   call inputsave()
-  let replacement = input('replacement: ', wordUnderCursor)
+  let replacement = input('replacement: ', original)
   call inputrestore()
   execute '%s/'.original.'/'.replacement.'/g'
 endfunction
@@ -650,12 +650,12 @@ function! ReplaceItInVisualMode() range
     return
   endif
   call inputsave()
-  let replacement = input('replacement: ', wordUnderCursor)
+  let replacement = input('replacement: ', original)
   call inputrestore()
   execute "'<,'>s/".original.'/'.replacement.'/g'
 endfunction
 
-nmap cr :call ReplaceItInNormalMode()<cr>
+nmap cv :call ReplaceItInNormalMode()<cr>
 vmap cv :call ReplaceItInVisualMode()<cr>
 
 " do substitution in selected area
