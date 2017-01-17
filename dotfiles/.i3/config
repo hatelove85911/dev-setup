@@ -218,15 +218,16 @@ mode "$mode_capture" {
 bindsym $mod+c mode "$mode_capture"
 
 # startup programs
-exec ss-qt5
 exec google-chrome --proxy-server="socks5://127.0.0.1:1080"
 exec --no-startup-id feh --bg-scale ~/dev-setup/wallpaper.png
-exec genpac ~/.genpac_config.ini
 
-
-# make virual machine fullscreen in vmware
-exec --no-startup-id vmware-user
-
-# keyboard setting 
+# keyboard setting script
 exec setxkbmap -layout us -option ctrl:nocaps
 exec xcape
+
+# some homeonly script
+exec --no-startup-id ss-qt5
+exec genpac ~/.genpac_config.ini
+
+# virtualization tool script
+exec --no-startup-id vmware-user
