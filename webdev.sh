@@ -46,6 +46,7 @@ npmGlobalModules=(eslint \
             json-server \
             git+https://github.com/ramitos/jsctags.git \
             js-beautify \
+            ngrok \
             yarn)
 
 for module in "${npmGlobalModules[@]}"
