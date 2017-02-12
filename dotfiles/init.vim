@@ -103,7 +103,7 @@ Plug 'scrooloose/syntastic'
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " html(xml) css javascript related
 """"""""""""""""""""""""""""""""""""""""""""""""""
-Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
+Plug 'pangloss/vim-javascript', { 'for': ['javascript', 'vue', 'jsx']}
 
 " distinguish json from javascript
 Plug 'elzr/vim-json', { 'for': 'json' }
@@ -118,20 +118,20 @@ Plug 'ternjs/tern_for_vim', {'do': 'npm install'}
 " format
 Plug 'Chiel92/vim-autoformat'
 
-" js library syntax
-" Plug 'othree/javascript-libraries-syntax.vim'
-
 " vue syntax
 Plug 'posva/vim-vue'
 
-" fix my js
-Plug 'ruanyl/vim-fixmyjs'
-
-" jsx
+" jsx syntax
 Plug 'mxw/vim-jsx'
 
-" html5
+" html5 syntax and autocomplete
 Plug 'othree/html5.vim'
+
+" css syntax
+Plug 'JulesWang/css.vim'
+
+" js code style
+Plug 'sindresorhus/vim-xo'
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " text object
 """"""""""""""""""""""""""""""""""""""""""""""""""
@@ -434,8 +434,7 @@ nmap k <Plug>(accelerated_jk_gk)
 "markdown file extension recognization
 au BufRead,BufNewFile *.md set filetype=markdown
 au BufRead,BufNewFile *.eslintrc set filetype=json
-au BufRead,BufNewFile *.vue set filetype=vue
-au BufRead,BufNewFile *.vue let b:current_syntax = "vue"
+au BufRead,BufNewFile *.vue set filetype=html.javascript.css.vue
 "make relative switch on when open any file type
 au Filetype * set relativenumber
 
@@ -555,9 +554,9 @@ let g:unite_source_session_enable_auto_save = 1
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 nmap <leader>f :Autoformat<cr>
-let g:formatdef_jsbeautify_javascript = '"js-beautify -s 2 -a"'
-au FileType javascript nmap <buffer> <leader>x :Autoformat <bar> :Fixmyjs<CR>
-au FileType javascript set ft=javascript.jsx
+let g:formatters_javascript=['xo_javascript', 'standard_javascript', 'jsbeautify_javascript']
+let g:formatdef_xo_javascript = '"xo --fix --space --no-semicolon --stdin"'
+" let g:formatdef_jsbeautify_javascript = '"js-beautify -s 2 -a"'
 
 " vue beautify
 " let g:formatters_vue = ['htmlbeautify_vue']

@@ -34,8 +34,6 @@ echo "install npm global modules"
 echo "*******************************************************************"
 # install NPM Modules
 npmGlobalModules=(eslint \
-            standard-format \
-            standard \
             node-inspector \
             devtool \
             yeoman-doctor \
@@ -45,7 +43,13 @@ npmGlobalModules=(eslint \
             http-server \
             json-server \
             git+https://github.com/ramitos/jsctags.git \
+
             js-beautify \
+            standard-format \
+            standard \
+            prettier \
+            xo \
+
             ngrok \
             yarn)
 
