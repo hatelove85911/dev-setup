@@ -5,12 +5,12 @@ endfunction
 let s:mycolors = ['solarized', 'vividchalk', 'molokai']
 let s:colorIndex = 0
 function! s:NextColor()
-    let s:colorIndex = s:colorIndex + 1
-	if s:colorIndex > 2
-		let s:colorIndex = 0
-    endif
-    echo s:mycolors[s:colorIndex]
-    execute 'colorscheme ' . s:mycolors[s:colorIndex]
+  let s:colorIndex = s:colorIndex + 1
+  if s:colorIndex > 2
+    let s:colorIndex = 0
+  endif
+  echo s:mycolors[s:colorIndex]
+  execute 'colorscheme ' . s:mycolors[s:colorIndex]
 endfunction
 
 if has('nvim')
@@ -35,7 +35,7 @@ Plug 'tpope/vim-fugitive'
 " for navigation between items in quick fix or location list easier and toggle
 " option quickly
 Plug 'tpope/vim-unimpaired'
-" neocomplete vim 
+" neocomplete vim
 Plug 'Shougo/neco-vim'
 " snippets
 Plug 'SirVer/ultisnips'
@@ -103,35 +103,28 @@ Plug 'scrooloose/syntastic'
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " html(xml) css javascript related
 """"""""""""""""""""""""""""""""""""""""""""""""""
-Plug 'pangloss/vim-javascript', { 'for': ['javascript', 'vue', 'jsx']}
-
-" distinguish json from javascript
-Plug 'elzr/vim-json', { 'for': 'json' }
-
-" xml
-Plug 'sukima/xmledit', { 'for': 'xml' }
-Plug 'mattn/emmet-vim'
-
-" tern
-Plug 'ternjs/tern_for_vim', {'do': 'npm install'}
-
-" format
+""""""""""" formatters
 Plug 'Chiel92/vim-autoformat'
 
+""""""""""" syntax
+Plug 'pangloss/vim-javascript', { 'for': ['javascript', 'vue', 'jsx']}
+" distinguish json from javascript
+Plug 'elzr/vim-json', { 'for': 'json' }
 " vue syntax
 Plug 'posva/vim-vue'
-
 " jsx syntax
 Plug 'mxw/vim-jsx'
-
 " html5 syntax and autocomplete
 Plug 'othree/html5.vim'
-
 " css syntax
 Plug 'JulesWang/css.vim'
 
-" js code style
-Plug 'sindresorhus/vim-xo'
+""""""""""" tools
+" xml
+Plug 'sukima/xmledit', { 'for': 'xml' }
+Plug 'mattn/emmet-vim'
+" tern
+Plug 'ternjs/tern_for_vim', {'do': 'npm install'}
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " text object
 """"""""""""""""""""""""""""""""""""""""""""""""""
@@ -161,10 +154,8 @@ Plug 'tpope/vim-commentary'
 " calutil is needed by visIncr Plug for increamental date
 Plug 'cskeeters/vim-calutil'
 Plug 'vim-scripts/VisIncr'
-
 " vim calculator
 Plug 'arecarn/crunch.vim'
-
 " auto closing brackets
 Plug 'jiangmiao/auto-pairs'
 " window maximizer
@@ -178,7 +169,7 @@ Plug 'christoomey/vim-tmux-navigator'
 " jump to matching xml tags and more, extend % function to not only jump to
 " matching parenthesis, square brackets
 Plug 'tmhedberg/matchit'
-" search for .lvimrc 
+" search for .lvimrc
 Plug 'embear/vim-localvimrc'
 " toggle quickfix or location list window
 Plug 'Valloric/ListToggle'
@@ -374,18 +365,18 @@ nmap <leader>l <Plug>AirlineSelectNextTab
 autocmd BufReadPost fugitive://* set bufhidden=delete
 " go to parent tree when editing git object
 autocmd BufReadPost fugitive://*
-  \ if fugitive#buffer().type() =~# '^\%(tree\|blob\)$' |
-  \   nnoremap <buffer> .. :edit %:h<CR> |
-  \ endif
+      \ if fugitive#buffer().type() =~# '^\%(tree\|blob\)$' |
+      \   nnoremap <buffer> .. :edit %:h<CR> |
+      \ endif
 
 nmap cis :Gstatus<cr>
 nmap cic :Gcommit<cr>
-nmap cil :Glog 
+nmap cil :Glog
 nmap cid :Gdiff<cr>
-nmap cig :Ggrep 
-nmap cie :Gedit 
-nmap cir :Gread 
-nmap ciw :Gwrite 
+nmap cig :Ggrep
+nmap cie :Gedit
+nmap cir :Gread
+nmap ciw :Gwrite
 nmap cib :Gblame<cr>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -433,8 +424,6 @@ nmap k <Plug>(accelerated_jk_gk)
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "markdown file extension recognization
 au BufRead,BufNewFile *.md set filetype=markdown
-au BufRead,BufNewFile *.eslintrc set filetype=json
-au BufRead,BufNewFile *.vue set filetype=html.javascript.css.vue
 "make relative switch on when open any file type
 au Filetype * set relativenumber
 
@@ -458,23 +447,23 @@ nmap ]w <c-w>w
 nmap [w <c-w>W
 
 function! MyRotate()
-if winnr('$') == 2
-  " save the original position, jump to the first window
-  let initial = winnr()
-  exe 1 . "wincmd w"
+  if winnr('$') == 2
+    " save the original position, jump to the first window
+    let initial = winnr()
+    exe 1 . "wincmd w"
 
-  wincmd l
-  if winnr() != 1
-    " succeeded moving to the right window
-    wincmd J " make it the bot window
-  else
-    " cannot move to the right, so we are at the top
-    wincmd H " make it the left window
+    wincmd l
+    if winnr() != 1
+      " succeeded moving to the right window
+      wincmd J " make it the bot window
+    else
+      " cannot move to the right, so we are at the top
+      wincmd H " make it the left window
+    endif
+
+    " restore cursor to the initial window
+    exe initial . "wincmd w"
   endif
-
-  " restore cursor to the initial window
-  exe initial . "wincmd w"
-endif
 endfunction
 nmap <M-r> :call MyRotate()<cr>
 
@@ -493,13 +482,13 @@ call unite#filters#sorter_default#use(['sorter_rank'])
 " \ split(&wildignore, ','))
 
 let g:unite_source_rec_async_command = ['ag', '--nocolor', '--nogroup', '--hidden', '-g', '',
-    \ '--ignore', '.svn', '--ignore', '.git', '--ignore', 'node_modules', '--ignore', 'build', '.']
+      \ '--ignore', '.svn', '--ignore', '.git', '--ignore', 'node_modules', '--ignore', 'build', '.']
 
 call unite#custom#profile('default', 'context', {
-  \   'no_split': 1,
-  \   'start_insert': 1,
-  \   'quit' : 1
-  \ })
+      \   'no_split': 1,
+      \   'start_insert': 1,
+      \   'quit' : 1
+      \ })
 
 nnoremap cub :<C-u>Unite -buffer-name=uniteBuffer buffer:-<cr>
 nnoremap cur :<C-u>Unite -buffer-name=uniteFiles file_rec/async:.<cr>
@@ -534,9 +523,9 @@ au Filetype vimfiler nmap <buffer> <c-p> <Plug>(vimfiler_redraw_screen)
 
 " custom profile
 call vimfiler#custom#profile('default', 'context', {
-    \ 'safe' : 0,
-    \ 'auto_cd': 1
-    \ })
+      \ 'safe' : 0,
+      \ 'auto_cd': 1
+      \ })
 
 nnoremap yv :<C-u>VimFiler "file_rec/async"<cr>
 nnoremap yvb :<C-u>VimFilerBufferDir "file_rec/async"<cr>
@@ -553,10 +542,13 @@ let g:unite_source_session_enable_auto_save = 1
 " code formatter
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-nmap <leader>f :Autoformat<cr>
-let g:formatters_javascript=['xo_javascript', 'standard_javascript', 'jsbeautify_javascript']
-let g:formatdef_xo_javascript = '"xo --fix --space --no-semicolon --stdin"'
-" let g:formatdef_jsbeautify_javascript = '"js-beautify -s 2 -a"'
+map <leader>f :Autoformat<cr>
+let g:formatters_javascript=['eslintfix_javascript', 'jsbeautify_javascript']
+let g:formatdef_eslintfix_javascript = '"eslint-fix"'
+let g:formatdef_jsbeautify_javascript = '"js-beautify -s 2 -a"'
+
+au BufReadPost *.vue map <leader>f :/<script>/+1,/<\/script>/-1 silent !eslint-fix<cr>
+" :/<template>/+1,/<\/template>/-1 !html-beautify - --indent-size 2<cr>
 
 " vue beautify
 " let g:formatters_vue = ['htmlbeautify_vue']
@@ -575,24 +567,27 @@ let g:formatdef_xo_javascript = '"xo --fix --space --no-semicolon --stdin"'
 " even toggle to passive mode, it still do checks when buffer write
 " that's why I write my own toggle funciton
 function! MyOwnSyntasticModeToggle()
-let b:syntastic_mode = get(b:, "syntastic_mode", "active")
+  let b:syntastic_mode = get(b:, "syntastic_mode", "active")
 
-if b:syntastic_mode == "passive"
-  let b:syntastic_mode = "active"
-  echo "active"
-else
-  let b:syntastic_mode = "passive"
-  echo "passive"
-  execute "SyntasticReset"
-endif
+  if b:syntastic_mode == "passive"
+    let b:syntastic_mode = "active"
+    echo "active"
+  else
+    let b:syntastic_mode = "passive"
+    echo "passive"
+    execute "SyntasticReset"
+  endif
 endfunction
+
+
 let g:syntastic_mode_map = {
-    \ 'mode': 'passive',
-    \ 'active_filetypes': ['javascript']}
+      \ 'mode': 'passive',
+      \ 'active_filetypes': ['javascript']}
 " let g:syntastic_mode_map = {
 "       \ 'mode': 'passive',
 "       \ 'active_filetypes': [],
 "       \ 'passive_filetypes': [] }
+
 " use the latest tidy html5 for html
 let g:syntastic_html_tidy_exec = 'tidy'
 " set javascript checkers
@@ -693,7 +688,7 @@ let g:neocomplete#enable_auto_close_preview = 1
 " you turned on auto_close_preview window
 " refer to the github issue for details:
 " https://github.com/Shougo/neocomplcache.vim/issues/424
-autocmd FileType gitcommit let b:neocomplcache_enable_auto_close_preview = 0 
+autocmd FileType gitcommit let b:neocomplcache_enable_auto_close_preview = 0
 " to use echo doc to view api
 " set completeopt-=preview
 
@@ -800,7 +795,7 @@ nmap <leader>w :w<CR>
 nmap <leader>q :q<CR>
 nmap <leader>ww :wa<CR>
 nmap <leader>qq :qa<CR>
-" define a map to switch to previous active buffer 
+" define a map to switch to previous active buffer
 nmap gb :b#<CR>
 
 "vmap dil for diffline

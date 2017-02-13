@@ -1,0 +1,12 @@
+#! /bin/bash
+
+if [[ -e "./package.json" ]]; then
+  npm install --save-dev eslint eslint-config-airbnb-base eslint-plugin-import eslint-fix;
+else
+  npm init -y;
+  npm install --save-dev eslint eslint-config-airbnb-base eslint-plugin-import eslint-fix;
+fi
+
+if ! [[ -e "./.eslintrc.js" ]]; then
+  cp ~/.bin/assets/.eslintrc.js ./;
+fi
