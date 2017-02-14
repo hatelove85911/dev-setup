@@ -195,8 +195,6 @@ Plug 'jszakmeister/vim-togglecursor'
 " status line
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-" smooth scroll when pressing ctrl+d or ctrl u
-Plug 'joeytwiddle/sexy_scroller.vim'
 
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " unused Plugs
@@ -476,7 +474,8 @@ nmap <M-r> :call MyRotate()<cr>
 " 2nd, make a key mapping to unite
 " nmap cu [unite]
 
-call unite#filters#matcher_default#use(['matcher_fuzzy'])
+" call unite#filters#converter_default#use(['converter_tail'])
+" call unite#filters#matcher_default#use(['matcher_project_ignore_files','matcher_context'])
 call unite#filters#sorter_default#use(['sorter_rank'])
 " call unite#custom#source('file_rec/async', 'ignore_globs',
 " \ split(&wildignore, ','))
@@ -487,16 +486,25 @@ let g:unite_source_rec_async_command = ['ag', '--nocolor', '--nogroup', '--hidde
 call unite#custom#profile('default', 'context', {
       \   'no_split': 1,
       \   'start_insert': 1,
-      \   'quit' : 1
+      \   'quit' : 1,
+      \   'resume' : 1
       \ })
 
+" buffer
 nnoremap cub :<C-u>Unite -buffer-name=uniteBuffer buffer:-<cr>
-nnoremap cur :<C-u>Unite -buffer-name=uniteFiles file_rec/async:.<cr>
+" files and grep
+nnoremap cua :<C-u>Unite -buffer-name=uniteFiles file_rec/async:.<cr>
+nnoremap cur :<C-u>Unite -buffer-name=uniteGrep grep:.:-iRP<cr>
+" git repo files and grep
+nnoremap cug :<C-u>Unite -buffer-name=uniteGitLsfiles file_rec/git<cr>
+nnoremap cui :<C-u>Unite -buffer-name=uniteGitGrep grep/git:.:-iP<cr>
+
+" find
+nnoremap cuf :<C-u>Unite -buffer-name=uniteFind find:.<cr>
+
 nnoremap cum :<C-u>Unite -buffer-name=uniteMru file_mru<cr>
 nnoremap cuy :<C-u>Unite -buffer-name=uniteYank -no-start-insert history/yank<cr>
-nnoremap cug :<C-u>Unite -buffer-name=uniteGrep grep:.:-iR<cr>
-nnoremap cuf :<C-u>Unite -buffer-name=uniteFind find:.<cr>
-nnoremap cuc :<C-u>Unite -buffer-name=uniteTag tag:%<cr>
+" nnoremacucuc :<C-u>Unite -buffer-name=uniteTag tag:%<cr>
 nnoremap cut :<C-u>Unite -buffer-name=uniteTag tag<cr>
 nnoremap cul :<C-u>Unite -buffer-name=uniteLine line<cr>
 nnoremap cuo :<C-u>Unite -buffer-name=uniteOutline outline<cr>
@@ -542,12 +550,12 @@ let g:unite_source_session_enable_auto_save = 1
 " code formatter
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-map <leader>f :Autoformat<cr>
+nmap <leader>f :Autoformat<cr>
 let g:formatters_javascript=['eslintfix_javascript', 'jsbeautify_javascript']
 let g:formatdef_eslintfix_javascript = '"eslint-fix"'
 let g:formatdef_jsbeautify_javascript = '"js-beautify -s 2 -a"'
 
-au BufReadPost *.vue map <leader>f :/<script>/+1,/<\/script>/-1 silent !eslint-fix<cr>
+" au BufReadPost *.vue map <leader>f :/<script>/+1,/<\/script>/-1 silent !eslint-fix<cr>
 " :/<template>/+1,/<\/template>/-1 !html-beautify - --indent-size 2<cr>
 
 " vue beautify
@@ -557,7 +565,7 @@ au BufReadPost *.vue map <leader>f :/<script>/+1,/<\/script>/-1 silent !eslint-f
 " au Filetype html nmap <buffer> <leader>f :%!tidy --show-errors 0 --show-warnings 0 --show-info 0 --quiet 1<cr>
 " au Filetype xhtml nmap <buffer> <leader>f :%!tidy --show-errors 0 --show-warnings 0 --show-info 0 --quiet 1<cr>
 " au Filetype xml nmap <buffer> <leader>f :%!tidy --show-errors 0 --show-warnings 0 --show-info 0 --quiet 1<cr>
-" au Filetype json nmap <buffer> <leader>f :%!python -m json.tool<cr>
+au Filetype json nmap <buffer> <leader>f :%!python -m json.tool<cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " syntastic configuration
