@@ -36,6 +36,8 @@ source ./commonPackages
 
 aptPackages=(chromium \
             vim-gtk \
+            # for vim help document on ubuntu
+            vim-runtime \
             i3 \
             gnome-terminal \
             nvpy \
@@ -47,6 +49,8 @@ aptPackages=(chromium \
             python-dev \
             python3-pip \
             python3-dev \
+            # install luajit to fix neocomplete not working in vim issue
+            luajit5.1-dev \
             docker-engine \
             shutter \
             feh \
