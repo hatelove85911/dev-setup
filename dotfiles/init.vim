@@ -550,7 +550,7 @@ let g:unite_source_session_enable_auto_save = 1
 " code formatter
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-map <leader>f :Autoformat<cr>
+nmap <leader>f :Autoformat<cr>
 let g:formatters_javascript=['eslintfix_javascript', 'jsbeautify_javascript']
 let g:formatdef_eslintfix_javascript = '"eslint-fix"'
 let g:formatdef_jsbeautify_javascript = '"js-beautify -s 2 -a"'
@@ -565,7 +565,7 @@ let g:formatdef_jsbeautify_javascript = '"js-beautify -s 2 -a"'
 " au Filetype html nmap <buffer> <leader>f :%!tidy --show-errors 0 --show-warnings 0 --show-info 0 --quiet 1<cr>
 " au Filetype xhtml nmap <buffer> <leader>f :%!tidy --show-errors 0 --show-warnings 0 --show-info 0 --quiet 1<cr>
 " au Filetype xml nmap <buffer> <leader>f :%!tidy --show-errors 0 --show-warnings 0 --show-info 0 --quiet 1<cr>
-" au Filetype json nmap <buffer> <leader>f :%!python -m json.tool<cr>
+au Filetype json nmap <buffer> <leader>f :%!python -m json.tool<cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " syntastic configuration
