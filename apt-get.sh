@@ -35,8 +35,9 @@ sudo apt-get remove --purge vim vim-runtime vim-gnome vim-tiny vim-common vim-gu
 source ./commonPackages
 
 aptPackages=(chromium \
+            tig \
+            ranger \
             vim-gtk \
-            # for vim help document on ubuntu
             vim-runtime \
             i3 \
             gnome-terminal \
@@ -49,7 +50,6 @@ aptPackages=(chromium \
             python-dev \
             python3-pip \
             python3-dev \
-            # install luajit to fix neocomplete not working in vim issue
             luajit5.1-dev \
             docker-engine \
             shutter \
@@ -120,11 +120,16 @@ rm -rf ~/dircolors-solarized
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
 ####################################################################################################
-# vim plugin manager
+# oh my vim
+####################################################################################################
+curl -L https://raw.github.com/liangxianzhe/oh-my-vim/master/tools/install.sh | sh
+
+####################################################################################################
+# deprecated because of using oh-my-vim: vim plugin manager
 ####################################################################################################
 # install vim plug, the vim plugin manager
-curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
-    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+# curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+#     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
 ####################################################################################################
 # powerline fonts

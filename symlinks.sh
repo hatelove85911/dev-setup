@@ -5,22 +5,23 @@
 # Ask for the administrator password upfront.
 sudo -v
 
-for file in $(pwd)/dotfiles/.{tmux.conf,exports,aliases,functions,zshenv,zshrc,ctags,gitconfig,bin,curlrc,wgetrc,i3,npmrc,yarnrc,pacconfig}; do
+for file in
+    $(pwd)/dotfiles/.{tmux.conf,exports,aliases,functions,zshenv,zshrc,ctags,gitconfig,bin,curlrc,wgetrc,i3,npmrc,yarnrc,pacconfig,before.vimrc,local.vimrc,after.vimrc}; do
     ln -sf "$file" ~;
 done;
 unset file;
 
 ################################################################################
-# normal vim
+# deprecated because of using oh my vim
 ################################################################################
-normalVimConfigDir="$HOME/.vim"
-! [ -e "$normalVimConfigDir" ] && mkdir -p "$normalVimConfigDir"
-ln -sf $(pwd)/dotfiles/init.vim ~/.vimrc
-ln -sf $(pwd)/dotfiles/UltiSnips "$normalVimConfigDir"
-ln -sf $(pwd)/dotfiles/neosnips "$normalVimConfigDir"
-# after plugin
-! [ -e "$normalVimConfigDir/after/plugin" ] && mkdir -p "$normalVimConfigDir/after/plugin"
-ln -sf  $(pwd)/dotfiles/after/plugin/my.vim "$normalVimConfigDir/after/plugin"
+# normalVimConfigDir="$HOME/.vim"
+# ! [ -e "$normalVimConfigDir" ] && mkdir -p "$normalVimConfigDir"
+# ln -sf $(pwd)/dotfiles/init.vim ~/.vimrc
+# ln -sf $(pwd)/dotfiles/UltiSnips "$normalVimConfigDir"
+# ln -sf $(pwd)/dotfiles/neosnips "$normalVimConfigDir"
+# # after plugin
+# ! [ -e "$normalVimConfigDir/after/plugin" ] && mkdir -p "$normalVimConfigDir/after/plugin"
+# ln -sf  $(pwd)/dotfiles/after/plugin/my.vim "$normalVimConfigDir/after/plugin"
 
 ################################################################################
 # i3
