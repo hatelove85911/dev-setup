@@ -60,6 +60,7 @@ aptPackages=(chromium \
             htop \
             ncmpcpp \
             sc \
+            mutt \
 # i3 dependent package
             i3 \
             xdotool \
