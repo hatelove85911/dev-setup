@@ -35,11 +35,8 @@ sudo apt-get remove --purge vim vim-runtime vim-gnome vim-tiny vim-common vim-gu
 source ./commonPackages
 
 aptPackages=(chromium \
-            tig \
-            ranger \
             vim-gtk \
             vim-runtime \
-            i3 \
             gnome-terminal \
             nvpy \
             dconf-cli \
@@ -57,6 +54,16 @@ aptPackages=(chromium \
             fcitx \
             fcitx-googlepinyin \
             exuberant-ctags \
+# ncurse interface applications
+            tig \
+            ranger \
+            htop \
+            ncmpcpp \
+            sc \
+# i3 dependent package
+            i3 \
+            xdotool \
+# clipboard
             xclip \
             xsel)
 
