@@ -79,7 +79,7 @@ bindsym $mod+minus split v
 bindsym $mod+f fullscreen toggle
 
 # default layout
-workspace_layout tabbed
+workspace_layout default
 
 # change container layout (stacked, tabbed, toggle split)
 bindsym $mod+s layout stacking
@@ -184,6 +184,7 @@ bindsym $mod+p workspace prev
 bindsym $mod+o exec i3-input -F 'rename workspace to "%s"' -P 'New name for this workspace: '
 bindsym $mod+shift+q i3-exit
 bindsym $mod+b exec google-chrome --proxy-server="socks5://127.0.0.1:1080"
+bindsym $mod+i exec i3-input -F 'exec ~/.bin/ri3w.sh "%s"' -P 'Name for window title: '
 
 # lock scripts
 set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (Shift+s) shutdown

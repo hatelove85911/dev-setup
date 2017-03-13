@@ -1,0 +1,12 @@
+#! /bin/bash
+
+if [[ -e "./package.json" ]]; then
+  npm install --save-dev eslint eslint-config-standard eslint-plugin-standard eslint-plugin-promise eslint-fix;
+else
+  npm init -y;
+  npm install --save-dev eslint eslint-config-standard eslint-plugin-standard eslint-plugin-promise eslint-fix;
+fi
+
+if ! [[ -e "./.eslintrc.js" ]]; then
+  cp ~/.bin/assets/.eslintrc.standard.js ./.eslintrc.js;
+fi

@@ -110,7 +110,15 @@ export EDITOR='vim'
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 
+
+
+
+
+
 eval `dircolors $HOME/.dir_colors`
+
+# emulate bash PROMPT_COMMAND (only for zsh)
+precmd() { eval "$PROMPT_COMMAND" }
 
 # stty ixany
 # stty ixoff -ixon

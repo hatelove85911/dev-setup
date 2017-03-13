@@ -555,6 +555,10 @@ let g:formatters_javascript=['eslintfix_javascript', 'jsbeautify_javascript']
 let g:formatdef_eslintfix_javascript = '"eslint-fix"'
 let g:formatdef_jsbeautify_javascript = '"js-beautify -s 2 -a"'
 
+
+let g:formatters_vue=['eslintfix_vue']
+let g:formatdef_eslintfix_vue = '"eslint-fix"'
+
 " au BufReadPost *.vue map <leader>f :/<script>/+1,/<\/script>/-1 silent !eslint-fix<cr>
 " :/<template>/+1,/<\/template>/-1 !html-beautify - --indent-size 2<cr>
 

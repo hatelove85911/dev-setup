@@ -8,5 +8,5 @@ else
 fi
 
 if ! [[ -e "./.eslintrc.js" ]]; then
-  cp ~/.bin/assets/.eslintrc.js ./;
+  cp ~/.bin/assets/.eslintrc.airbnb.js ./.eslintrc.js;
 fi

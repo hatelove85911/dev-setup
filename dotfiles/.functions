@@ -370,3 +370,4 @@ mdr () {
   local selected="$( fasd -dl | fzf )"
   [ ! -z "$selected"  ] && cd "$selected";
 }
+
