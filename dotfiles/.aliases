@@ -177,6 +177,9 @@ alias ti="tmux info"
 alias stmconf="tmux source-file ~/.tmux.conf"
 alias tmconf="v ~/.tmux.conf"
 
+# ranger
+alias rr="ranger"
+
 # git
 alias g="git"
 alias gcfg="v ~/.gitconfig"

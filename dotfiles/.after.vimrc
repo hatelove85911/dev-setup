@@ -158,14 +158,27 @@ nnoremap <leader>z :MaximizerToggle<cr>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " some customization to default oh-my-vim setting
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" unite default context setting
+call unite#custom#profile('default', 'context', {
+      \   'no_split': 1,
+      \   'quit' : 1,
+      \   'resume' : 1
+      \ })
+
 " add default ignore directory to ag command
 if executable('ag')
-  " let g:unite_source_grep_default_opts .=
-  "       \ ' --ignore ''node_modules'' --ignore ''.hg''' .
-  "       \ ' --ignore ''.svn'' --ignore ''.git'' --ignore ''.bzr''' .
-  "       \ '-i --vimgrep --hidden'
+  let g:unite_source_grep_default_opts =
+        \ '--nocolor --nogroup -S'.
+        \ ' --ignore ''node_modules'' --ignore ''.hg''' .
+        \ ' --ignore ''.svn'' --ignore ''.git'' --ignore ''.bzr''' .
+        \ '-i --vimgrep --hidden'
 endif
 
+
+nnoremap <silent><Leader>a :Unite -silent -auto-preview 
+      \ -winheight=40 -no-start-insert grep<CR>
+nnoremap <silent><Leader>A :UniteWithCursorWord -silent -auto-preview 
+      \ -winheight=40 -no-start-insert grep<CR>
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
