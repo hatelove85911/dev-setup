@@ -10,16 +10,6 @@ nmap col :windo set cursorline!<CR>
 " return to normal mode, type n to go to next occurence, type . to repeat
 nmap cr *cgn
 
-" set search highligh foreground and background same as
-" molokai color scheme
-highlight Search term=reverse ctermfg=0 ctermbg=222 guifg=#000000 guibg=#FFE792
-
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" arpeggio
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-Arpeggioinoremap jk  <Esc>
-
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " airline theme
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
