@@ -51,6 +51,7 @@ aptPackages=(chromium \
             docker-engine \
             shutter \
             feh \
+            w3m \
             fcitx \
             fcitx-googlepinyin \
             exuberant-ctags \

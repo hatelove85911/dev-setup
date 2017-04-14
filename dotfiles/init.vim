@@ -1,33 +1,10 @@
-function! DoRemote(arg)
-  UpdateRemotePlugins
-endfunction
-
-let s:mycolors = ['solarized', 'vividchalk', 'molokai']
-let s:colorIndex = 0
-function! s:NextColor()
-  let s:colorIndex = s:colorIndex + 1
-  if s:colorIndex > 2
-    let s:colorIndex = 0
-  endif
-  echo s:mycolors[s:colorIndex]
-  execute 'colorscheme ' . s:mycolors[s:colorIndex]
-endfunction
-
-if has('nvim')
-  let g:python3_host_prog = '/usr/bin/python3'
-  let g:path2Vimrc='~/.config/nvim/init.vim'
-  let g:path2VimHome="~/.config/nvim"
-  let g:path2VimplugHome='~/.config/nvim/plugged'
-else
-  let g:path2Vimrc='~/.vimrc'
-  let g:path2VimHome='~/.vim'
-  let g:path2VimplugHome='~/.vim/plugged'
-endif
+let $vimrcpath='~/.vimrc'
+let $vimhome='~/.vim'
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " plugins
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-call plug#begin(g:path2VimplugHome)
+call plug#begin(expand($vimhome.'/plugged/'))
 " operate on surroundings
 Plug 'tpope/vim-surround'
 " git
@@ -35,16 +12,12 @@ Plug 'tpope/vim-fugitive'
 " for navigation between items in quick fix or location list easier and toggle
 " option quickly
 Plug 'tpope/vim-unimpaired'
-" neocomplete vim
-Plug 'Shougo/neco-vim'
 " snippets
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 
 " super substitute
 Plug 'tpope/vim-abolish'
-" vim shell
-Plug 'Shougo/vimshell.vim'
 " expand selection region
 Plug 'terryma/vim-expand-region'
 " accelerated jk move
@@ -53,17 +26,16 @@ Plug 'rhysd/accelerated-jk'
 Plug 'MattesGroeger/vim-bookmarks'
 " line diff
 Plug 'AndrewRadev/linediff.vim'
-" simple note
-Plug 'mrtazz/simplenote.vim'
 
 """""""""""""""""""""""""""""""""""""""""""""""""
 " shougo unite
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " quick file finder
 " ag is a front end for the silver searcher ag program
-Plug 'rking/ag.vim'
 Plug 'Shougo/vimproc.vim', { 'do': 'make' }
-Plug 'Shougo/unite.vim' | Plug 'Shougo/neomru.vim' | Plug 'Shougo/neoyank.vim'
+Plug 'Shougo/unite.vim' 
+Plug 'Shougo/neomru.vim' 
+Plug 'Shougo/neoyank.vim'
 Plug 'tsukkee/unite-tag'
 Plug 'Shougo/unite-outline'
 " file explorer, can be integrated with unite
@@ -77,22 +49,11 @@ Plug 'Shougo/unite-help'
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " completion plugin
 Plug 'Shougo/neocomplete.vim'
-" Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemote') }
-" calculator source for neocomplete
-Plug 'hrsh7th/vim-neco-calc'
-" neocomplete syntax source
-Plug 'Shougo/neco-syntax'
-" codi
-Plug 'metakirby5/codi.vim'
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " tags
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" tagbar
-Plug 'majutsushi/tagbar'
 " automatic tags generation
 " Plug 'ludovicchabant/vim-gutentags'
-" find project root
-Plug 'dbakker/vim-projectroot'
 
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " syntastic
@@ -111,20 +72,27 @@ Plug 'pangloss/vim-javascript', { 'for': ['javascript', 'vue', 'jsx']}
 " distinguish json from javascript
 Plug 'elzr/vim-json', { 'for': 'json' }
 " vue syntax
-Plug 'posva/vim-vue'
+Plug 'posva/vim-vue', {'for': ['vue']}
 " jsx syntax
-Plug 'mxw/vim-jsx'
+Plug 'mxw/vim-jsx', {'for': ['javascript', 'jsx']}
 " html5 syntax and autocomplete
-Plug 'othree/html5.vim'
+Plug 'othree/html5.vim', {'for': ['html', 'vue']}
 " css syntax
-Plug 'JulesWang/css.vim'
+Plug 'JulesWang/css.vim', {'for': ['css']}
 
 """"""""""" tools
 " xml
 Plug 'sukima/xmledit', { 'for': 'xml' }
 Plug 'mattn/emmet-vim'
+""""""""""" weixin mini app
+Plug 'chemzqm/wxapp.vim'
 " tern
 Plug 'ternjs/tern_for_vim', {'do': 'npm install'}
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" python
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+Plug 'python-mode/python-mode'
+
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " text object
 """"""""""""""""""""""""""""""""""""""""""""""""""
@@ -173,12 +141,11 @@ Plug 'tmhedberg/matchit'
 Plug 'embear/vim-localvimrc'
 " toggle quickfix or location list window
 Plug 'Valloric/ListToggle'
-" create simutenous keymapping
-Plug 'kana/vim-arpeggio'
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " User interface related, nothing important to function
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " color scheme
+Plug 'joedicastro/vim-molokai256'
 Plug 'crusoexia/vim-monokai'
 Plug 'tomasr/molokai'
 Plug 'altercation/vim-colors-solarized'
@@ -201,35 +168,28 @@ Plug 'vim-airline/vim-airline-themes'
 """"""""""""""""""""""""""""""""""""""""""""""""""
 call plug#end()
 
-"command abbrevation for pluginstall, PlugUpdte, PlugUpgrade, PlugClean
-cabbrev pi PlugInstall
-cabbrev pu PlugUpdate
-cabbrev pg PlugUpgrade
-cabbrev pc PlugClean
 
 " use git protocol by default other than https
 "let g:vundle_default_git_proto = 'git'
 
 " map leader to space
-let mapleader=" "
+let mapleader=','
+let maplocalleader= ' '
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " general
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" show widemenu
-set wildmenu
-" always show status line
-set laststatus=2
-" no swap file
-set noswapfile
-" set hidden allowed
-set hidden
+set wildmenu          " show widemenu
+set laststatus=2      " always show status line
+set hidden            " set hidden allowed
+
 " access system clipboard
 if has('unnamedplus')
   set clipboard=unnamedplus
 else
   set clipboard=unnamed
 endif
+
 " for fixing the issue of auto indenting
 " the pasted code, see:
 " http://superuser.com/a/437744
@@ -256,10 +216,24 @@ function! XTermPasteBegin()
 endfunction
 
 inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
-nmap cop :set paste! paste?<cr>
 
 " search ignore case by default
-set ic
+set incsearch                   " incremental searching
+set showmatch                   " show pairs match
+set hlsearch                    " highlight search results
+set smartcase                   " smart case ignore
+set ignorecase                  " ignore case letters
+
+" Backups
+"
+"
+"
+set backup
+set noswapfile
+set backupdir=$HOME/.vim/tmp/backup/
+set undodir=$HOME/.vim/tmp/undo/
+set directory=$HOME/.vim/tmp/swap/
+set viminfo+=n$HOME/.vim/tmp/viminfo
 
 " wrap
 " set wrap
@@ -268,14 +242,12 @@ set ic
 " set list charts
 set listchars=trail:·,precedes:«,extends:»,eol:↲,tab:▸\
 set list
+
 " disable Background Color Erase (BCE) so that color schemes
 " render properly when inside 256-color tmux and GNU screen.
 " see also http://snk.tuxfamily.org/log/vim-256color-bce.html
 set t_ut=
-" set t_Co=256
-" let g:solarized_termcolors=256
-" set background=dark
-colorscheme molokai
+colorscheme molokai256
 set relativenumber
 set number
 set showcmd
@@ -288,9 +260,6 @@ set tabstop=4 "tab stop means number of spaces a tab in a file counts for
 set softtabstop=2 "number of spaces when editing files, insert tab or delete tab
 set shiftwidth=2 "number of spaces moved when indent a line left or right
 set expandtab " expand tab into spaces
-
-" open help in split vertical window
-cabbrev h vert h
 
 " natural split position
 set splitbelow
@@ -310,25 +279,6 @@ set autoread
 " accelerate <c-e> and <c-y> a bit
 " nnoremap <c-e> 3<c-e>
 " nnoremap <c-y> 3<c-y>
-
-" print current file name
-cabbrev pfn echo expand('%:t')
-cabbrev pfp echo expand('%:p')
-cabbrev pfr echo @%
-cabbrev pfd echo expand('%:p:h')
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" simplenote
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-source ~/.simplenoterc
-
-nmap yal :SimplenoteList<cr>
-nmap yau :SimplenoteUpdate<cr>
-nmap yat :SimplenoteTrash<cr>
-nmap yad :SimplenoteDelete<cr>
-nmap yan :SimplenoteNew<cr>
-let g:SimplenoteVertical=1
-let g:SimplenoteSingleWindow=1
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " airline
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -342,40 +292,22 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#show_buffers = 1
 let g:airline#extensions#tabline#buffers_label = 'b'
 let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
+" Just show the filename (no path) in the tab
+let g:airline#extensions#tabline#fnamemod = ':t'
 
 " enable buffer index and quick select buffer
 let g:airline#extensions#tabline#buffer_idx_mode = 1
-nmap <leader>1 <Plug>AirlineSelectTab1
-nmap <leader>2 <Plug>AirlineSelectTab2
-nmap <leader>3 <Plug>AirlineSelectTab3
-nmap <leader>4 <Plug>AirlineSelectTab4
-nmap <leader>5 <Plug>AirlineSelectTab5
-nmap <leader>6 <Plug>AirlineSelectTab6
-nmap <leader>7 <Plug>AirlineSelectTab7
-nmap <leader>8 <Plug>AirlineSelectTab8
-nmap <leader>9 <Plug>AirlineSelectTab9
-nmap <leader>h <Plug>AirlineSelectPrevTab
-nmap <leader>l <Plug>AirlineSelectNextTab
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" fugitive
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-autocmd BufReadPost fugitive://* set bufhidden=delete
-" go to parent tree when editing git object
-autocmd BufReadPost fugitive://*
-      \ if fugitive#buffer().type() =~# '^\%(tree\|blob\)$' |
-      \   nnoremap <buffer> .. :edit %:h<CR> |
-      \ endif
-
-nmap cis :Gstatus<cr>
-nmap cic :Gcommit<cr>
-nmap cil :Glog
-nmap cid :Gdiff<cr>
-nmap cig :Ggrep
-nmap cie :Gedit
-nmap cir :Gread
-nmap ciw :Gwrite
-nmap cib :Gblame<cr>
+nmap <localleader>1 <Plug>AirlineSelectTab1
+nmap <localleader>2 <Plug>AirlineSelectTab2
+nmap <localleader>3 <Plug>AirlineSelectTab3
+nmap <localleader>4 <Plug>AirlineSelectTab4
+nmap <localleader>5 <Plug>AirlineSelectTab5
+nmap <localleader>6 <Plug>AirlineSelectTab6
+nmap <localleader>7 <Plug>AirlineSelectTab7
+nmap <localleader>8 <Plug>AirlineSelectTab8
+nmap <localleader>9 <Plug>AirlineSelectTab9
+nmap <localleader>h <Plug>AirlineSelectPrevTab
+nmap <localleader>l <Plug>AirlineSelectNextTab
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " toggle quickfix or location list
@@ -405,13 +337,6 @@ call expand_region#custom_text_objects({
       \ })
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" gutentags
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" let g:gutentags_project_root = ['.projectRoot']
-" let g:gutentags_cache_dir = '~/tagfiles'
-" let g:gutentags_exclude = ['.git','.svn','.hg','min','vendor','\*.min.\*','\*.map','\*.swp','\*.bak','\*.pyc','\*.class','\*.sln','\*.Master','\*.csproj','\*.csproj.user','\*.cache','\*.dll','\*.pdb','tags','cscope.\*','\*.tar.\*','node_modules','bower_components', 'build', 'dist']
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " accelerated jk
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 nmap j <Plug>(accelerated_jk_gj)
@@ -420,11 +345,95 @@ nmap k <Plug>(accelerated_jk_gk)
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " autocommand
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"markdown file extension recognization
-au BufRead,BufNewFile *.md set filetype=markdown
-"make relative switch on when open any file type
-au Filetype * set relativenumber
+augroup myown
+  au!
+  "markdown file extension recognization
+  au BufRead,BufNewFile *.md set filetype=markdown
+  "make relative switch on when open any file type
+  au Filetype * set relativenumber
 
+  " source vimrc again when some vim script file is changed
+  au BufWritePost *.vimrc source ~/.vimrc
+  au BufWritePost *.vim source ~/.vimrc
+
+  " unite buffer local mapping
+  au Filetype unite nnoremap <buffer> <c-l> :TmuxNavigateRight<CR>
+  au Filetype unite nmap <buffer> <c-p> <Plug>(unite_redraw)
+
+  " vim, tmux seamless navigation, put the following mapping
+  " in after plugin to overwrite the key mapping done in the vimfiler plugin
+  " which use <c-l> to do refresh
+  " define new key map <c-r> to do refresh
+  au Filetype vimfiler nnoremap <buffer> <c-l> :TmuxNavigateRight<CR>
+  au Filetype vimfiler nmap <buffer> <c-p> <Plug>(vimfiler_redraw_screen)
+
+  " format json file
+  au Filetype json nmap <buffer> <leader>f :%!python -m json.tool<cr>
+
+  " neocomplete
+  au Filetype javascript setlocal omnifunc=tern#Complete
+  au FileType css setlocal omnifunc=csscomplete#CompleteCSS
+  au FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+  au FileType python setlocal omnifunc=pythoncomplete#Complete
+  au FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+
+  " when using fugitive plugin, there'll be issue when writing commit message if
+  " you turned on auto_close_preview window
+  " refer to the github issue for details:
+  " https://github.com/Shougo/neocomplcache.vim/issues/424
+  au FileType gitcommit let b:neocomplcache_enable_auto_close_preview = 0
+
+  " fugitive
+  au BufReadPost fugitive://* set bufhidden=delete
+  " go to parent tree when editing git object
+  au BufReadPost fugitive://*
+        \ if fugitive#buffer().type() =~# '^\%(tree\|blob\)$' |
+        \   nnoremap <buffer> .. :edit %:h<CR> |
+        \ endif
+augroup end
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" command abbreviation
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" command abbreavtion for source %
+cabbrev ss execute 'source' $vimrcpath
+cabbrev vrc execute 'e'.$vimrcpath
+cabbrev aft execute 'e'.$vimhome.'/after/plugin/my.vim'
+cabbrev zrc e ~/.zshrc<cr>
+
+"command abbrevation for pluginstall, PlugUpdte, PlugUpgrade, PlugClean
+cabbrev pi PlugInstall
+cabbrev pu PlugUpdate
+cabbrev pg PlugUpgrade
+cabbrev pc PlugClean
+
+" open help in split vertical window
+cabbrev h vert h
+
+" do substitution in selected area
+cabbrev sis s/\%V
+
+" print current file name
+cabbrev pfn echo expand('%:t')
+cabbrev pfp echo expand('%:p')
+cabbrev pfr echo @%
+cabbrev pfd echo expand('%:p:h')
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" unimparied toggle options
+" co+<x> to toggle some setting
+" [
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" toggle maximum window
+nmap coo :MaximizerToggle<cr>
+" toggle expand tab
+nmap coe :set expandtab!<CR>:set expandtab?<CR>
+" toggle paste mode
+nmap cop :set paste! paste?<cr>
+
+" move to next/previous window
+nmap ]w <c-w>w
+nmap [w <c-w>W
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " window management
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -434,40 +443,13 @@ nmap <Left> 10<c-w><
 " increase of decrease the hight of a window
 nmap <Down> 8<c-w>-
 nmap <Up> 8<c-w>+
-" swap position of window in the horizontal or vertical stack
-nmap <M-s> <c-w>r
 " toggle maximization of a window
 let g:maximizer_set_default_mapping = 0
-nnoremap coo :MaximizerToggle<cr>
-
-" move to next/previous window
-nmap ]w <c-w>w
-nmap [w <c-w>W
-
-function! MyRotate()
-  if winnr('$') == 2
-    " save the original position, jump to the first window
-    let initial = winnr()
-    exe 1 . "wincmd w"
-
-    wincmd l
-    if winnr() != 1
-      " succeeded moving to the right window
-      wincmd J " make it the bot window
-    else
-      " cannot move to the right, so we are at the top
-      wincmd H " make it the left window
-    endif
-
-    " restore cursor to the initial window
-    exe initial . "wincmd w"
-  endif
-endfunction
-nmap <M-r> :call MyRotate()<cr>
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " unite
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" load helperfuncs
+exec ':so ' $vimhome."/autoload/helperfuncs.vim"
 " 1st, map key strokes: [unite] to do nothing, make sure [unite] is reserved
 " for unite plugin usage
 " nnoremap [unite] <Nop>
@@ -476,6 +458,7 @@ nmap <M-r> :call MyRotate()<cr>
 
 " call unite#filters#converter_default#use(['converter_tail'])
 " call unite#filters#matcher_default#use(['matcher_project_ignore_files','matcher_context'])
+call unite#filters#matcher_default#use(['matcher_fuzzy'])
 call unite#filters#sorter_default#use(['sorter_rank'])
 " call unite#custom#source('file_rec/async', 'ignore_globs',
 " \ split(&wildignore, ','))
@@ -490,8 +473,60 @@ call unite#custom#profile('default', 'context', {
       \   'resume' : 1
       \ })
 
-" buffer
-nnoremap cub :<C-u>Unite -buffer-name=uniteBuffer buffer:-<cr>
+" unite menus
+let g:unite_source_menu_menus = {}
+" menu prefix key (for all Unite menus) {{{
+nnoremap [menu] <Nop>
+nmap <LocalLeader> [menu]
+" menus menu
+nnoremap <silent>[menu]u :Unite -silent -winheight=20 menu<CR>
+
+
+""" unite sources
+" buffers
+nnoremap <silent><Leader>b :<C-u>Unite -silent -buffer-name=uniteBuffer buffer<CR>
+" yank
+nnoremap <silent><Leader>y :<C-u>Unite -buffer-name=uniteYank -no-start-insert history/yank<cr>
+
+nnoremap <silent><Leader>a :Unite -silent -auto-preview -winheight=40 -no-quit
+            \ grep<CR>
+
+
+if executable('ag')
+    let g:unite_source_grep_command='ag'
+    let g:unite_source_grep_default_opts='--nocolor --nogroup -a -S'
+    let g:unite_source_grep_recursive_opt=''
+    let g:unite_source_grep_search_word_highlight = 1
+elseif executable('ack')
+    let g:unite_source_grep_command='ack'
+    let g:unite_source_grep_default_opts='--no-group --no-color'
+    let g:unite_source_grep_recursive_opt=''
+    let g:unite_source_grep_search_word_highlight = 1
+endif
+
+
+" Unite Menu {{{
+let g:unite_source_menu_menus.grep = {
+    \ 'description' : '           search files
+        \                                          ⌘ [space]a',
+    \}
+let g:unite_source_menu_menus.grep.command_candidates = [
+    \['▷ grep (ag → ack → grep)                                     ⌘ <Leader>a',
+        \'Unite -auto-preview -winheight=40 -no-quit grep'],
+    \['▷ grep current word                                          ⌘ <Leader>A',
+        \'UniteWithCursorWord -auto-preview -winheight=40 -no-quit grep'],
+    \['▷ find',
+        \'Unite find'],
+    \['▷ locate',
+        \'Unite -start-insert locate'],
+    \]
+
+let g:unite_source_menu_menus.grep.command_candidates = helperfuncs#unite_menu_gen(g:unite_source_menu_menus.grep.command_candidates, [])
+
+nnoremap <silent>[menu]a :Unite -silent menu:grep<CR>
+
+" END Unite Menu }}}
+
 " files and grep
 nnoremap cua :<C-u>Unite -buffer-name=uniteFiles file_rec/async:.<cr>
 nnoremap cur :<C-u>Unite -buffer-name=uniteGrep grep:.:-iRP<cr>
@@ -503,7 +538,6 @@ nnoremap cui :<C-u>Unite -buffer-name=uniteGitGrep grep/git:.:-iP<cr>
 nnoremap cuf :<C-u>Unite -buffer-name=uniteFind find:.<cr>
 
 nnoremap cum :<C-u>Unite -buffer-name=uniteMru file_mru<cr>
-nnoremap cuy :<C-u>Unite -buffer-name=uniteYank -no-start-insert history/yank<cr>
 " nnoremacucuc :<C-u>Unite -buffer-name=uniteTag tag:%<cr>
 nnoremap cut :<C-u>Unite -buffer-name=uniteTag tag<cr>
 nnoremap cul :<C-u>Unite -buffer-name=uniteLine line<cr>
@@ -511,8 +545,6 @@ nnoremap cuo :<C-u>Unite -buffer-name=uniteOutline outline<cr>
 nnoremap cup :<C-u>Unite -buffer-name=uniteSnippet ultisnips<cr>
 nnoremap cuh :<C-u>Unite -buffer-name=uniteHelp help<cr>
 
-au Filetype unite nnoremap <buffer> <c-l> :TmuxNavigateRight<CR>
-au Filetype unite nmap <buffer> <c-p> <Plug>(unite_redraw)|
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " vimfiler
@@ -522,30 +554,17 @@ let g:vimfiler_as_default_explorer = 1
 " Disable netrw.vim
 let g:loaded_netrwPlugin = 1
 
-" vim, tmux seamless navigation, put the following mapping
-" in after plugin to overwrite the key mapping done in the vimfiler plugin
-" which use <c-l> to do refresh
-" define new key map <c-r> to do refresh
-au Filetype vimfiler nnoremap <buffer> <c-l> :TmuxNavigateRight<CR>
-au Filetype vimfiler nmap <buffer> <c-p> <Plug>(vimfiler_redraw_screen)
-
 " custom profile
 call vimfiler#custom#profile('default', 'context', {
       \ 'safe' : 0,
       \ 'auto_cd': 1
       \ })
-
-nnoremap yv :<C-u>VimFiler "file_rec/async"<cr>
-nnoremap yvb :<C-u>VimFilerBufferDir "file_rec/async"<cr>
-nnoremap yvc :<C-u>VimFilerCurrentDir "file_rec/async"<cr>
-
+nnoremap <leader>X :<C-u>VimFiler "file_rec/async"<cr>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " unite-session
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-nnoremap cus :<C-u>Unite -buffer-name=uniteSession -no-start-insert session<cr>
-cabbrev us UniteSessionSave
+nnoremap <leader>s :<C-u>Unite -buffer-name=uniteSession -no-start-insert session<cr>
 let g:unite_source_session_enable_auto_save = 1
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " code formatter
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -569,12 +588,10 @@ let g:formatdef_eslintfix_vue = '"eslint-fix"'
 " au Filetype html nmap <buffer> <leader>f :%!tidy --show-errors 0 --show-warnings 0 --show-info 0 --quiet 1<cr>
 " au Filetype xhtml nmap <buffer> <leader>f :%!tidy --show-errors 0 --show-warnings 0 --show-info 0 --quiet 1<cr>
 " au Filetype xml nmap <buffer> <leader>f :%!tidy --show-errors 0 --show-warnings 0 --show-info 0 --quiet 1<cr>
-au Filetype json nmap <buffer> <leader>f :%!python -m json.tool<cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " syntastic configuration
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
 " the syntastic built-in toggle command doesn't work
 " even toggle to passive mode, it still do checks when buffer write
 " that's why I write my own toggle funciton
@@ -664,28 +681,17 @@ endfunction
 nmap cv :call ReplaceItInNormalMode()<cr>
 vmap cv :call ReplaceItInVisualMode()<cr>
 
-" do substitution in selected area
-cabbrev sis s/\%V
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " ultisnips
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:UltiSnipsSnippetsDir = g:path2VimHome . "/UltiSnips"
+let g:UltiSnipsSnippetsDir = $vimhome . "/UltiSnips"
 let g:UltiSnipsSnippetDirectories=["UltiSnips"]
 
 let g:UltiSnipsExpandTrigger = '<tab>'
 let g:UltiSnipsJumpForwardTrigger = '<tab>'
 let g:UltiSnipsJumpBackwardTrigger = '<s-tab>'
 
-nmap cp :UltiSnipsEdit<cr>
-
-" function! UltiSnipsCallUnite()
-"   Unite ultisnips
-"   return ''
-" endfunction
-
-" " inoremap <silent> cup <C-R>=(pumvisible()? "\<LT>C-E>":"")<CR><C-R>=UltiSnipsCallUnite()<CR>
-" nnoremap <silent> cup a<C-R>=(pumvisible()? "\<LT>C-E>":"")<CR><C-R>=UltiSnipsCallUnite()<CR>
-
+nmap <leader>p :UltiSnipsEdit<cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " neocomplete
@@ -696,11 +702,6 @@ let g:neocomplete#enable_at_startup = 1
 let g:neocomplete#enable_smart_case = 1
 " auto close preview window
 let g:neocomplete#enable_auto_close_preview = 1
-" when using fugitive plugin, there'll be issue when writing commit message if
-" you turned on auto_close_preview window
-" refer to the github issue for details:
-" https://github.com/Shougo/neocomplcache.vim/issues/424
-autocmd FileType gitcommit let b:neocomplcache_enable_auto_close_preview = 0
 " to use echo doc to view api
 " set completeopt-=preview
 
@@ -749,11 +750,6 @@ inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
 "   return pumvisible() ? "\<C-y>" : AutoPairsSpace()
 " endfunction
 
-au Filetype javascript setlocal omnifunc=tern#Complete
-au FileType css setlocal omnifunc=csscomplete#CompleteCSS
-au FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-au FileType python setlocal omnifunc=pythoncomplete#Complete
-au FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 
 " Enable heavy omni completion.
 if !exists('g:neocomplete#sources#omni#input_patterns')
@@ -769,7 +765,6 @@ endif
 "let g:neocomplete#sources#omni#input_patterns.cpp =
 "\ '[^.[:digit:] *\t]\%(\.\|->\)\%(\h\w*\)\?\|\h\w*::\%(\h\w*\)\?'
 
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " scartch pad
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -778,17 +773,25 @@ let g:scratch_horizontal = 0
 let g:scratch_top = 0
 let g:scratch_height = 100
 let g:scratch_persistence_file = '/tmp/scratch.vim'
-nmap gs :Scratch<cr>
+nmap <leader>d :Scratch<cr>
 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" ranger
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Use Ranger as a file explorer {{{
+fun! RangerChooser()
+    exec "silent !ranger --choosefile=/tmp/chosenfile " . expand("%:p:h")
+    if filereadable('/tmp/chosenfile')
+        exec 'edit ' . system('cat /tmp/chosenfile')
+        call system('rm /tmp/chosenfile')
+    endif
+    redraw!
+endfun
+map <leader>x :call RangerChooser()<CR>
+" }}}
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " some shortcut mapping
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" toggle tagbar
-nmap coe :set expandtab!<CR>:set expandtab?<CR>
-" cycle through my favorite colorschemes
-nmap yc :call <SID>NextColor()<CR>
-" toggle expansion
-" nmap cot :TagbarToggle<CR>
 " quick insert semicolon at the end of the line
 nmap <leader>; A;<Esc>
 "upper case Y to copy from cursor to line end
@@ -805,8 +808,8 @@ nnoremap gJ J
 " buffer write and quit
 nmap <leader>w :w<CR>
 nmap <leader>q :q<CR>
-nmap <leader>ww :wa<CR>
-nmap <leader>qq :qa<CR>
+nmap <leader>W :wa<CR>
+nmap <leader>Q :qa<CR>
 " define a map to switch to previous active buffer
 nmap gb :b#<CR>
 
@@ -848,9 +851,3 @@ vnoremap <silent> * :<c-u>let @/='<C-R>=<SID>get_visual_selection()<CR>'<CR>:<c-
 
 " map ctrl + space to trigger auto completion
 inoremap <Nul> <c-x>
-
-" command abbreavtion for source %
-cabbrev ss execute 'source' g:path2Vimrc
-cabbrev vrc execute 'e'.g:path2Vimrc
-cabbrev aft execute 'e'.g:path2VimHome.'/after/plugin/my.vim'
-cabbrev zrc e ~/.zshrc<cr>
