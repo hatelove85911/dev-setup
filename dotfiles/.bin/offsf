@@ -1,0 +1,10 @@
+#!/bin/bash
+# cd /data/sfsf/workspace/trunk/V4-Git/au-V4-web/build && rm -rf *
+cd /data/sfsf/workspace/trunk/multirater/au-multirater-web/build && rm -rf *
+
+tomcat_pid=`ps aux | grep tomcat | grep -v grep`
+if [ -n "${tomcat_pid}" ]
+then
+    ps aux | grep tomcat | grep -v grep | awk '{print $2}' | xargs kill -9
+fi
+
