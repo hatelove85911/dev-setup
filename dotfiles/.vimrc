@@ -33,8 +33,8 @@ Plug 'AndrewRadev/linediff.vim'
 " quick file finder
 " ag is a front end for the silver searcher ag program
 Plug 'Shougo/vimproc.vim', { 'do': 'make' }
-Plug 'Shougo/unite.vim' 
-Plug 'Shougo/neomru.vim' 
+Plug 'Shougo/unite.vim'
+Plug 'Shougo/neomru.vim'
 Plug 'Shougo/neoyank.vim'
 Plug 'tsukkee/unite-tag'
 Plug 'Shougo/unite-outline'
@@ -353,15 +353,15 @@ augroup myown
   au BufWritePost *.vim source ~/.vimrc
 
   " unite buffer local mapping
-  au Filetype unite nnoremap <buffer> <c-l> :TmuxNavigateRight<CR>
-  au Filetype unite nmap <buffer> <c-p> <Plug>(unite_redraw)
+  " au Filetype unite nnoremap <buffer> <c-l> :TmuxNavigateRight<CR>
+  " au Filetype unite nmap <buffer> <c-p> <Plug>(unite_redraw)
 
   " vim, tmux seamless navigation, put the following mapping
   " in after plugin to overwrite the key mapping done in the vimfiler plugin
   " which use <c-l> to do refresh
   " define new key map <c-r> to do refresh
-  au Filetype vimfiler nnoremap <buffer> <c-l> :TmuxNavigateRight<CR>
-  au Filetype vimfiler nmap <buffer> <c-p> <Plug>(vimfiler_redraw_screen)
+  " au Filetype vimfiler nnoremap <buffer> <c-l> :TmuxNavigateRight<CR>
+  " au Filetype vimfiler nmap <buffer> <c-p> <Plug>(vimfiler_redraw_screen)
 
   " format json file
   au Filetype json nmap <buffer> <leader>f :%!python -m json.tool<cr>
@@ -386,7 +386,7 @@ augroup myown
         \ if fugitive#buffer().type() =~# '^\%(tree\|blob\)$' |
         \   nnoremap <buffer> .. :edit %:h<CR> |
         \ endif
-augroup end
+  augroup end
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -395,7 +395,6 @@ augroup end
 " command abbreavtion for source %
 cabbrev ss execute 'source' $vimrcpath
 cabbrev vrc execute 'e'.$vimrcpath
-cabbrev aft execute 'e'.$vimhome.'/after/plugin/my.vim'
 cabbrev zrc e ~/.zshrc<cr>
 
 "command abbrevation for pluginstall, PlugUpdte, PlugUpgrade, PlugClean
@@ -446,52 +445,60 @@ let g:maximizer_set_default_mapping = 0
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " load helperfuncs
 exec ':so ' $vimhome."/autoload/helperfuncs.vim"
-" 1st, map key strokes: [unite] to do nothing, make sure [unite] is reserved
-" for unite plugin usage
-" nnoremap [unite] <Nop>
-" 2nd, make a key mapping to unite
-" nmap cu [unite]
 
 " call unite#filters#converter_default#use(['converter_tail'])
-" call unite#filters#matcher_default#use(['matcher_project_ignore_files','matcher_context'])
 call unite#filters#matcher_default#use(['matcher_fuzzy'])
 call unite#filters#sorter_default#use(['sorter_rank'])
 " call unite#custom#source('file_rec/async', 'ignore_globs',
 " \ split(&wildignore, ','))
 
-let g:unite_source_rec_async_command = ['ag', '--nocolor', '--nogroup', '--hidden', '-g', '',
-      \ '--ignore', '.svn', '--ignore', '.git', '--ignore', 'node_modules', '--ignore', 'build', '.']
 
 call unite#custom#profile('default', 'context', {
       \   'no_split': 1,
-      \   'start_insert': 1,
+      \   'start_insert': 0,
       \   'quit' : 1,
       \   'resume' : 1
       \ })
 
 
 """ unite sources
-" buffers
-nnoremap <silent><Leader>b :<C-u>Unite -silent -buffer-name=uniteBuffer buffer<CR>
-" yank
-nnoremap <silent><Leader>y :<C-u>Unite -buffer-name=uniteYank -no-start-insert history/yank<cr>
+nnoremap <silent><Leader>y :<C-u>Unite -silent -buffer-name=uniteYank history/yank<cr>
+nnoremap <silent><Leader>r :Unite -silent -buffer-name=uniteRegister register<CR>
+nnoremap <silent><Leader>b :<C-u>Unite -silent -buffer-name=uniteBuffer -auto-preview -winheight=40 buffer<CR>
+nnoremap <silent><Leader>u :<C-u>Unite -silent -buffer-name=uniteUltisnips ultisnips<CR>
+" non-git directory file searching sources
+nnoremap <silent><Leader>a :<C-u>Unite -silent -buffer-name=uniteGrep -auto-preview -winheight=40 grep<CR>
+nnoremap <silent><Leader>A :<C-u>UniteWithCursorWord -silent -buffer-name=uniteGrep -auto-preview -winheight=40 grep<CR>
+nnoremap <silent><Leader>e :<C-u>Unite -silent -buffer-name=uniteFileRecAsync -auto-preview -winheight=40 file_rec/async<CR>
+nnoremap <silent><Leader>j :<C-u>Unite -silent -buffer-name=uniteFind -auto-preview -winheight=40 find<CR>
+" git repo related sources
+nnoremap <silent><Leader>g :<C-u>Unite -silent -buffer-name=uniteGrepGit -auto-preview -winheight=40 grep/git:/:-P<CR>
+nnoremap <silent><Leader>G :<C-u>Unite -silent -buffer-name=uniteGrepGit -auto-preview -winheight=40 grep/git:.:-P<CR>
+nnoremap <silent><Leader>t :<C-u>Unite -silent -buffer-name=uniteFileRecGit -auto-preview -winheight=40 file_rec/git<CR>
+" new file or directory
+nnoremap <silent><Leader>n :<C-u>Unite --start-insert file/new<CR>
+nnoremap <silent><Leader>k :<C-u>Unite --start-insert directory/new<CR>
 
-nnoremap <silent><Leader>a :Unite -silent -auto-preview -winheight=40 -no-quit
-            \ grep<CR>
-
-
+" Source variables {{{
 if executable('ag')
-    let g:unite_source_grep_command='ag'
-    let g:unite_source_grep_default_opts='--nocolor --nogroup -a -S'
-    let g:unite_source_grep_recursive_opt=''
-    let g:unite_source_grep_search_word_highlight = 1
+  " Use ag (the silver searcher)
+  " https://github.com/ggreer/the_silver_searcher
+  let g:unite_source_grep_command = 'ag'
+  let g:unite_source_grep_default_opts =
+  \ '-i --hidden --ignore ' .
+  \ '''.hg'' --ignore ''.svn'' --ignore ''.git'' --ignore ''.bzr'''
+  let g:unite_source_grep_recursive_opt = ''
 elseif executable('ack')
-    let g:unite_source_grep_command='ack'
-    let g:unite_source_grep_default_opts='--no-group --no-color'
-    let g:unite_source_grep_recursive_opt=''
-    let g:unite_source_grep_search_word_highlight = 1
+  let g:unite_source_grep_command='ack'
+  let g:unite_source_grep_default_opts='--no-group --no-color'
+  let g:unite_source_grep_recursive_opt=''
+  let g:unite_source_grep_search_word_highlight = 1
 endif
 
+let g:unite_source_rec_async_command = ['ag', '--nocolor', '--nogroup', '--hidden', '-g', '',
+      \ '--ignore', '.svn', '--ignore', '.git', '--ignore', 'node_modules', '--ignore', 'build', '.']
+" END source variabls }}}
+"
 " Unite Menu {{{
 let g:unite_source_menu_menus = {}
 " menu prefix key (for all Unite menus) {{{
@@ -499,40 +506,72 @@ nnoremap [menu] <Nop>
 nmap <LocalLeader> [menu]
 
 let g:unite_source_menu_menus.all = {
-    \ 'description' : '           search files
-        \                                          ⌘ [space]a',
-    \}
+      \ 'description' : '           search files
+      \                                          ⌘ [space]a',
+      \}
 let g:unite_source_menu_menus.all.command_candidates = [
-    \['▷ grep (ag → ack → grep)                                     ⌘ <Leader>a',
-        \'Unite -auto-preview -winheight=40 -no-quit grep'],
-    \['▷ grep current word                                          ⌘ <Leader>A',
-        \'UniteWithCursorWord -auto-preview -winheight=40 -no-quit grep'],
-    \]
+      \['▷ yank history                                               ⌘ <Leader>y',
+      \'Unite -silent -buffer-name=uniteYank history/yank'],
+      \['▷ register                                                   ⌘ <Leader>r',
+      \'Unite -silent -buffer-name=uniteRegister register'],
+      \['▷ buffer                                                     ⌘ <Leader>b',
+      \'Unite -silent -buffer-name=uniteBuffer -auto-preview -winheight=40 buffer'],
+      \['▷ ultisnips                                                  ⌘ <Leader>u',
+      \'Unite -silent -buffer-name=uniteUltisnips ultisnips'],
+      \['▷ grep (ag → ack → grep)                                     ⌘ <Leader>a',
+      \'Unite -silent -buffer-name=uniteGrep -auto-preview -winheight=40 grep'],
+      \['▷ grep current word                                          ⌘ <Leader>A',
+      \'UniteWithCursorWord -silent -buffer-name=uniteGrep -auto-preview -winheight=40 grep'],
+      \['▷ asynchronous recursive file                                ⌘ <Leader>e',
+      \'Unite -silent -buffer-name=uniteFileRecAsync -auto-preview -winheight=40 file_rec/async'],
+      \['▷ find                                                       ⌘ <Leader>j',
+      \'Unite -silent -buffer-name=uniteFind -auto-preview -winheight=40 find'],
+      \['▷ git grep /                                                 ⌘ <Leader>g',
+      \'Unite -silent -buffer-name=uniteGrepGit -auto-preview -winheight=40 grep/git:/:-P'],
+      \['▷ git grep .                                                 ⌘ <Leader>G',
+      \'Unite -silent -buffer-name=uniteGrepGit -auto-preview -winheight=40 grep/git:.:-P'],
+      \['▷ git repo asynchronous file search                          ⌘ <Leader>t',
+      \'Unite -silent -buffer-name=uniteFileRecGit -auto-preview -winheight=40 file_rec/git'],
+      \['▷ create new file                                            ⌘ <Leader>n',
+      \'Unite --start-insert file/new'],
+      \['▷ create new directory                                       ⌘ <Leader>k',
+      \'Unite --start-insert directory/new'],
+      \['============================================================================', ''],
+      \['- ⌘ <Leader>x ranger', 'call RangerChooser()'],
+      \['- ⌘ <Leader>v vim filer', 'VimFiler "file_rec/async"'],
+      \['- ⌘ <Leader>s vim session', 'Unite -buffer-name=uniteSession -no-start-insert session'],
+      \['============================================================================', ''],
+      \['- con toggle number', ''],
+      \['- coc toggle cursor', ''],
+      \['- coo toggle maximize window', ''],
+      \['- cor toggle relative number', ''],
+      \['- cop toggle paste mode', ''],
+      \['- coe toggle expand tab', ''],
+      \['- coh toggle highlight', ''],
+      \['- col toggle listchars', ''],
+      \['- cok toggle location window', ''],
+      \['- coq toggle quickfix window', ''],
+      \['- cow toggle wrap', ''],
+      \['- cob toggle background light/dark', ''],
+      \['- cox toggle column cursor', ''],
+      \['- coi toggle ignore case', ''],
+      \['- cos toggle spell', ''],
+      \['============================================================================', ''],
+      \['- pfn print file name', ''],
+      \['- pfp print file path', ''],
+      \['- pfd print current file directory', ''],
+      \['- pfr print relative path', ''],
+      \['- sis substitute in selection area', ''],
+      \['- vrc edit ~/.vimrc', ''],
+      \['- zrc edit ~/.zshrc', ''],
+      \['- ss  source ~/.vimrc', ''],
+      \['- h   open help in vertical split', ''],
+      \]
 
 let g:unite_source_menu_menus.all.command_candidates = helperfuncs#unite_menu_gen(g:unite_source_menu_menus.all.command_candidates, [])
 
 nnoremap <silent>[menu]a :Unite -silent menu:all<CR>
 " END Unite Menu }}}
-
-" files and grep
-nnoremap cua :<C-u>Unite -buffer-name=uniteFiles file_rec/async:.<cr>
-nnoremap cur :<C-u>Unite -buffer-name=uniteGrep grep:.:-iRP<cr>
-" git repo files and grep
-nnoremap cug :<C-u>Unite -buffer-name=uniteGitLsfiles file_rec/git<cr>
-nnoremap cui :<C-u>Unite -buffer-name=uniteGitGrep grep/git:.:-iP<cr>
-
-" find
-nnoremap cuf :<C-u>Unite -buffer-name=uniteFind find:.<cr>
-
-nnoremap cum :<C-u>Unite -buffer-name=uniteMru file_mru<cr>
-" nnoremacucuc :<C-u>Unite -buffer-name=uniteTag tag:%<cr>
-nnoremap cut :<C-u>Unite -buffer-name=uniteTag tag<cr>
-nnoremap cul :<C-u>Unite -buffer-name=uniteLine line<cr>
-nnoremap cuo :<C-u>Unite -buffer-name=uniteOutline outline<cr>
-nnoremap cup :<C-u>Unite -buffer-name=uniteSnippet ultisnips<cr>
-nnoremap cuh :<C-u>Unite -buffer-name=uniteHelp help<cr>
-
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " vimfiler
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -546,7 +585,7 @@ call vimfiler#custom#profile('default', 'context', {
       \ 'safe' : 0,
       \ 'auto_cd': 1
       \ })
-nnoremap <leader>X :<C-u>VimFiler "file_rec/async"<cr>
+nnoremap <leader>v :<C-u>VimFiler "file_rec/async"<cr>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " unite-session
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -767,12 +806,12 @@ nmap <leader>d :Scratch<cr>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Use Ranger as a file explorer {{{
 fun! RangerChooser()
-    exec "silent !ranger --choosefile=/tmp/chosenfile " . expand("%:p:h")
-    if filereadable('/tmp/chosenfile')
-        exec 'edit ' . system('cat /tmp/chosenfile')
-        call system('rm /tmp/chosenfile')
-    endif
-    redraw!
+  exec "silent !ranger --choosefile=/tmp/chosenfile " . expand("%:p:h")
+  if filereadable('/tmp/chosenfile')
+    exec 'edit ' . system('cat /tmp/chosenfile')
+    call system('rm /tmp/chosenfile')
+  endif
+  redraw!
 endfun
 map <leader>x :call RangerChooser()<CR>
 " }}}
