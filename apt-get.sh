@@ -128,17 +128,6 @@ rm -rf ~/dircolors-solarized
 [ -e ~/.tmux ] && rm -rf ~/.tmux
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
-####################################################################################################
-# oh my vim
-####################################################################################################
-curl -L https://raw.github.com/liangxianzhe/oh-my-vim/master/tools/install.sh | sh
-
-####################################################################################################
-# deprecated because of using oh-my-vim: vim plugin manager
-####################################################################################################
-# install vim plug, the vim plugin manager
-# curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
-#     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
 ####################################################################################################
 # powerline fonts

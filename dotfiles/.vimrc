@@ -228,12 +228,8 @@ set ignorecase                  " ignore case letters
 "
 "
 "
-set backup
+set nobackup
 set noswapfile
-set backupdir=$HOME/.vim/tmp/backup/
-set undodir=$HOME/.vim/tmp/undo/
-set directory=$HOME/.vim/tmp/swap/
-set viminfo+=n$HOME/.vim/tmp/viminfo
 
 " wrap
 " set wrap
@@ -473,14 +469,6 @@ call unite#custom#profile('default', 'context', {
       \   'resume' : 1
       \ })
 
-" unite menus
-let g:unite_source_menu_menus = {}
-" menu prefix key (for all Unite menus) {{{
-nnoremap [menu] <Nop>
-nmap <LocalLeader> [menu]
-" menus menu
-nnoremap <silent>[menu]u :Unite -silent -winheight=20 menu<CR>
-
 
 """ unite sources
 " buffers
@@ -504,27 +492,26 @@ elseif executable('ack')
     let g:unite_source_grep_search_word_highlight = 1
 endif
 
-
 " Unite Menu {{{
-let g:unite_source_menu_menus.grep = {
+let g:unite_source_menu_menus = {}
+" menu prefix key (for all Unite menus) {{{
+nnoremap [menu] <Nop>
+nmap <LocalLeader> [menu]
+
+let g:unite_source_menu_menus.all = {
     \ 'description' : '           search files
         \                                          ⌘ [space]a',
     \}
-let g:unite_source_menu_menus.grep.command_candidates = [
+let g:unite_source_menu_menus.all.command_candidates = [
     \['▷ grep (ag → ack → grep)                                     ⌘ <Leader>a',
         \'Unite -auto-preview -winheight=40 -no-quit grep'],
     \['▷ grep current word                                          ⌘ <Leader>A',
         \'UniteWithCursorWord -auto-preview -winheight=40 -no-quit grep'],
-    \['▷ find',
-        \'Unite find'],
-    \['▷ locate',
-        \'Unite -start-insert locate'],
     \]
 
-let g:unite_source_menu_menus.grep.command_candidates = helperfuncs#unite_menu_gen(g:unite_source_menu_menus.grep.command_candidates, [])
+let g:unite_source_menu_menus.all.command_candidates = helperfuncs#unite_menu_gen(g:unite_source_menu_menus.all.command_candidates, [])
 
-nnoremap <silent>[menu]a :Unite -silent menu:grep<CR>
-
+nnoremap <silent>[menu]a :Unite -silent menu:all<CR>
 " END Unite Menu }}}
 
 " files and grep

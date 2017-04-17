@@ -6,25 +6,16 @@
 sudo -v
 
 for file in
-    $(pwd)/dotfiles/.{tmux.conf,exports,aliases,functions,zshenv,zshrc,ctags,gitconfig,bin,curlrc,wgetrc,i3,npmrc,yarnrc,pacconfig,before.vimrc,local.vimrc,after.vimrc}; do
+    $(pwd)/dotfiles/.{tmux.conf,exports,aliases,functions,zshenv,zshrc,ctags,gitconfig,bin,curlrc,wgetrc,i3,npmrc,yarnrc,pacconfig,vimrc,vim}; do
     ln -sf "$file" ~;
 done;
 unset file;
-
-################################################################################
-# vim
-################################################################################
-normalVimConfigDir="$HOME/.vim"
-! [ -e "$normalVimConfigDir" ] && mkdir -p "$normalVimConfigDir"
-ln -sf $(pwd)/dotfiles/init.vim ~/.vimrc
-ln -sf $(pwd)/dotfiles/UltiSnips "$normalVimConfigDir"
-ln -sf $(pwd)/dotfiles/neosnips "$normalVimConfigDir"
-# auto load folder
-! [ -e "$normalVimConfigDir/autoload" ] && mkdir -p "$normalVimConfigDir/autoload"
-ln -sf  $(pwd)/dotfiles/autoload/helperfuncs "$normalVimConfigDir/autoload/helperfuncs"
-# after plugin
-! [ -e "$normalVimConfigDir/after/plugin" ] && mkdir -p "$normalVimConfigDir/after/plugin"
-ln -sf  $(pwd)/dotfiles/after/plugin/my.vim "$normalVimConfigDir/after/plugin"
+####################################################################################################
+# install vim plugin manager
+####################################################################################################
+# install vim plug, the vim plugin manager
+curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
 ################################################################################
 # i3
