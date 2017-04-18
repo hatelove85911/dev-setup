@@ -819,7 +819,9 @@ map <leader>x :call RangerChooser()<CR>
 " some shortcut mapping
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " quick insert semicolon at the end of the line
-nmap <leader>; A;<Esc>
+nmap <localleader>; A;<Esc>
+" quick indent whole file
+nmap <localleader>i mzgg=G`z
 "upper case Y to copy from cursor to line end
 nnoremap Y v$hy
 " select the whole line
