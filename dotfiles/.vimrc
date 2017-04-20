@@ -386,6 +386,10 @@ augroup myown
         \ if fugitive#buffer().type() =~# '^\%(tree\|blob\)$' |
         \   nnoremap <buffer> .. :edit %:h<CR> |
         \ endif
+
+  " formatter
+  au FileType javascript.jsx,javascript set formatprg=prettier\ --stdin\ --parser\ flow\ --single-quote\ --trailing-comma\ es5\ --tab-width\ 4\ --no-semi
+  au Filetype javascript.jsx,javascript nmap <buffer> <leader>f mzgggqG`z
   augroup end
 
 
@@ -595,12 +599,8 @@ let g:unite_source_session_enable_auto_save = 1
 " code formatter
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+
 nmap <leader>f :Autoformat<cr>
-let g:formatters_javascript=['eslintfix_javascript', 'jsbeautify_javascript']
-let g:formatdef_eslintfix_javascript = '"eslint-fix"'
-let g:formatdef_jsbeautify_javascript = '"js-beautify -s 2 -a"'
-
-
 let g:formatters_vue=['eslintfix_vue']
 let g:formatdef_eslintfix_vue = '"eslint-fix"'
 
