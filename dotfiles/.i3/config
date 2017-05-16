@@ -220,10 +220,10 @@ bindsym $mod+c mode "$mode_capture"
 
 # startup programs
 exec google-chrome --proxy-server="socks5://127.0.0.1:1080"
-exec --no-startup-id feh --bg-scale ~/dev-setup/wallpaper.png
+exec --no-startup-id "feh --bg-scale ~/dev-setup/wallpaper.png"
 
 # keyboard setting script
-exec setxkbmap -layout us -option ctrl:nocaps
+exec "setxkbmap -layout us -option ctrl:nocaps"
 exec xcape
 
 # some homeonly script
