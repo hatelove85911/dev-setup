@@ -62,7 +62,8 @@ done
 echo "*******************************************************************"
 echo "install pip modules
 echo "*******************************************************************"
-pipModules=(genpac \
+pipModules=(sncli \
+            genpac \
             ConfigParser)
 
 for module in "${pipModules[@]}"
