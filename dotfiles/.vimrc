@@ -141,6 +141,8 @@ Plug 'tmhedberg/matchit'
 Plug 'embear/vim-localvimrc'
 " toggle quickfix or location list window
 Plug 'Valloric/ListToggle'
+" simple note
+Plug 'mrtazz/simplenote.vim'
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " User interface related, nothing important to function
 """"""""""""""""""""""""""""""""""""""""""""""""""

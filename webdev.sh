@@ -24,11 +24,6 @@ echo "*******************************************************************"
 nvm install node
 nvm use node
 
-
-echo "*******************************************************************"
-echo "use taopao npm registry
-echo "*******************************************************************"
-
 echo "*******************************************************************"
 echo "install npm global modules"
 echo "*******************************************************************"
@@ -55,7 +50,7 @@ npmGlobalModules=(eslint \
 
 for module in "${npmGlobalModules[@]}"
 do
-   npm install -g "$module"
+   npm install -g --registry https://registry.npm.taobao.org "$module"
 done
 
 
@@ -68,5 +63,5 @@ pipModules=(sncli \
 
 for module in "${pipModules[@]}"
 do
-   pip install "$module"
+   pip3 install "$module"
 done
