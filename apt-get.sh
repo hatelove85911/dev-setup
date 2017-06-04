@@ -67,6 +67,7 @@ aptPackages=(chromium-browser \
             fcitx \
             fcitx-googlepinyin \
             exuberant-ctags \
+            jq \
 # ncurse interface applications
             tig \
             ranger \
