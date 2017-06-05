@@ -262,6 +262,9 @@ alias offproxy="unset http_proxy https_proxy"
 # wifi control
 alias wifi="wicd-curses"
 
+# xclip
+alias xclip="xclip -selection clipboard"
+
 # grep
 
 # alias to clear 
