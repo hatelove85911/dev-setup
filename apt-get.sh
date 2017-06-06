@@ -130,6 +130,9 @@ git clone git://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
 # install agnosterzak zsh theme
 wget https://raw.githubusercontent.com/zakaziko99/agnosterzak-ohmyzsh-theme/master/agnosterzak.zsh-theme -O ~/.oh-my-zsh/themes/agnosterzak.zsh-theme
 
+# install powerlevel9k theme
+git clone https://github.com/bhilburn/powerlevel9k.git ~/.oh-my-zsh/custom/themes/powerlevel9k
+
 ####################################################################################################
 # solarized
 ####################################################################################################
