@@ -24,3 +24,18 @@ export GREP_OPTIONS='--color=auto';
 
 # set default TERM environment variable
 export TERM='xterm-256color'
+
+# NVM_DIR
+export NVM_DIR="$HOME/.nvm"
+
+# compnay proxy
+export PROXY_ADDR="http://proxy.wdf.sap.corp:8080"
+
+# android home
+export ANDROID_HOME="/home/admin/android"
+
+# reduce lag to 0.2s when entering vi mode by esc
+export KEYTIMEOUT=2
+
+# path
+export PATH=./node_modules/.bin:~/.bin:~/.local/bin/:/usr/bin/:/usr/sbin:$PATH

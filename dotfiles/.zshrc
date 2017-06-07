@@ -1,22 +1,3 @@
-##################################################
-# exports
-##################################################
-[ -r ~/.exports ] && [ -f ~/.exports ] && source ~/.exports;
-
-##################################################
-# nvm
-##################################################
-[ -s "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh" # This loads nvm
-nvm use node
-
-##################################################
-# docker
-##################################################
-# Always start by pointing to the local dev instance on mac os
-if [[  "$OSTYPE" == "darwin"*  ]]; then
-  dmenv dev;
-fi
-
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
 
@@ -24,7 +5,7 @@ export ZSH=$HOME/.oh-my-zsh
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-ZSH_THEME="agnosterzak"
+ZSH_THEME=""
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -70,18 +51,10 @@ DISABLE_AUTO_TITLE="true"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(vi-mode fasd history-substring-search)
 
-# User configuration
-# export PATH="/usr/bin:/bin:/usr/sbin:/sbin:$PATH"
-# export MANPATH="/usr/local/man:$MANPATH"
-if [[  "$OSTYPE" == "darwin"*  ]]; then
-  export PATH=./node_modules/.bin:~/.bin:/usr/local/bin/:"$(brew --prefix coreutils)/libexec/gnubin":$PATH
-elif [[  "$OSTYPE" == "linux"*  ]]; then
-  export PATH=./node_modules/.bin:~/.bin:~/.local/bin/:/usr/bin/:/usr/sbin:$PATH
-fi
-#  ~/.path can be used to extend `$PATH`.
-[ -r ~/.path ] && [ -f ~/.path ] && source ~/.path;
-
 source $ZSH/oh-my-zsh.sh
+
+# User configuration
+# export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment
 export LANG=en_US.UTF-8
@@ -103,25 +76,14 @@ export EDITOR='vim'
 [ -r ~/.functions ] && [ -f ~/.functions ] && source ~/.functions;
 [ -r ~/.aliases ] && [ -f ~/.aliases ] && source ~/.aliases;
 
-
 # ~/.extra can be used for other settings you don’t want to commit.
 [ -r ~/.extra ] && [ -f ~/.extra ] && source ~/.extra;
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 
+# eval `dircolors $HOME/.dir_colors`
 
-
-
-
-
-eval `dircolors $HOME/.dir_colors`
-
-# emulate bash PROMPT_COMMAND (only for zsh)
-precmd() { eval "$PROMPT_COMMAND" }
-
-# stty ixany
-# stty ixoff -ixon
-# LS_COLORS=$LS_COLORS:'ow=34;40' ; export LS_COLORS
-# zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
-zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
+# use pure theme
+autoload -U promptinit; promptinit
+prompt pure

@@ -5,7 +5,7 @@
 # Ask for the administrator password upfront.
 sudo -v
 
-for file in $(pwd)/dotfiles/.{tmux.conf,exports,aliases,functions,zshenv,zshrc,ctags,gitconfig,bin,curlrc,wgetrc,i3,npmrc,yarnrc,pacconfig,vimrc,vim}
+for file in $(pwd)/dotfiles/.{tmux.conf,aliases,functions,zshenv,zshrc,ctags,gitconfig,bin,curlrc,wgetrc,i3,npmrc,yarnrc,pacconfig,vimrc,vim}
 do
 	    ln -sf "$file" ~
 done

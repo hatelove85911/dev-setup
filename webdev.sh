@@ -9,20 +9,12 @@ sudo -v
 # Keep-alive: update existing `sudo` time stamp until the script has finished.
 while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 
-echo "*******************************************************************"
-echo "install nvm"
-echo "*******************************************************************"
-export NVM_DIR="$HOME/.nvm" && (
-  git clone https://github.com/creationix/nvm.git "$NVM_DIR"
-  cd "$NVM_DIR"
-  git checkout `git describe --abbrev=0 --tags --match "v[0-9]*" origin`
-) && source "$NVM_DIR/nvm.sh"
 
 echo "*******************************************************************"
 echo "install latest node"
 echo "*******************************************************************"
-nvm install node
-nvm use node
+curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
+sudo apt-get install -y nodejs
 
 echo "*******************************************************************"
 echo "install npm global modules"
