@@ -38,7 +38,9 @@ npmGlobalModules=(eslint \
             xo \
 
             ngrok \
-            yarn)
+            yarn \
+
+            pure-prompt)
 
 for module in "${npmGlobalModules[@]}"
 do
