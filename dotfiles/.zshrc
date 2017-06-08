@@ -82,7 +82,8 @@ export EDITOR='vim'
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 
-# eval `dircolors $HOME/.dir_colors`
+# use solarized ls dir color
+eval `dircolors $HOME/.dir_colors`
 
 # use pure theme
 autoload -U promptinit; promptinit
