@@ -345,6 +345,8 @@ nmap k <Plug>(accelerated_jk_gk)
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 augroup myown
   au!
+  " prevent clipboard lost when vim exit
+  au VimLeave * call system("xsel -ib", getreg('+'))
   "markdown file extension recognization
   au BufRead,BufNewFile *.md set filetype=markdown
   "make relative switch on when open any file type

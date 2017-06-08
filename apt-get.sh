@@ -48,6 +48,7 @@ aptPackages=(chromium-browser \
             vim-gtk \
             vim-runtime \
             gnome-terminal \
+            rxvt-unicode-256color \
             nvpy \
             dconf-cli \
             shadowsocks-qt5 \
@@ -77,6 +78,7 @@ aptPackages=(chromium-browser \
             mutt \
 # i3 dependent package
             i3 \
+            compton \
             xdotool \
             polybar \
 # clipboard
