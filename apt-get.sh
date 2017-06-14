@@ -81,6 +81,9 @@ aptPackages=(chromium-browser \
             compton \
             xdotool \
             polybar \
+# openbox
+            openbox \
+            obconf \
 # clipboard
             xclip \
             xsel \

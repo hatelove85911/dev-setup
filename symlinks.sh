@@ -23,3 +23,9 @@ curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
 # soft link .i3 both in ~/.i3 directory and ~/.config/.i3
 ! [ -e "$HOME/.config/" ] && mkdir -p ""$HOME/.config/""
 ln -sf $(pwd)/dotfiles/.i3 "$HOME/.config/"
+
+################################################################################
+# openbox
+################################################################################
+! [ -e "$HOME/.config/" ] && mkdir -p ""$HOME/.config/""
+ln -sf $(pwd)/dotfiles/openbox "$HOME/.config/"
