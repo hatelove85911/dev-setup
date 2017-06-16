@@ -84,6 +84,8 @@ aptPackages=(chromium-browser \
 # openbox
             openbox \
             obconf \
+# lubuntu-desktop
+            lubuntu-desktop \
 # clipboard
             xclip \
             xsel \
