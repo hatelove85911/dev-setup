@@ -151,7 +151,7 @@
      cases. -->
   <margins>
     <top>0</top>
-    <bottom>0</bottom>
+    <bottom>20</bottom>
     <left>0</left>
     <right>0</right>
   </margins>
@@ -232,51 +232,64 @@
       </action>
     </keybind>
     <!-- Keybindings for window position and resize -->
-    <keybind key="W-S-h">        # HalfLeftScreen
+    <keybind key="W-h">        # HalfLeftScreen
     <action name="UnmaximizeFull"/>
     <action name="MoveResizeTo"><x>0</x><y>0</y><height>100%</height><width>50%</width></action>
   </keybind>
-    <keybind key="W-S-l">        # HalfRightScreen
+    <keybind key="W-l">        # HalfRightScreen
     <action name="UnmaximizeFull"/>
     <action name="MoveResizeTo"><x>-0</x><y>0</y><height>100%</height><width>50%</width></action>
   </keybind>
-  <keybind key="W-S-k">        # HalfTopScreen
+  <keybind key="W-k">        # HalfTopScreen
     <action name="UnmaximizeFull"/>
     <action name="MoveResizeTo"><x>0</x><y>0</y><height>50%</height><width>100%</width></action>
   </keybind>
-  <keybind key="W-S-j">        # HalfBottomScreen
+  <keybind key="W-j">        # HalfBottomScreen
     <action name="UnmaximizeFull"/>
     <action name="MoveResizeTo"><x>0</x><y>-0</y><height>50%</height><width>100%</width></action>
   </keybind>
-  <keybind key="W-m">
-    <action name="ToggleFullscreen"/>
+<keybind key="W-f">
+  <action name="ToggleFullscreen"/>
   </keybind>
-    <!-- Keybindings for window switching with the arrow keys -->
-    <keybind key="W-l">
-      <action name="DirectionalCycleWindows">
-        <direction>right</direction>
-      </action>
-    </keybind>
-    <keybind key="W-h">
-      <action name="DirectionalCycleWindows">
-        <direction>left</direction>
-      </action>
-    </keybind>
-    <keybind key="W-k">
-      <action name="DirectionalCycleWindows">
-        <direction>up</direction>
-      </action>
-    </keybind>
-    <keybind key="W-j">
-      <action name="DirectionalCycleWindows">
-        <direction>down</direction>
-      </action>
-    </keybind>
+  <keybind key="W-m">
+    <action name="ToggleMaximize"/>
+  </keybind>
+    <!-- Keybindings for window switching like vim -->
+    <!-- <keybind key="W-l"> -->
+    <!--   <action name="DirectionalCycleWindows"> -->
+    <!--     <direction>right</direction> -->
+    <!--   </action> -->
+    <!-- </keybind> -->
+    <!-- <keybind key="W-h"> -->
+    <!--   <action name="DirectionalCycleWindows"> -->
+    <!--     <direction>left</direction> -->
+    <!--   </action> -->
+    <!-- </keybind> -->
+    <!-- <keybind key="W-k"> -->
+    <!--   <action name="DirectionalCycleWindows"> -->
+    <!--     <direction>up</direction> -->
+    <!--   </action> -->
+    <!-- </keybind> -->
+    <!-- <keybind key="W-j"> -->
+    <!--   <action name="DirectionalCycleWindows"> -->
+    <!--     <direction>down</direction> -->
+    <!--   </action> -->
+    <!-- </keybind> -->
     <!-- Keybindings for running applications -->
     <keybind key="W-Return">
       <action name="Execute">
         <command>gnome-terminal</command>
       </action>
+    </keybind>
+    <keybind key="W-b">
+      <action name="Execute">
+        <command>google-chrome</command>
+      </action>
+    </keybind>
+    <keybind key="W-s">
+        <action name="Execute">
+          <command>shutter</command>
+        </action>
     </keybind>
     <!-- restart openbox -->
     <keybind key="A-S-r">
