@@ -39,7 +39,7 @@
                   'Active' - where the active window is -->
   </placement>
   <theme>
-    <name>Bear2</name>
+    <name>Mikachu</name>
     <titleLayout>NLIMC</titleLayout>
     <!--
       available characters are NDSLIMC, each can occur at most once.
@@ -215,6 +215,7 @@
     <!-- Keybindings for window switching -->
     <keybind key="W-n">
       <action name="NextWindow">
+        <raise>yes</raise>
         <finalactions>
           <action name="Focus"/>
           <action name="Raise"/>
@@ -224,6 +225,7 @@
     </keybind>
     <keybind key="W-p">
       <action name="PreviousWindow">
+        <raise>yes</raise>
         <finalactions>
           <action name="Focus"/>
           <action name="Raise"/>
@@ -232,28 +234,28 @@
       </action>
     </keybind>
     <!-- Keybindings for window position and resize -->
-    <keybind key="W-h">        # HalfLeftScreen
+    <keybind key="W-S-h">        # HalfLeftScreen
     <action name="UnmaximizeFull"/>
-    <action name="MoveResizeTo"><x>0</x><y>0</y><height>100%</height><width>50%</width></action>
+    <action name="MoveResizeTo"><x>0</x><y>0</y><height>100%</height><width>1/5</width></action>
   </keybind>
     <keybind key="W-l">        # HalfRightScreen
     <action name="UnmaximizeFull"/>
     <action name="MoveResizeTo"><x>-0</x><y>0</y><height>100%</height><width>50%</width></action>
   </keybind>
-  <keybind key="W-k">        # HalfTopScreen
+    <keybind key="W-k">        # HalfTopScreen
     <action name="UnmaximizeFull"/>
     <action name="MoveResizeTo"><x>0</x><y>0</y><height>50%</height><width>100%</width></action>
   </keybind>
-  <keybind key="W-j">        # HalfBottomScreen
+    <keybind key="W-j">        # HalfBottomScreen
     <action name="UnmaximizeFull"/>
     <action name="MoveResizeTo"><x>0</x><y>-0</y><height>50%</height><width>100%</width></action>
   </keybind>
-<keybind key="W-f">
-  <action name="ToggleFullscreen"/>
-  </keybind>
-  <keybind key="W-m">
-    <action name="ToggleMaximize"/>
-  </keybind>
+    <keybind key="W-f">
+      <action name="ToggleFullscreen"/>
+    </keybind>
+    <keybind key="W-m">
+      <action name="ToggleMaximize"/>
+    </keybind>
     <!-- Keybindings for window switching like vim -->
     <!-- <keybind key="W-l"> -->
     <!--   <action name="DirectionalCycleWindows"> -->
@@ -287,9 +289,9 @@
       </action>
     </keybind>
     <keybind key="W-s">
-        <action name="Execute">
-          <command>shutter</command>
-        </action>
+      <action name="Execute">
+        <command>shutter</command>
+      </action>
     </keybind>
     <!-- restart openbox -->
     <keybind key="A-S-r">
