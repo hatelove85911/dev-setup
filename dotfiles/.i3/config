@@ -52,12 +52,6 @@ bindsym $alt+j focus down
 bindsym $alt+k focus up
 bindsym $alt+l focus right
 
-# change window size
-bindsym $alt+Up resize grow height 10 px or 10 ppt
-bindsym $alt+Down resize shrink height 10 px or 10 ppt
-bindsym $alt+Left resize shrink width 10 px or 10 ppt
-bindsym $alt+Right resize grow width 10 px or 10 ppt
-
 # move focused window
 bindsym $alt+Shift+h move left
 bindsym $alt+Shift+j move down
@@ -65,10 +59,7 @@ bindsym $alt+Shift+k move up
 bindsym $alt+Shift+l move right
 
 # split in horizontal orientation
-bindsym $alt+backslash split h
-
-# split in vertical orientation
-bindsym $alt+minus split v
+bindsym $alt+v split toggle
 
 # enter fullscreen mode for the focused container
 bindsym $alt+f fullscreen toggle
@@ -81,34 +72,28 @@ bindsym $alt+s layout stacking
 bindsym $alt+w layout tabbed
 bindsym $alt+e layout toggle split
 
-
-
-
 # toggle tiling / floating
 bindsym $alt+Shift+space floating toggle
 # change focus between tiling / floating windows
 bindsym $alt+space focus mode_toggle
-
-
 
 # focus the parent container
 bindsym $alt+Shift+Tab focus parent
 # focus the child container
 bindsym $alt+Tab focus child
 
-
-
 # workspace
 set $workspace1 1: browser
 set $workspace2 2
 set $workspace3 3
 set $workspace4 4
-set $workspace5 5: virtual machine
-set $workspace6 6: others
-set $workspace7 7: note
+set $workspace5 5
+set $workspace6 6
+set $workspace7 7
 set $workspace8 8
-set $workspace9 9: chat
-set $workspace10 10: email
+set $workspace9 9
+set $workspace10 10
+
 # switch to workspace
 bindsym $alt+1 workspace number 1
 bindsym $alt+2 workspace number 2
@@ -122,6 +107,7 @@ bindsym $alt+9 workspace number 9
 bindsym $alt+0 workspace number 10
 bindsym $alt+n workspace next
 bindsym $alt+p workspace prev
+
 # move focused container to workspace
 bindsym $alt+Shift+1 move container to workspace $workspace1
 bindsym $alt+Shift+2 move container to workspace $workspace2
@@ -134,40 +120,31 @@ bindsym $alt+Shift+8 move container to workspace $workspace8
 bindsym $alt+Shift+9 move container to workspace $workspace9
 bindsym $alt+Shift+0 move container to workspace $workspace10
 
-# move window to scratchpad and show windows in scratchpad
-bindsym $alt+semicolon exec ~/.bin/i3/i3_mark_scratchpad.sh
-bindsym $alt+Shift+semicolon [con_mark="^scratchpad666"] scratchpad show
-
-# reload the configuration file
-bindsym $alt+Shift+c reload
-# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
-bindsym $alt+Shift+r restart
-# exit i3 (logs you out of your X session)
-# bindsym $alt+Shift+e exit
-#
-
-
-bindsym $alt+Ctrl+h move absolute position 0 0
-bindsym $alt+Ctrl+l move right 30 px
-
-
 ####################################################################################################
 # my own settings
 ####################################################################################################
 # default workspace for applciations
 assign [class="Chromium-browser"] $workspace1
 assign [class="Google-chrome"] $workspace1
-assign [class="shadowsocks-qt5"] $workspace6
-assign [class="VirtualBox"] $workspace5
-assign [class="Simplenote"] $workspace7
 
 # keybindings
-bindsym $alt+r exec i3-input -F 'rename workspace to "%s"' -P 'New name for this workspace: '
-bindsym $alt+shift+q i3-exit
+# launch shortcut
 bindsym $alt+b exec google-chrome --proxy-server="socks5://127.0.0.1:1080"
-bindsym $alt+m exec i3-input -F 'mark --toggle %s' -P 'Mark: '
-bindsym $alt+Shift+m exec i3-input -F '[con_mark="%s"] focus' -P 'Go to mark: '
-bindsym $alt+i exec i3-input -F "title_format %s" -P 'Title: '
+# rename workspace
+bindsym $alt+r exec i3-input -F 'rename workspace to "%s"' -P 'New name for this workspace: '
+# move window to scratchpad and show windows in scratchpad
+bindsym $alt+semicolon exec ~/.bin/i3/i3_mark_scratchpad.sh
+bindsym $sup+semicolon [con_mark="^scratchpad666"] scratchpad show
+# show hide simplenote
+bindsym $sup+n [con_mark="^scratchpad666" class="Simplenote"] scratchpad show
+# show hide ss-qt5
+bindsym $sup+s [con_mark="^scratchpad666" class="shadowsocks-qt5"] scratchpad show
+# show hide post-man
+bindsym $sup+p [con_mark="^scratchpad666" title="Postman"] scratchpad show
+# reload the configuration file
+bindsym $alt+Shift+c reload
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym $alt+Shift+r restart
 
 # lock scripts
 set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (Shift+s) shutdown
@@ -183,7 +160,7 @@ mode "$mode_system" {
       bindsym Return mode "default"
       bindsym Escape mode "default"
 }
-bindsym $alt+shift+e mode "$mode_system"
+bindsym $alt+Shift+e mode "$mode_system"
 
 # screenshot
 set $mode_capture Capture (s) select, (f) full, (w) window, (a) active, (m) menu, (t) tooltip
@@ -204,12 +181,18 @@ bindsym $alt+c mode "$mode_capture"
 # startup programs
 exec --no-startup-id google-chrome --proxy-server="socks5://127.0.0.1:1080"
 exec --no-startup-id "feh --bg-scale ~/dev-setup/wallpaper.png"
-exec --no-startup-id simplenote
-exec --no-startup-id ss-qt5
+exec --no-startup-id simplenote 
+exec --no-startup-id albert
 exec --no-startup-id vmware-user
+exec --no-startup-id ss-qt5
+exec --no-startup-id ~/.bin/keyb.sh
 
+# for window
+for_window [class="Simplenote"] exec ~/.bin/i3/i3_mark_scratchpad.sh
+for_window [class="shadowsocks-qt5"] exec ~/.bin/i3/i3_mark_scratchpad.sh
+for_window [title="Postman"] exec ~/.bin/i3/i3_mark_scratchpad.sh
 
-# loop and feel (theme)
+# look and feel (theme)
 set $CL_BG #282C34
 set $CL_FG #ABB2BF
 set $CL_CUR #528BFF
