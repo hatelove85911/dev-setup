@@ -39,3 +39,6 @@ export KEYTIMEOUT=2
 
 # path
 export PATH=./node_modules/.bin:~/.bin:~/.local/bin/:/usr/bin/:/usr/sbin:$PATH
+
+# fpath
+export FPATH=~/.zfunctions:$FPATH
