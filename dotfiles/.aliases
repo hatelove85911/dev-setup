@@ -251,6 +251,13 @@ alias npmcfg="npm config set"
 alias npmcfd="npm config delete"
 alias tnpm="npm --registry https://registry.npm.taobao.org"
 
+# yaourt
+alias yai="yaourt -Sy --noconfirm"
+alias yas="yaourt -Ss"
+
+# proxychains
+alias pc="proxychains4"
+
 # alias for httpie
 alias h="http"
 
