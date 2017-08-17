@@ -40,6 +40,9 @@ npmGlobalModules=(eslint \
             ngrok \
             yarn \
 
+            wept \
+            wepy-cli \
+
             pure-prompt)
 
 for module in "${npmGlobalModules[@]}"

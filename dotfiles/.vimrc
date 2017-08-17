@@ -349,6 +349,8 @@ augroup myown
   au VimLeave * call system("xsel -ib", getreg('+'))
   "markdown file extension recognization
   au BufRead,BufNewFile *.md set filetype=markdown
+  "wpy file extension recognization
+  au BufRead,BufNewFile *.wpy set filetype=wpy.html
   "make relative switch on when open any file type
   au Filetype * set relativenumber
 
