@@ -22,7 +22,7 @@ fi
 alias l="ls -lF ${colorflag}"
 
 # List all files colorized in long format, including dot files
-alias la="ls -laF ${colorflag}"
+alias la="ls -lahF ${colorflag}"
 
 # List only directories
 alias lsd="ls -lF ${colorflag} | grep --color=never '^d'"
@@ -42,11 +42,6 @@ alias timer='echo "Timer started. Stop with Ctrl-D." && date && time cat && date
 
 # Get OS X Software Updates, and update installed Ruby gems, Homebrew, npm, and their installed packages
 alias update='sudo softwareupdate -i -a; brew update; brew upgrade --all; brew cleanup; npm install npm -g; npm update -g; sudo gem update --system; sudo gem update'
-
-# IP addresses
-alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
-alias localip="ipconfig getifaddr en0"
-alias ips="ifconfig -a | grep -o 'inet6\? \(addr:\)\?\s\?\(\(\([0-9]\+\.\)\{3\}[0-9]\+\)\|[a-fA-F0-9:]\+\)' | awk '{ sub(/inet6? (addr:)? ?/, \"\"); print }'"
 
 # Flush Directory Service cache
 alias flush="dscacheutil -flushcache && killall -HUP mDNSResponder"
@@ -153,7 +148,7 @@ alias obrc="v ~/.config/openbox/rc.xml"
 alias yarnrc="v ~/.yarnrc"
 alias npmrc="v ~/.npmrc"
 alias snrc="v ~/.simplenoterc"
-alias nvpy="v ~/.nvpy.cfg"
+alias nvpyrc="v ~/.nvpy.cfg"
 alias vrcaft="v $HOME/.after.vimrc"
 alias vrcloc="v $HOME/.local.vimrc"
 alias vrcbef="v $HOME/.before.vimrc"
@@ -237,7 +232,26 @@ alias dt="devtool"
 # Short for docker-machine
 alias dm="docker-machine"
 alias dcmp="docker-compose"
+alias dkpt="docker run -d -p 9000:9000 -v /var/run/docker.sock:/var/run/docker.sock portainer/portainer"
 alias dk="docker"
+dockerpsformat='table {{.ID}}:{{.Command}}\t{{.Names}}\t{{.Status}}\t{{.Image}}\t{{.Networks}}\t{{.Ports}}\t{{.CreatedAt}}'
+alias dkps="docker ps --format '$dockerpsformat'"
+alias dkpsa="docker ps -a --format '$dockerpsformat'"
+alias dkr="docker run"
+alias dkrn="docker run --name"
+alias dkst="docker start"
+alias dks="docker stop"
+alias dki="docker images"
+alias dkrm="docker rm"
+alias dkrmi="docker rmi"
+alias dka="docker attach"
+alias dkn="docker network"
+alias dkncr="docker network create --driver bridge"
+alias dknls="docker network ls"
+alias dknrm="docker network rm"
+alias dkni="docker network inspect"
+alias dknc="docker network connect"
+alias dknd="docker network disconnect"
 
 # fasd interactive file search, selection an edit with vim
 alias vv="sf -e vim"
