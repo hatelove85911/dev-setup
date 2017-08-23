@@ -231,7 +231,9 @@ alias dt="devtool"
 # docker
 # Short for docker-machine
 alias dm="docker-machine"
-alias dcmp="docker-compose"
+alias dcp="docker-compose"
+alias dcpu="docker-compose up"
+alias dcpd="docker-compose down"
 alias dkpt="docker run -d -p 9000:9000 -v /var/run/docker.sock:/var/run/docker.sock portainer/portainer"
 alias dk="docker"
 dockerpsformat='table {{.ID}}:{{.Command}}\t{{.Names}}\t{{.Status}}\t{{.Image}}\t{{.Networks}}\t{{.Ports}}\t{{.CreatedAt}}'
