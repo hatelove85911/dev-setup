@@ -42,8 +42,6 @@ Plug 'Shougo/unite-outline'
 Plug 'Shougo/vimfiler.vim'
 " unite session
 Plug 'Shougo/unite-session'
-" unite help
-Plug 'Shougo/unite-help'
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " shougo neocomplete
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -86,13 +84,8 @@ Plug 'sukima/xmledit', { 'for': 'xml' }
 Plug 'mattn/emmet-vim'
 """"""""""" weixin mini app
 Plug 'chemzqm/wxapp.vim'
-" tern
-Plug 'ternjs/tern_for_vim', {'do': 'npm install'}
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" python
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-Plug 'python-mode/python-mode'
-
+" markdown preview
+Plug 'JamshedVesuna/vim-markdown-preview'
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " text object
 """"""""""""""""""""""""""""""""""""""""""""""""""
@@ -103,16 +96,10 @@ Plug 'kana/vim-textobj-function'
 " support script for vim-textobj-function for js filetypes
 " it will do nothing unless vim-textobj-function
 Plug 'thinca/vim-textobj-function-javascript'
-" for any type of quote
-Plug 'beloglazov/vim-textobj-quotes'
-" url
-Plug 'mattn/vim-textobj-url'
 " parameters
 Plug 'sgur/vim-textobj-parameter'
 " html xml attrbutes
 Plug 'whatyouhide/vim-textobj-xmlattr'
-" indent
-Plug 'kana/vim-textobj-indent'
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " small Plugs
 """"""""""""""""""""""""""""""""""""""""""""""""""
@@ -122,8 +109,6 @@ Plug 'tpope/vim-commentary'
 " calutil is needed by visIncr Plug for increamental date
 Plug 'cskeeters/vim-calutil'
 Plug 'vim-scripts/VisIncr'
-" vim calculator
-Plug 'arecarn/crunch.vim'
 " auto closing brackets
 Plug 'jiangmiao/auto-pairs'
 " window maximizer
@@ -132,17 +117,11 @@ Plug 'szw/vim-maximizer'
 Plug 'mtth/scratch.vim'
 " swap two region of text easily
 Plug 'tommcdo/vim-exchange'
-" seamless navigation between tmux and vim
-Plug 'christoomey/vim-tmux-navigator'
 " jump to matching xml tags and more, extend % function to not only jump to
 " matching parenthesis, square brackets
 Plug 'tmhedberg/matchit'
 " search for .lvimrc
 Plug 'embear/vim-localvimrc'
-" toggle quickfix or location list window
-Plug 'Valloric/ListToggle'
-" simple note
-Plug 'mrtazz/simplenote.vim'
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " User interface related, nothing important to function
 """"""""""""""""""""""""""""""""""""""""""""""""""
@@ -192,33 +171,6 @@ else
   set clipboard=unnamed
 endif
 
-" for fixing the issue of auto indenting
-" the pasted code, see:
-" http://superuser.com/a/437744
-" http://stackoverflow.com/a/21798070
-" https://coderwall.com/p/if9mda/automatically-set-paste-mode-in-vim-when-pasting-in-insert-mode
-function! WrapForTmux(s)
-  if !exists('$TMUX')
-    return a:s
-  endif
-
-  let tmux_start = "\<Esc>Ptmux;"
-  let tmux_end = "\<Esc>\\"
-
-  return tmux_start . substitute(a:s, "\<Esc>", "\<Esc>\<Esc>", 'g') . tmux_end
-endfunction
-
-let &t_SI .= WrapForTmux("\<Esc>[?2004h")
-let &t_EI .= WrapForTmux("\<Esc>[?2004l")
-
-function! XTermPasteBegin()
-  set pastetoggle=<Esc>[201~
-  set paste
-  return ""
-endfunction
-
-inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
-
 " search ignore case by default
 set incsearch                   " incremental searching
 set showmatch                   " show pairs match
@@ -227,9 +179,6 @@ set smartcase                   " smart case ignore
 set ignorecase                  " ignore case letters
 
 " Backups
-"
-"
-"
 set nobackup
 set noswapfile
 
@@ -274,9 +223,10 @@ set noshowmode
 " auto read if file is changed outside vim but not changed inside vim yet
 set autoread
 
-" accelerate <c-e> and <c-y> a bit
-" nnoremap <c-e> 3<c-e>
-" nnoremap <c-y> 3<c-y>
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" grip ( the markdown previewer )
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let vim_markdown_preview_github=1
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " airline
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -308,31 +258,9 @@ nmap <localleader>h <Plug>AirlineSelectPrevTab
 nmap <localleader>l <Plug>AirlineSelectNextTab
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" toggle quickfix or location list
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:lt_location_list_toggle_map = 'cok'
-let g:lt_quickfix_list_toggle_map = 'coq'
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " local vimrc
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:localvimrc_ask = 0
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" expand region
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Extend the global default
-call expand_region#custom_text_objects({
-      \ 'a''' :0,
-      \ 'a""' :0,
-      \ 'a]' :1,
-      \ 'ab' :1,
-      \ 'aB' :1,
-      \ 'ii' :0,
-      \ 'ai' :0,
-      \ 'if' :1,
-      \ 'af' :1,
-      \ })
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " accelerated jk
@@ -357,17 +285,6 @@ augroup myown
   " source vimrc again when some vim script file is changed
   au BufWritePost *.vimrc source ~/.vimrc
   au BufWritePost *.vim source ~/.vimrc
-
-  " unite buffer local mapping
-  " au Filetype unite nnoremap <buffer> <c-l> :TmuxNavigateRight<CR>
-  " au Filetype unite nmap <buffer> <c-p> <Plug>(unite_redraw)
-
-  " vim, tmux seamless navigation, put the following mapping
-  " in after plugin to overwrite the key mapping done in the vimfiler plugin
-  " which use <c-l> to do refresh
-  " define new key map <c-r> to do refresh
-  " au Filetype vimfiler nnoremap <buffer> <c-l> :TmuxNavigateRight<CR>
-  " au Filetype vimfiler nmap <buffer> <c-p> <Plug>(vimfiler_redraw_screen)
 
   " format json file
   au Filetype json nmap <buffer> <leader>f :%!python -m json.tool<cr>
@@ -431,10 +348,6 @@ cabbrev pfd echo expand('%:p:h')
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " toggle maximum window
 nmap coo :MaximizerToggle<cr>
-" toggle expand tab
-nmap coe :set expandtab!<CR>:set expandtab?<CR>
-" toggle paste mode
-nmap cop :set paste! paste?<cr>
 
 " move to next/previous window
 nmap ]w <c-w>w
@@ -604,8 +517,6 @@ let g:unite_source_session_enable_auto_save = 1
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " code formatter
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-
 nmap <leader>f :Autoformat<cr>
 let g:formatters_vue=['eslintfix_vue']
 let g:formatdef_eslintfix_vue = '"eslint-fix"'
@@ -665,54 +576,6 @@ let g:syntastic_error_symbol = '✗'
 let g:syntastic_style_error_symbol = '🚫'
 let g:syntastic_warning_symbol = '❗'
 let g:syntastic_style_warning_symbol = '⚠'
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" multiline editing
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" small script to apply macro to visually selected lines
-" recommended in online post:
-" https://medium.com/@schtoeffel/you-don-t-need-more-than-one-cursor-in-vim-2c44117d51db#.y8t7jdgwx
-" xnoremap @ :<C-u>call ExecuteMacroOverVisualRange()<CR>
-"
-
-" function! ExecuteMacroOverVisualRange()
-" echo "@".getcmdline()
-" execute ":'<,'>normal @".nr2char(getchar())
-" endfunction
-" " apply macro globally
-" cabbrev gq g/./normal @q<HOME><Right><Right><Right>
-
-" replace all occurence of the word under cursor or user input in the whole file or in the selected range with user's input
-function! ReplaceItInNormalMode()
-  let wordUnderCursor = expand('<cword>')
-  call inputsave()
-  let original = input('target: ', wordUnderCursor)
-  if original == ""
-    return
-  endif
-  call inputrestore()
-  call inputsave()
-  let replacement = input('replacement: ', original)
-  call inputrestore()
-  execute '%s/'.original.'/'.replacement.'/g'
-endfunction
-
-function! ReplaceItInVisualMode() range
-  let wordUnderCursor = expand('<cword>')
-  call inputsave()
-  let original = input('target: ', wordUnderCursor)
-  call inputrestore()
-  if original == ""
-    return
-  endif
-  call inputsave()
-  let replacement = input('replacement: ', original)
-  call inputrestore()
-  execute "'<,'>s/".original.'/'.replacement.'/g'
-endfunction
-
-nmap cv :call ReplaceItInNormalMode()<cr>
-vmap cv :call ReplaceItInVisualMode()<cr>
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " ultisnips
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
