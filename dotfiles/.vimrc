@@ -51,7 +51,7 @@ Plug 'Shougo/neocomplete.vim'
 " tags
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " automatic tags generation
-" Plug 'ludovicchabant/vim-gutentags'
+Plug 'ludovicchabant/vim-gutentags'
 
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " syntastic
@@ -349,6 +349,10 @@ cabbrev pfd echo expand('%:p:h')
 " toggle maximum window
 nmap coo :MaximizerToggle<cr>
 
+nmap <c-h> <c-w>h
+nmap <c-l> <c-w>l
+nmap <c-k> <c-w>k
+nmap <c-j> <c-w>j
 " move to next/previous window
 nmap ]w <c-w>w
 nmap [w <c-w>W
