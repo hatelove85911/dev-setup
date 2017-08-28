@@ -184,6 +184,7 @@ exec --no-startup-id "feh --bg-scale ~/dev-setup/wallpaper.png"
 exec --no-startup-id simplenote 
 exec --no-startup-id albert
 exec --no-startup-id vmware-user
+exec --no-startup-id vmware-user-suid-wrapper
 exec --no-startup-id ss-qt5
 exec --no-startup-id ~/.bin/keyb.sh
 
