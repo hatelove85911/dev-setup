@@ -26,7 +26,11 @@ Plug 'rhysd/accelerated-jk'
 Plug 'MattesGroeger/vim-bookmarks'
 " line diff
 Plug 'AndrewRadev/linediff.vim'
-
+" fzf loves vim
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+" vim rooter, automatic change root to project root
+Plug 'airblade/vim-rooter'
 """""""""""""""""""""""""""""""""""""""""""""""""
 " shougo unite
 """"""""""""""""""""""""""""""""""""""""""""""""""
@@ -34,10 +38,7 @@ Plug 'AndrewRadev/linediff.vim'
 " ag is a front end for the silver searcher ag program
 Plug 'Shougo/vimproc.vim', { 'do': 'make' }
 Plug 'Shougo/unite.vim'
-Plug 'Shougo/neomru.vim'
 Plug 'Shougo/neoyank.vim'
-Plug 'tsukkee/unite-tag'
-Plug 'Shougo/unite-outline'
 " file explorer, can be integrated with unite
 Plug 'Shougo/vimfiler.vim'
 " unite session
@@ -224,6 +225,14 @@ set noshowmode
 set autoread
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" rooter
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:rooter_manual_only = 1
+" quick show pwd
+nmap <localleader>p :pwd<CR>
+" quick change pwd to project root
+nmap <localleader>r :Rooter<CR>
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " grip ( the markdown previewer )
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let vim_markdown_preview_github=1
@@ -232,8 +241,6 @@ let vim_markdown_preview_github=1
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "powerline font
 let g:airline_powerline_fonts=1
-let g:airline#extensions#quickfix#quickfix_text = 'Quickfix'
-let g:airline#extensions#quickfix#location_text = 'Location'
 let g:airline#extensions#branch#enabled = 1
 " tabline
 let g:airline#extensions#tabline#enabled = 1
@@ -242,7 +249,6 @@ let g:airline#extensions#tabline#buffers_label = 'b'
 let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
 " Just show the filename (no path) in the tab
 let g:airline#extensions#tabline#fnamemod = ':t'
-
 " enable buffer index and quick select buffer
 let g:airline#extensions#tabline#buffer_idx_mode = 1
 nmap <localleader>1 <Plug>AirlineSelectTab1
@@ -281,16 +287,10 @@ augroup myown
   au BufRead,BufNewFile *.wpy set filetype=wpy.html
   "make relative switch on when open any file type
   au Filetype * set relativenumber
-
-  " source vimrc again when some vim script file is changed
-  au BufWritePost *.vimrc source ~/.vimrc
-  au BufWritePost *.vim source ~/.vimrc
-
   " format json file
   au Filetype json nmap <buffer> <leader>f :%!python -m json.tool<cr>
 
   " neocomplete
-  au Filetype javascript setlocal omnifunc=tern#Complete
   au FileType css setlocal omnifunc=csscomplete#CompleteCSS
   au FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
   au FileType python setlocal omnifunc=pythoncomplete#Complete
@@ -367,6 +367,10 @@ nmap <Down> 8<c-w>-
 nmap <Up> 8<c-w>+
 " toggle maximization of a window
 let g:maximizer_set_default_mapping = 0
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" fzf
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " unite
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -374,11 +378,10 @@ let g:maximizer_set_default_mapping = 0
 exec ':so ' $vimhome."/autoload/helperfuncs.vim"
 
 " call unite#filters#converter_default#use(['converter_tail'])
-call unite#filters#matcher_default#use(['matcher_fuzzy'])
-call unite#filters#sorter_default#use(['sorter_rank'])
+" call unite#filters#matcher_default#use(['matcher_fuzzy'])
+" call unite#filters#sorter_default#use(['sorter_rank'])
 " call unite#custom#source('file_rec/async', 'ignore_globs',
 " \ split(&wildignore, ','))
-
 
 call unite#custom#profile('default', 'context', {
       \   'no_split': 1,
@@ -389,41 +392,29 @@ call unite#custom#profile('default', 'context', {
 
 
 """ unite sources
-nnoremap <silent><Leader>y :<C-u>Unite -silent -buffer-name=uniteYank history/yank<cr>
-nnoremap <silent><Leader>r :Unite -silent -buffer-name=uniteRegister register<CR>
-nnoremap <silent><Leader>b :<C-u>Unite -silent -buffer-name=uniteBuffer -auto-preview -winheight=40 buffer<CR>
-nnoremap <silent><Leader>u :<C-u>Unite -silent -buffer-name=uniteUltisnips ultisnips<CR>
-" non-git directory file searching sources
-nnoremap <silent><Leader>a :<C-u>Unite -silent -buffer-name=uniteGrep -auto-preview -winheight=40 grep<CR>
-nnoremap <silent><Leader>A :<C-u>UniteWithCursorWord -silent -buffer-name=uniteGrep -auto-preview -winheight=40 grep<CR>
-nnoremap <silent><Leader>e :<C-u>Unite -silent -buffer-name=uniteFileRecAsync -auto-preview -winheight=40 file_rec/async<CR>
-nnoremap <silent><Leader>j :<C-u>Unite -silent -buffer-name=uniteFind -auto-preview -winheight=40 find<CR>
-" git repo related sources
-nnoremap <silent><Leader>g :<C-u>Unite -silent -buffer-name=uniteGrepGit -auto-preview -winheight=40 grep/git:/:-P<CR>
-nnoremap <silent><Leader>G :<C-u>Unite -silent -buffer-name=uniteGrepGit -auto-preview -winheight=40 grep/git:.:-P<CR>
-nnoremap <silent><Leader>t :<C-u>Unite -silent -buffer-name=uniteFileRecGit -auto-preview -winheight=40 file_rec/git<CR>
-" new file or directory
-nnoremap <silent><Leader>n :<C-u>Unite --start-insert file/new<CR>
-nnoremap <silent><Leader>k :<C-u>Unite --start-insert directory/new<CR>
+nnoremap <silent><Leader>y :<C-u>Unite history/yank<cr>
+nnoremap <silent><Leader>r :<C-u>Unite register<CR>
+nnoremap <silent><Leader>b :<C-u>Unite buffer<CR>
+
+let g:unite_source_rec_async_command = ['ag', '--nocolor', '--nogroup', '--filename-pattern', '']
+nnoremap <silent><Leader>t :<C-u>Unite file_rec/async<CR>
 
 " Source variables {{{
-if executable('ag')
-  " Use ag (the silver searcher)
-  " https://github.com/ggreer/the_silver_searcher
-  let g:unite_source_grep_command = 'ag'
-  let g:unite_source_grep_default_opts =
-  \ '-i --hidden --ignore ' .
-  \ '''.hg'' --ignore ''.svn'' --ignore ''.git'' --ignore ''.bzr'''
-  let g:unite_source_grep_recursive_opt = ''
-elseif executable('ack')
-  let g:unite_source_grep_command='ack'
-  let g:unite_source_grep_default_opts='--no-group --no-color'
-  let g:unite_source_grep_recursive_opt=''
-  let g:unite_source_grep_search_word_highlight = 1
-endif
+" if executable('ag')
+"   " Use ag (the silver searcher)
+"   " https://github.com/ggreer/the_silver_searcher
+"   let g:unite_source_grep_command = 'ag'
+"   let g:unite_source_grep_default_opts =
+"   \ '-i --hidden --ignore ' .
+"   \ '''.hg'' --ignore ''.svn'' --ignore ''.git'' --ignore ''.bzr'''
+"   let g:unite_source_grep_recursive_opt = ''
+" elseif executable('ack')
+"   let g:unite_source_grep_command='ack'
+"   let g:unite_source_grep_default_opts='--no-group --no-color'
+"   let g:unite_source_grep_recursive_opt=''
+"   let g:unite_source_grep_search_word_highlight = 1
+" endif
 
-let g:unite_source_rec_async_command = ['ag', '--nocolor', '--nogroup', '--hidden', '-g', '',
-      \ '--ignore', '.svn', '--ignore', '.git', '--ignore', 'node_modules', '--ignore', 'build', '.']
 " END source variabls }}}
 "
 " Unite Menu {{{
@@ -438,27 +429,27 @@ let g:unite_source_menu_menus.all = {
       \}
 let g:unite_source_menu_menus.all.command_candidates = [
       \['▷ yank history                                               ⌘ <Leader>y',
-      \'Unite -silent -buffer-name=uniteYank history/yank'],
+      \'Unite -buffer-name=uniteYank history/yank'],
       \['▷ register                                                   ⌘ <Leader>r',
-      \'Unite -silent -buffer-name=uniteRegister register'],
+      \'Unite -buffer-name=uniteRegister register'],
       \['▷ buffer                                                     ⌘ <Leader>b',
-      \'Unite -silent -buffer-name=uniteBuffer -auto-preview -winheight=40 buffer'],
+      \'Unite -buffer-name=uniteBuffer -winheight=40 buffer'],
       \['▷ ultisnips                                                  ⌘ <Leader>u',
-      \'Unite -silent -buffer-name=uniteUltisnips ultisnips'],
+      \'Unite -buffer-name=uniteUltisnips ultisnips'],
       \['▷ grep (ag → ack → grep)                                     ⌘ <Leader>a',
-      \'Unite -silent -buffer-name=uniteGrep -auto-preview -winheight=40 grep'],
+      \'Unite -buffer-name=uniteGrep -winheight=40 grep'],
       \['▷ grep current word                                          ⌘ <Leader>A',
-      \'UniteWithCursorWord -silent -buffer-name=uniteGrep -auto-preview -winheight=40 grep'],
+      \'UniteWithCursorWord -buffer-name=uniteGrep -winheight=40 grep'],
       \['▷ asynchronous recursive file                                ⌘ <Leader>e',
-      \'Unite -silent -buffer-name=uniteFileRecAsync -auto-preview -winheight=40 file_rec/async'],
+      \'Unite -buffer-name=uniteFileRecAsync -winheight=40 file_rec/async'],
       \['▷ find                                                       ⌘ <Leader>j',
-      \'Unite -silent -buffer-name=uniteFind -auto-preview -winheight=40 find'],
+      \'Unite -buffer-name=uniteFind -winheight=40 find'],
       \['▷ git grep /                                                 ⌘ <Leader>g',
-      \'Unite -silent -buffer-name=uniteGrepGit -auto-preview -winheight=40 grep/git:/:-P'],
+      \'Unite -buffer-name=uniteGrepGit -winheight=40 grep/git:/:-P'],
       \['▷ git grep .                                                 ⌘ <Leader>G',
-      \'Unite -silent -buffer-name=uniteGrepGit -auto-preview -winheight=40 grep/git:.:-P'],
+      \'Unite -buffer-name=uniteGrepGit -winheight=40 grep/git:.:-P'],
       \['▷ git repo asynchronous file search                          ⌘ <Leader>t',
-      \'Unite -silent -buffer-name=uniteFileRecGit -auto-preview -winheight=40 file_rec/git'],
+      \'Unite -buffer-name=uniteFileRecGit -winheight=40 file_rec/git'],
       \['▷ create new file                                            ⌘ <Leader>n',
       \'Unite --start-insert file/new'],
       \['▷ create new directory                                       ⌘ <Leader>k',
@@ -497,7 +488,7 @@ let g:unite_source_menu_menus.all.command_candidates = [
 
 let g:unite_source_menu_menus.all.command_candidates = helperfuncs#unite_menu_gen(g:unite_source_menu_menus.all.command_candidates, [])
 
-nnoremap <silent>[menu]a :Unite -silent menu:all<CR>
+nnoremap <silent>[menu]a :Unite menu:all<CR>
 " END Unite Menu }}}
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " vimfiler
@@ -512,7 +503,7 @@ call vimfiler#custom#profile('default', 'context', {
       \ 'safe' : 0,
       \ 'auto_cd': 1
       \ })
-nnoremap <leader>v :<C-u>VimFiler "file_rec/async"<cr>
+nnoremap <leader>v :<C-u>VimFiler -buffer-name=vimfiler "file_rec/async"<cr>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " unite-session
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
