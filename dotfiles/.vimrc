@@ -1,6 +1,7 @@
 let $vimrcpath='~/.vimrc'
 let $vimhome='~/.vim'
 
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " plugins
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -26,9 +27,6 @@ Plug 'rhysd/accelerated-jk'
 Plug 'MattesGroeger/vim-bookmarks'
 " line diff
 Plug 'AndrewRadev/linediff.vim'
-" fzf loves vim
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim'
 " vim rooter, automatic change root to project root
 Plug 'airblade/vim-rooter'
 """""""""""""""""""""""""""""""""""""""""""""""""
@@ -65,15 +63,18 @@ Plug 'scrooloose/syntastic'
 """"""""""""""""""""""""""""""""""""""""""""""""""
 """"""""""" formatters
 Plug 'Chiel92/vim-autoformat'
+Plug 'prettier/vim-prettier', { 
+	\ 'do': 'npm install', 
+	\ 'for': ['javascript', 'javascript.jsx', 'typescript', 'css', 'less', 'scss', 'json'] }
 
 """"""""""" syntax
-Plug 'pangloss/vim-javascript', { 'for': ['javascript', 'vue', 'jsx']}
+Plug 'pangloss/vim-javascript', { 'for': ['javascript', 'javascript.jsx']}
+" jsx syntax
+Plug 'mxw/vim-jsx', {'for': ['javascript.jsx']}
 " distinguish json from javascript
 Plug 'elzr/vim-json', { 'for': 'json' }
 " vue syntax
 Plug 'posva/vim-vue', {'for': ['vue']}
-" jsx syntax
-Plug 'mxw/vim-jsx', {'for': ['javascript', 'jsx']}
 " html5 syntax and autocomplete
 Plug 'othree/html5.vim', {'for': ['html', 'vue']}
 " css syntax
@@ -86,7 +87,7 @@ Plug 'mattn/emmet-vim'
 """"""""""" weixin mini app
 Plug 'chemzqm/wxapp.vim'
 " markdown preview
-Plug 'JamshedVesuna/vim-markdown-preview'
+Plug 'shime/vim-livedown'
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " text object
 """"""""""""""""""""""""""""""""""""""""""""""""""
@@ -285,10 +286,10 @@ augroup myown
   au BufRead,BufNewFile *.md set filetype=markdown
   "wpy file extension recognization
   au BufRead,BufNewFile *.wpy set filetype=wpy.html
+  "js file extension recognization
+  au BufRead,BufNewFile *.js,*.jsx set filetype=javascript.jsx
   "make relative switch on when open any file type
   au Filetype * set relativenumber
-  " format json file
-  au Filetype json nmap <buffer> <leader>f :%!python -m json.tool<cr>
 
   " neocomplete
   au FileType css setlocal omnifunc=csscomplete#CompleteCSS
@@ -309,10 +310,6 @@ augroup myown
         \ if fugitive#buffer().type() =~# '^\%(tree\|blob\)$' |
         \   nnoremap <buffer> .. :edit %:h<CR> |
         \ endif
-
-  " formatter
-  au FileType javascript.jsx,javascript set formatprg=prettier\ --stdin\ --parser\ flow\ --single-quote\ --trailing-comma\ es5\ --tab-width\ 4\ --no-semi
-  au Filetype javascript.jsx,javascript nmap <buffer> <leader>f mzgggqG`z
   augroup end
 
 
@@ -367,9 +364,6 @@ nmap <Down> 8<c-w>-
 nmap <Up> 8<c-w>+
 " toggle maximization of a window
 let g:maximizer_set_default_mapping = 0
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" fzf
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " unite
@@ -395,28 +389,22 @@ call unite#custom#profile('default', 'context', {
 nnoremap <silent><Leader>y :<C-u>Unite history/yank<cr>
 nnoremap <silent><Leader>r :<C-u>Unite register<CR>
 nnoremap <silent><Leader>b :<C-u>Unite buffer<CR>
-
-let g:unite_source_rec_async_command = ['ag', '--nocolor', '--nogroup', '--filename-pattern', '']
+" source file_rec/async
+let g:unite_source_rec_async_command = ['ag', '--nocolor', '--nogroup', '-S', '-g', '']
 nnoremap <silent><Leader>t :<C-u>Unite file_rec/async<CR>
+call unite#custom#profile('source/file_rec/async', 'context', {
+      \   'start_insert': 1,
+      \ })
 
-" Source variables {{{
-" if executable('ag')
-"   " Use ag (the silver searcher)
-"   " https://github.com/ggreer/the_silver_searcher
-"   let g:unite_source_grep_command = 'ag'
-"   let g:unite_source_grep_default_opts =
-"   \ '-i --hidden --ignore ' .
-"   \ '''.hg'' --ignore ''.svn'' --ignore ''.git'' --ignore ''.bzr'''
-"   let g:unite_source_grep_recursive_opt = ''
-" elseif executable('ack')
-"   let g:unite_source_grep_command='ack'
-"   let g:unite_source_grep_default_opts='--no-group --no-color'
-"   let g:unite_source_grep_recursive_opt=''
-"   let g:unite_source_grep_search_word_highlight = 1
-" endif
+" source grep
+let g:unite_source_grep_command = 'ag'
+let g:unite_source_grep_default_opts = '--nogroup --nocolor -S'
+let g:unite_source_grep_recursive_opt = ''
+nnoremap <silent><Leader>g :<C-u>Unite grep<CR>
+call unite#custom#profile('source/grep', 'context', {
+      \   'start_insert': 1,
+      \ })
 
-" END source variabls }}}
-"
 " Unite Menu {{{
 let g:unite_source_menu_menus = {}
 " menu prefix key (for all Unite menus) {{{
@@ -508,24 +496,40 @@ nnoremap <leader>v :<C-u>VimFiler -buffer-name=vimfiler "file_rec/async"<cr>
 " unite-session
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 nnoremap <leader>s :<C-u>Unite -buffer-name=uniteSession -no-start-insert session<cr>
+nnoremap <localleader>s :UniteSessionSave 
 let g:unite_source_session_enable_auto_save = 1
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " code formatter
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""prettier configuration
+let g:prettier#autoformat = 0
+augroup prettier
+  au!
+  autocmd BufWritePre *.js,*.json,*.css,*.scss,*.less Prettier
+augroup end
+autocmd Filetype javascript,javascript.jsx,json,css,scss,less nmap <buffer> <leader>f <Plug>(Prettier)
+" max line lengh that prettier will wrap on
+let g:prettier#config#print_width = 80
+" number of spaces per indentation level
+let g:prettier#config#tab_width = 2
+" use tabs over spaces
+let g:prettier#config#use_tabs = 'false'
+" print semicolons
+let g:prettier#config#semi = 'false'
+" single quotes over double quotes
+let g:prettier#config#single_quote = 'true' 
+" print spaces between brackets
+let g:prettier#config#bracket_spacing = 'false' 
+" put > on the last line instead of new line
+let g:prettier#config#jsx_bracket_same_line = 'true' 
+" none|es5|all
+let g:prettier#config#trailing_comma = 'all'
+" flow|babylon|typescript|postcss|json|graphql
+let g:prettier#config#parser = 'flow'
+
+""""""""""" auto format
 nmap <leader>f :Autoformat<cr>
-let g:formatters_vue=['eslintfix_vue']
-let g:formatdef_eslintfix_vue = '"eslint-fix"'
-
-" au BufReadPost *.vue map <leader>f :/<script>/+1,/<\/script>/-1 silent !eslint-fix<cr>
-" :/<template>/+1,/<\/template>/-1 !html-beautify - --indent-size 2<cr>
-
-" vue beautify
-" let g:formatters_vue = ['htmlbeautify_vue']
-" let g:formatdef_htmlbeautify_vue = '"htmlbeautify -s 2 -a -I -A -U []"'
-" au Filetype javascript nmap <buffer> <leader>s :%!standard-format -<cr>
-" au Filetype html nmap <buffer> <leader>f :%!tidy --show-errors 0 --show-warnings 0 --show-info 0 --quiet 1<cr>
-" au Filetype xhtml nmap <buffer> <leader>f :%!tidy --show-errors 0 --show-warnings 0 --show-info 0 --quiet 1<cr>
-" au Filetype xml nmap <buffer> <leader>f :%!tidy --show-errors 0 --show-warnings 0 --show-info 0 --quiet 1<cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " syntastic configuration
@@ -577,11 +581,11 @@ let g:syntastic_style_warning_symbol = '⚠'
 let g:UltiSnipsSnippetsDir = $vimhome . "/UltiSnips"
 let g:UltiSnipsSnippetDirectories=["UltiSnips"]
 
-let g:UltiSnipsExpandTrigger = '<tab>'
+let g:UltiSnipsExpandTrigger = '<c-j>'
 let g:UltiSnipsJumpForwardTrigger = '<tab>'
 let g:UltiSnipsJumpBackwardTrigger = '<s-tab>'
 
-nmap <leader>p :UltiSnipsEdit<cr>
+nmap <localleader>u :UltiSnipsEdit<cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " neocomplete
@@ -598,48 +602,12 @@ let g:neocomplete#enable_auto_close_preview = 1
 " <C-h>, <BS>: close popup and delete backword char.
 inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
 
-" <TAB>: completion.
-" disbaled tab, the reason is that using tab for both utlisnips and
-" neocomplete is inconvenient, when you want to expand ultisnips, you must use
-" <c-y> to close popup first, that's why I only assign tab to ultisnips
-" inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<C-R>=UltiSnips#ExpandSnippetOrJump()<CR>"
-" inoremap <expr><s-TAB>  pumvisible() ? "\<C-p>" : "\<C-R>=UltiSnips#JumpBackwards()<CR>"
-
-" there're three option to close the popup menu: enter, esc, space
-" compaired the 3 options, finally I give up all of them and just choose to
-" use <c-y> to close popup
-" because those keys are very important, when you're typing and press them,
-" you'll expect them to be effective immdediately, otherwise it's going to
-" impact your speed, with the below configuration in the way, it'll take the
-" first key stroke to close the popup and the second one to effect, that's
-" unacceptable
-" but I leave the configuraton still here, just in case for furture reference
-
-" inoremap <silent> <esc> <C-r>=<SID>my_esc_function()<esc>
-" function! s:my_esc_function()
-"   " return (pumvisible() ? "\<C-y>" : "" ) . "\<esc>"
-"   " For no inserting <esc> key.
-"   return pumvisible() ? "\<C-y>" : "\<esc>"
-" endfunction
-"
-" inoremap <silent> <cr> <C-r>=<SID>my_cr_function()<CR>
-" function! s:my_cr_function()
-"   " return (pumvisible() ? "\<C-y>" : "" ) . "\<CR>"
-"   " For no inserting <CR> key.
-"   return pumvisible() ? "\<C-y>" : "\<CR>"
-" endfunction
-"
-" set g:AutoPairsMapSpace to zero to disable auto-pairs' keymap
-" and remap <space> to my own keymapping
-" let g:AutoPairsMapSpace = 0
-" inoremap <silent> <space> <C-r>=<SID>my_space_function()<cr>
-" function! s:my_space_function()
-"   " return (pumvisible() ? "\<C-y>" : "" ) . "\<space>"
-"   " For no inserting <space> key.
-"   " return pumvisible() ? "\<C-y>" : "\<space>"
-"   return pumvisible() ? "\<C-y>" : AutoPairsSpace()
-" endfunction
-
+" remap ctrl+u to close auto complete popup because ctrl+y is used by emmet
+" plugin
+inoremap <silent> <c-u> <C-r>=<SID>my_esc_function()<esc>
+function! s:my_esc_function()
+  return pumvisible() ? "\<C-y>" : "\<c-u>"
+endfunction
 
 " Enable heavy omni completion.
 if !exists('g:neocomplete#sources#omni#input_patterns')
