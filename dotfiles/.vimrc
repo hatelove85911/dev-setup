@@ -1,7 +1,6 @@
 let $vimrcpath='~/.vimrc'
 let $vimhome='~/.vim'
 
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " plugins
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -51,21 +50,16 @@ Plug 'Shougo/neocomplete.vim'
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " automatic tags generation
 Plug 'ludovicchabant/vim-gutentags'
-
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " syntastic
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " syntax checker
 Plug 'scrooloose/syntastic'
-
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " html(xml) css javascript related
 """"""""""""""""""""""""""""""""""""""""""""""""""
 """"""""""" formatters
 Plug 'Chiel92/vim-autoformat'
-Plug 'prettier/vim-prettier', { 
-	\ 'do': 'npm install', 
-	\ 'for': ['javascript', 'javascript.jsx', 'typescript', 'css', 'less', 'scss', 'json'] }
 
 """"""""""" syntax
 Plug 'pangloss/vim-javascript', { 'for': ['javascript', 'javascript.jsx']}
@@ -79,15 +73,16 @@ Plug 'posva/vim-vue', {'for': ['vue']}
 Plug 'othree/html5.vim', {'for': ['html', 'vue']}
 " css syntax
 Plug 'JulesWang/css.vim', {'for': ['css']}
-
 """"""""""" tools
 " xml
 Plug 'sukima/xmledit', { 'for': 'xml' }
 Plug 'mattn/emmet-vim'
 """"""""""" weixin mini app
 Plug 'chemzqm/wxapp.vim'
-" markdown preview
-Plug 'shime/vim-livedown'
+""""""""""" markdown
+Plug 'godlygeek/tabular'
+Plug 'plasticboy/vim-markdown'
+Plug 'suan/vim-instant-markdown'
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " text object
 """"""""""""""""""""""""""""""""""""""""""""""""""
@@ -226,6 +221,14 @@ set noshowmode
 set autoread
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" markdown
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:vim_markdown_no_default_key_mappings = 1
+let g:vim_markdown_folding_disabled = 1
+" instance markdown plugin
+let g:instant_markdown_autostart = 0
+nmap <leader>p :InstantMarkdownPreview<CR>
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " rooter
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:rooter_manual_only = 1
@@ -233,10 +236,6 @@ let g:rooter_manual_only = 1
 nmap <localleader>p :pwd<CR>
 " quick change pwd to project root
 nmap <localleader>r :Rooter<CR>
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" grip ( the markdown previewer )
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let vim_markdown_preview_github=1
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " airline
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -311,8 +310,6 @@ augroup myown
         \   nnoremap <buffer> .. :edit %:h<CR> |
         \ endif
   augroup end
-
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " command abbreviation
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -503,30 +500,11 @@ let g:unite_source_session_enable_auto_save = 1
 " code formatter
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """""""""""prettier configuration
-let g:prettier#autoformat = 0
 augroup prettier
   au!
-  autocmd BufWritePre *.js,*.json,*.css,*.scss,*.less Prettier
+  " autocmd BufWritePre *.js,*.json,*.css,*.scss,*.less Prettier
+  autocmd Filetype javascript,javascript.jsx,json,css,scss,less nmap <buffer> <leader>f :silent %!prettier --stdin --config ".prettierrc"<CR>
 augroup end
-autocmd Filetype javascript,javascript.jsx,json,css,scss,less nmap <buffer> <leader>f <Plug>(Prettier)
-" max line lengh that prettier will wrap on
-let g:prettier#config#print_width = 80
-" number of spaces per indentation level
-let g:prettier#config#tab_width = 2
-" use tabs over spaces
-let g:prettier#config#use_tabs = 'false'
-" print semicolons
-let g:prettier#config#semi = 'false'
-" single quotes over double quotes
-let g:prettier#config#single_quote = 'true' 
-" print spaces between brackets
-let g:prettier#config#bracket_spacing = 'false' 
-" put > on the last line instead of new line
-let g:prettier#config#jsx_bracket_same_line = 'true' 
-" none|es5|all
-let g:prettier#config#trailing_comma = 'all'
-" flow|babylon|typescript|postcss|json|graphql
-let g:prettier#config#parser = 'flow'
 
 """"""""""" auto format
 nmap <leader>f :Autoformat<cr>
@@ -534,47 +512,7 @@ nmap <leader>f :Autoformat<cr>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " syntastic configuration
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" the syntastic built-in toggle command doesn't work
-" even toggle to passive mode, it still do checks when buffer write
-" that's why I write my own toggle funciton
-function! MyOwnSyntasticModeToggle()
-  let b:syntastic_mode = get(b:, "syntastic_mode", "active")
-
-  if b:syntastic_mode == "passive"
-    let b:syntastic_mode = "active"
-    echo "active"
-  else
-    let b:syntastic_mode = "passive"
-    echo "passive"
-    execute "SyntasticReset"
-  endif
-endfunction
-
-
-let g:syntastic_mode_map = {
-      \ 'mode': 'passive',
-      \ 'active_filetypes': ['javascript']}
-" let g:syntastic_mode_map = {
-"       \ 'mode': 'passive',
-"       \ 'active_filetypes': [],
-"       \ 'passive_filetypes': [] }
-
-" use the latest tidy html5 for html
-let g:syntastic_html_tidy_exec = 'tidy'
-" set javascript checkers
-let g:syntastic_javascript_checkers = ["eslint"]
-
-" let g:syntastic_check_on_wq = 0
-let g:syntastic_aggregate_errors = 1
-let g:syntastic_auto_loc_list = 0
-
-nmap <leader>c :SyntasticCheck<cr>
-cabbrev si SyntasticInfo
-
-let g:syntastic_error_symbol = '✗'
-let g:syntastic_style_error_symbol = '🚫'
-let g:syntastic_warning_symbol = '❗'
-let g:syntastic_style_warning_symbol = '⚠'
+let g:syntastic_javascript_checkers=['eslint']
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " ultisnips
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
