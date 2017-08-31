@@ -244,7 +244,7 @@ cabbrev glc Glog --
 cabbrev glg Glog --grep=
 cabbrev gls Glog -S
 cabbrev gs Gstatus
-cabbrev gdf Gdiff
+cabbrev gdf Gvdiff
 cabbrev gw Gwrite
 cabbrev gr Gread
 cabbrev gmv Gmove

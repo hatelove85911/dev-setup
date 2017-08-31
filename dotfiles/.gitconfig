@@ -173,7 +173,7 @@
   # Include summaries of merged commits in newly created merge commit messages
   log = true
   # merge tool use vimdiff
-	tool = vimdiff
+	tool = fugitive
 	conflictstyle = diff3
 [mergetool]
 	prompt = false
@@ -210,3 +210,5 @@
   insteadOf = "gist:"
 [url "https://"]
   insteadOf = git://
+[mergetool "fugitive"]
+	cmd = vim -f -c \"Gvdiff\" \"$MERGED\"
