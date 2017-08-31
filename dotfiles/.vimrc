@@ -29,6 +29,8 @@ Plug 'MattesGroeger/vim-bookmarks'
 Plug 'AndrewRadev/linediff.vim'
 " vim rooter, automatic change root to project root
 Plug 'airblade/vim-rooter'
+" extended . repeat
+Plug 'tpope/vim-repeat'
 """""""""""""""""""""""""""""""""""""""""""""""""
 " shougo unite
 """"""""""""""""""""""""""""""""""""""""""""""""""
