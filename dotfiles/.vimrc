@@ -145,7 +145,8 @@ Plug 'jszakmeister/vim-togglecursor'
 " status line
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-
+" show indent lines
+Plug 'Yggdroot/indentLine'
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " unused Plugs
 """"""""""""""""""""""""""""""""""""""""""""""""""
@@ -162,6 +163,12 @@ let maplocalleader= ' '
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " general
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+filetype plugin on
+filetype indent on
+syntax enable 
+set nocompatible
+
+
 set wildmenu          " show widemenu
 set laststatus=2      " always show status line
 set hidden            " set hidden allowed
@@ -196,6 +203,7 @@ set list
 " render properly when inside 256-color tmux and GNU screen.
 " see also http://snk.tuxfamily.org/log/vim-256color-bce.html
 set t_ut=
+set background=dark
 colorscheme molokai256
 set relativenumber
 set number
@@ -239,6 +247,11 @@ cabbrev gr Gread
 cabbrev gmv Gmove
 cabbrev grm Gremove
 cabbrev gs Gcommit
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" indent line
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:indentLine_char = '┊'
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " markdown
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
