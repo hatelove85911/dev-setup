@@ -241,6 +241,8 @@ cabbrev ge Gedit
 cabbrev gl Glog
 cabbrev glf Glog -- %
 cabbrev glc Glog --
+cabbrev glg Glog --grep=
+cabbrev gls Glog -S
 cabbrev gs Gstatus
 cabbrev gdf Gdiff
 cabbrev gw Gwrite
@@ -249,6 +251,8 @@ cabbrev gmv Gmove
 cabbrev grm Gremove
 cabbrev gc Gcommit
 cabbrev gv GV --branches --remotes --tags --graph --decorate --date=short
+cabbrev gg Ggrep
+cabbrev gb Gblame
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " indent line
@@ -266,8 +270,6 @@ nmap <leader>p :InstantMarkdownPreview<CR>
 " rooter
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:rooter_manual_only = 1
-" quick show pwd
-nmap <localleader>p :pwd<CR>
 " quick change pwd to project root
 nmap <localleader>r :Rooter<CR>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -529,7 +531,7 @@ nnoremap <leader>v :<C-u>VimFiler -buffer-name=vimfiler "file_rec/async"<cr>
 " unite-session
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 nnoremap <leader>s :<C-u>Unite -buffer-name=uniteSession -no-start-insert session<cr>
-nnoremap <localleader>s :UniteSessionSave 
+cabbrev uss UniteSessionSave
 let g:unite_source_session_enable_auto_save = 1
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -559,7 +561,7 @@ let g:UltiSnipsExpandTrigger = '<c-j>'
 let g:UltiSnipsJumpForwardTrigger = '<tab>'
 let g:UltiSnipsJumpBackwardTrigger = '<s-tab>'
 
-nmap <localleader>u :UltiSnipsEdit<cr>
+nmap <localleader>p :UltiSnipsEdit<cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " neocomplete
@@ -660,7 +662,7 @@ nmap dol :diffget LO<cr>
 " diffget REMOTE in three merge
 nmap dor :diffget RE<cr>
 " diffupdate
-nmap dfu :diffupdate<cr>
+nmap diu :diffupdate<cr>
 " 0 to the start of line
 nnoremap 0 ^
 " g0 to the column 1
@@ -682,6 +684,3 @@ function! s:get_visual_selection()
   return join(lines, "\n")
 endfunction
 vnoremap <silent> * :<c-u>let @/='<C-R>=<SID>get_visual_selection()<CR>'<CR>:<c-u>set hls<CR>
-
-" map ctrl + space to trigger auto completion
-inoremap <Nul> <c-x>
