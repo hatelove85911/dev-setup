@@ -9,6 +9,7 @@ call plug#begin(expand($vimhome.'/plugged/'))
 Plug 'tpope/vim-surround'
 " git
 Plug 'tpope/vim-fugitive'
+Plug 'gregsexton/gitv', {'on': ['Gitv']}
 " for navigation between items in quick fix or location list easier and toggle
 " option quickly
 Plug 'tpope/vim-unimpaired'
@@ -40,6 +41,8 @@ Plug 'Shougo/neoyank.vim'
 Plug 'Shougo/vimfiler.vim'
 " unite session
 Plug 'Shougo/unite-session'
+" quick left or right motion
+Plug 'unblevable/quick-scope'
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " shougo neocomplete
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -221,6 +224,20 @@ set noshowmode
 set autoread
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" fugitive
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+cabbrev ge Gedit
+cabbrev gl Glog -- %
+cabbrev glr Glog
+cabbrev glc Glog --
+cabbrev gs Gstatus
+cabbrev gdf Gdiff
+cabbrev gw Gwrite
+cabbrev gr Gread
+cabbrev gmv Gmove
+cabbrev grm Gremove
+cabbrev gs Gcommit
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " markdown
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:vim_markdown_no_default_key_mappings = 1
@@ -377,8 +394,7 @@ exec ':so ' $vimhome."/autoload/helperfuncs.vim"
 call unite#custom#profile('default', 'context', {
       \   'no_split': 1,
       \   'start_insert': 0,
-      \   'quit' : 1,
-      \   'resume' : 1
+      \   'quit' : 1
       \ })
 
 
@@ -390,7 +406,7 @@ nnoremap <silent><Leader>b :<C-u>Unite buffer<CR>
 let g:unite_source_rec_async_command = ['ag', '--nocolor', '--nogroup', '-S', '-g', '']
 nnoremap <silent><Leader>t :<C-u>Unite file_rec/async<CR>
 call unite#custom#profile('source/file_rec/async', 'context', {
-      \   'start_insert': 1,
+      \   'start_insert': 1
       \ })
 
 " source grep
@@ -400,6 +416,7 @@ let g:unite_source_grep_recursive_opt = ''
 nnoremap <silent><Leader>g :<C-u>Unite grep<CR>
 call unite#custom#profile('source/grep', 'context', {
       \   'start_insert': 1,
+      \   'resume': 1
       \ })
 
 " Unite Menu {{{
