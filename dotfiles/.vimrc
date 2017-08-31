@@ -660,11 +660,11 @@ vmap dil :Linediff<CR>
 vmap dp :diffput<cr>
 vmap do :diffget<cr>
 " diffget BASE in three merge
-nmap dob :diffget BA<cr>
+" nmap dob :diffget BA<cr>
 " diffget LOCAL in three merge
-nmap dol :diffget LO<cr>
+nmap dol :diffget //2<cr>:diffupdate<cr>
 " diffget REMOTE in three merge
-nmap dor :diffget RE<cr>
+nmap dor :diffget //3<cr>:diffupdate<cr>
 " diffupdate
 nmap diu :diffupdate<cr>
 " 0 to the start of line
@@ -688,3 +688,5 @@ function! s:get_visual_selection()
   return join(lines, "\n")
 endfunction
 vnoremap <silent> * :<c-u>let @/='<C-R>=<SID>get_visual_selection()<CR>'<CR>:<c-u>set hls<CR>
+
+exec ':so ' $vimhome."/colors/mycolorscheme.vim"
