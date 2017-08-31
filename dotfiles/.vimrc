@@ -46,6 +46,8 @@ Plug 'Shougo/vimfiler.vim'
 Plug 'Shougo/unite-session'
 " quick left or right motion
 Plug 'unblevable/quick-scope'
+" tabularize texts
+Plug 'godlygeek/tabular'
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " shougo neocomplete
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -106,6 +108,7 @@ Plug 'whatyouhide/vim-textobj-xmlattr'
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " small Plugs
 """"""""""""""""""""""""""""""""""""""""""""""""""
+Plug 'yuttie/comfortable-motion.vim'
 " comment out code
 Plug 'tpope/vim-commentary'
 " generate incremental thing, like number, character
@@ -166,7 +169,7 @@ let maplocalleader= ' '
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 filetype plugin on
 filetype indent on
-syntax enable 
+syntax enable
 set nocompatible
 
 
@@ -329,6 +332,8 @@ augroup myown
   au BufRead,BufNewFile *.js,*.jsx set filetype=javascript.jsx
   "make relative switch on when open any file type
   au Filetype * set relativenumber
+  "auto remove trailing space before save buffer
+  au BufWritePre * %s/\s\+$//e
 
   " neocomplete
   au FileType css setlocal omnifunc=csscomplete#CompleteCSS
@@ -630,6 +635,8 @@ map <leader>x :call RangerChooser()<CR>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " some shortcut mapping
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+:nnoremap <silent> dse :let _s=@/ <Bar> :%s/\s\+$//e <Bar> :let @/=_s <Bar> :nohl <Bar> :unlet _s <CR>
+:nnoremap <silent> dss :let _s=@/ <Bar> :%s/^\s\+//e <Bar> :let @/=_s <Bar> :nohl <Bar> :unlet _s <CR>
 " quick insert semicolon at the end of the line
 nmap <localleader>; A;<Esc>
 " quick indent whole file
