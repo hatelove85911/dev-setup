@@ -9,7 +9,7 @@ call plug#begin(expand($vimhome.'/plugged/'))
 Plug 'tpope/vim-surround'
 " git
 Plug 'tpope/vim-fugitive'
-Plug 'gregsexton/gitv', {'on': ['Gitv']}
+Plug 'junegunn/gv.vim'
 " for navigation between items in quick fix or location list easier and toggle
 " option quickly
 Plug 'tpope/vim-unimpaired'
@@ -39,6 +39,7 @@ Plug 'tpope/vim-repeat'
 Plug 'Shougo/vimproc.vim', { 'do': 'make' }
 Plug 'Shougo/unite.vim'
 Plug 'Shougo/neoyank.vim'
+Plug 'osyo-manga/unite-quickfix'
 " file explorer, can be integrated with unite
 Plug 'Shougo/vimfiler.vim'
 " unite session
@@ -237,8 +238,8 @@ set autoread
 " fugitive
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 cabbrev ge Gedit
-cabbrev gl Glog -- %
-cabbrev glr Glog
+cabbrev gl Glog
+cabbrev glf Glog -- %
 cabbrev glc Glog --
 cabbrev gs Gstatus
 cabbrev gdf Gdiff
@@ -246,7 +247,8 @@ cabbrev gw Gwrite
 cabbrev gr Gread
 cabbrev gmv Gmove
 cabbrev grm Gremove
-cabbrev gs Gcommit
+cabbrev gc Gcommit
+cabbrev gv GV --branches --remotes --tags --graph --decorate --date=short
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " indent line
@@ -417,6 +419,8 @@ call unite#custom#profile('default', 'context', {
 nnoremap <silent><Leader>y :<C-u>Unite history/yank<cr>
 nnoremap <silent><Leader>r :<C-u>Unite register<CR>
 nnoremap <silent><Leader>b :<C-u>Unite buffer<CR>
+nnoremap <silent><Leader>k :<C-u>Unite quickfix<CR>
+nnoremap <silent><Leader>l :<C-u>Unite location_list<CR>
 " source file_rec/async
 let g:unite_source_rec_async_command = ['ag', '--nocolor', '--nogroup', '-S', '-g', '']
 nnoremap <silent><Leader>t :<C-u>Unite file_rec/async<CR>
