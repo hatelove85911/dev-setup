@@ -255,6 +255,21 @@ cabbrev gv GV --branches --remotes --tags --graph --decorate --date=short
 cabbrev gg Ggrep
 cabbrev gb Gblame
 
+"vmap dil for diffline
+vmap dil :Linediff<CR>
+" visual map for diffput and diffget
+vmap dp :diffput <bar> diffupdate<cr>
+vmap do :diffget <bar> diffupdate<cr>
+" diffget BASE in three merge
+" nmap dob :diffget BA<cr>
+" diffget LOCAL in three merge
+nmap dol :diffget //2 <bar> diffupdate<cr>
+nmap dola :%diffget //2 <bar> diffupdate<cr>
+" diffget REMOTE in three merge
+nmap dor :diffget //3 <bar> diffupdate<cr>
+nmap dora :%diffget //3 <bar> diffupdate<cr>
+" diffupdate
+nmap diu :diffupdate<cr>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " indent line
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -660,20 +675,6 @@ nmap <leader>Q :qa<CR>
 " define a map to switch to previous active buffer
 nmap gb :b#<CR>
 
-"vmap dil for diffline
-vmap dil :Linediff<CR>
-
-" visual map for diffput and diffget
-vmap dp :diffput<cr>
-vmap do :diffget<cr>
-" diffget BASE in three merge
-" nmap dob :diffget BA<cr>
-" diffget LOCAL in three merge
-nmap dol :diffget //2<cr>:diffupdate<cr>
-" diffget REMOTE in three merge
-nmap dor :diffget //3<cr>:diffupdate<cr>
-" diffupdate
-nmap diu :diffupdate<cr>
 " 0 to the start of line
 nnoremap 0 ^
 nnoremap ^ 0
