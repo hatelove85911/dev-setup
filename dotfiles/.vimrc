@@ -44,8 +44,6 @@ Plug 'osyo-manga/unite-quickfix'
 Plug 'Shougo/vimfiler.vim'
 " unite session
 Plug 'Shougo/unite-session'
-" quick left or right motion
-Plug 'unblevable/quick-scope'
 " tabularize texts
 Plug 'godlygeek/tabular'
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -143,6 +141,7 @@ Plug 'tpope/vim-vividchalk'
 Plug 'junegunn/seoul256.vim'
 Plug 'gosukiwi/vim-atom-dark'
 Plug 'yearofmoo/Vim-Darkmate'
+Plug 'romainl/Apprentice'
 
 " for cursor shape change in difference terminal
 Plug 'jszakmeister/vim-togglecursor'
@@ -195,9 +194,8 @@ set ignorecase                  " ignore case letters
 set nobackup
 set noswapfile
 
-" wrap
-" set wrap
-" set textwidth=60
+" enable soft wrap by default
+set wrap
 
 " set list charts
 set listchars=trail:·,precedes:«,extends:»,eol:↲,tab:▸\
@@ -208,11 +206,11 @@ set list
 " see also http://snk.tuxfamily.org/log/vim-256color-bce.html
 set t_ut=
 set background=dark
-colorscheme molokai256
+colorscheme apprentice
 set relativenumber
 set number
 set showcmd
-set cursorline
+set nocursorline
 set showtabline=0
 
 " indention
@@ -257,10 +255,6 @@ cabbrev gv GV --branches --remotes --tags --graph --decorate --date=short
 cabbrev gg Ggrep
 cabbrev gb Gblame
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" toggle quick scope (need to turn off in vimdiff)
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-nmap coq <plug>(QuickScopeToggle)
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " indent line
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -354,7 +348,12 @@ augroup myown
         \ if fugitive#buffer().type() =~# '^\%(tree\|blob\)$' |
         \   nnoremap <buffer> .. :edit %:h<CR> |
         \ endif
-  augroup end
+augroup end
+
+augroup vimdiff
+  au!
+  au FilterWritePre * if &diff | execute 'setlocal wrap' | endif
+augroup end
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " command abbreviation
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -387,6 +386,7 @@ cabbrev pfd echo expand('%:p:h')
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " toggle maximum window
 nmap coo :MaximizerToggle<cr>
+nmap <localleader>o :only<cr>
 
 nmap <c-h> <c-w>h
 nmap <c-l> <c-w>l
@@ -676,8 +676,7 @@ nmap dor :diffget //3<cr>:diffupdate<cr>
 nmap diu :diffupdate<cr>
 " 0 to the start of line
 nnoremap 0 ^
-" g0 to the column 1
-nnoremap g0 0
+nnoremap ^ 0
 " remap * to not jump to next occurence immediately, instead, stay at where
 " you are, solution posted here:
 " http://stackoverflow.com/a/13682379/2303252
@@ -695,5 +694,3 @@ function! s:get_visual_selection()
   return join(lines, "\n")
 endfunction
 vnoremap <silent> * :<c-u>let @/='<C-R>=<SID>get_visual_selection()<CR>'<CR>:<c-u>set hls<CR>
-
-exec ':so ' $vimhome."/colors/mycolorscheme.vim"
