@@ -31,6 +31,8 @@ Plug 'AndrewRadev/linediff.vim'
 Plug 'airblade/vim-rooter'
 " extended . repeat
 Plug 'tpope/vim-repeat'
+" gundo
+Plug 'sjl/gundo.vim'
 """""""""""""""""""""""""""""""""""""""""""""""""
 " shougo unite
 """"""""""""""""""""""""""""""""""""""""""""""""""
@@ -447,6 +449,9 @@ nnoremap <silent><Leader>r :<C-u>Unite register<CR>
 nnoremap <silent><Leader>b :<C-u>Unite buffer<CR>
 nnoremap <silent><Leader>k :<C-u>Unite quickfix<CR>
 nnoremap <silent><Leader>l :<C-u>Unite location_list<CR>
+" toggle gundo
+nnoremap <silent><Leader>u :GundoToggle<CR>
+
 " source file_rec/async
 let g:unite_source_rec_async_command = ['ag', '--nocolor', '--nogroup', '-S', '-g', '']
 nnoremap <silent><Leader>t :<C-u>Unite file_rec/async<CR>
