@@ -263,15 +263,15 @@ vmap dil :Linediff<CR>
 vmap dp :diffput <bar> diffupdate<cr>
 vmap do :diffget <bar> diffupdate<cr>
 " diffget BASE in three merge
-" nmap dob :diffget BA<cr>
+" nnoremap dob :diffget BA<cr>
 " diffget LOCAL in three merge
-nmap dol :diffget //2 <bar> diffupdate<cr>
-nmap dola :%diffget //2 <bar> diffupdate<cr>
+nnoremap dol :diffget //2 <bar> diffupdate<cr>
+nnoremap dola :%diffget //2 <bar> diffupdate<cr>
 " diffget REMOTE in three merge
-nmap dor :diffget //3 <bar> diffupdate<cr>
-nmap dora :%diffget //3 <bar> diffupdate<cr>
+nnoremap dor :diffget //3 <bar> diffupdate<cr>
+nnoremap dora :%diffget //3 <bar> diffupdate<cr>
 " diffupdate
-nmap diu :diffupdate<cr>
+nnoremap diu :diffupdate<cr>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " indent line
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -283,13 +283,13 @@ let g:vim_markdown_no_default_key_mappings = 1
 let g:vim_markdown_folding_disabled = 1
 " instance markdown plugin
 let g:instant_markdown_autostart = 0
-nmap <leader>p :InstantMarkdownPreview<CR>
+nnoremap <leader>p :InstantMarkdownPreview<CR>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " rooter
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:rooter_manual_only = 1
 " quick change pwd to project root
-nmap <localleader>r :Rooter<CR>
+nnoremap <localleader>r :Rooter<CR>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " airline
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -305,17 +305,17 @@ let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
 let g:airline#extensions#tabline#fnamemod = ':t'
 " enable buffer index and quick select buffer
 let g:airline#extensions#tabline#buffer_idx_mode = 1
-nmap <localleader>1 <Plug>AirlineSelectTab1
-nmap <localleader>2 <Plug>AirlineSelectTab2
-nmap <localleader>3 <Plug>AirlineSelectTab3
-nmap <localleader>4 <Plug>AirlineSelectTab4
-nmap <localleader>5 <Plug>AirlineSelectTab5
-nmap <localleader>6 <Plug>AirlineSelectTab6
-nmap <localleader>7 <Plug>AirlineSelectTab7
-nmap <localleader>8 <Plug>AirlineSelectTab8
-nmap <localleader>9 <Plug>AirlineSelectTab9
-nmap <localleader>h <Plug>AirlineSelectPrevTab
-nmap <localleader>l <Plug>AirlineSelectNextTab
+nnoremap <localleader>1 <Plug>AirlineSelectTab1
+nnoremap <localleader>2 <Plug>AirlineSelectTab2
+nnoremap <localleader>3 <Plug>AirlineSelectTab3
+nnoremap <localleader>4 <Plug>AirlineSelectTab4
+nnoremap <localleader>5 <Plug>AirlineSelectTab5
+nnoremap <localleader>6 <Plug>AirlineSelectTab6
+nnoremap <localleader>7 <Plug>AirlineSelectTab7
+nnoremap <localleader>8 <Plug>AirlineSelectTab8
+nnoremap <localleader>9 <Plug>AirlineSelectTab9
+nnoremap <localleader>h <Plug>AirlineSelectPrevTab
+nnoremap <localleader>l <Plug>AirlineSelectNextTab
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " local vimrc
@@ -402,25 +402,25 @@ cabbrev pfd echo expand('%:p:h')
 " [
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " toggle maximum window
-nmap coo :MaximizerToggle<cr>
-nmap <localleader>o :only<cr>
+nnoremap coo :MaximizerToggle<cr>
+nnoremap <localleader>o :only<cr>
 
-nmap <c-h> <c-w>h
-nmap <c-l> <c-w>l
-nmap <c-k> <c-w>k
-nmap <c-j> <c-w>j
+nnoremap <c-h> <c-w>h
+nnoremap <c-l> <c-w>l
+nnoremap <c-k> <c-w>k
+nnoremap <c-j> <c-w>j
 " move to next/previous window
-nmap ]w <c-w>w
-nmap [w <c-w>W
+nnoremap ]w <c-w>w
+nnoremap [w <c-w>W
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " window management
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " widen or narrow a window
-nmap <Right> 10<c-w>>
-nmap <Left> 10<c-w><
+nnoremap <Right> 10<c-w>>
+nnoremap <Left> 10<c-w><
 " increase of decrease the hight of a window
-nmap <Down> 8<c-w>-
-nmap <Up> 8<c-w>+
+nnoremap <Down> 8<c-w>-
+nnoremap <Up> 8<c-w>+
 " toggle maximization of a window
 let g:maximizer_set_default_mapping = 0
 
@@ -473,7 +473,7 @@ call unite#custom#profile('source/grep', 'context', {
 let g:unite_source_menu_menus = {}
 " menu prefix key (for all Unite menus) {{{
 nnoremap [menu] <Nop>
-nmap <LocalLeader> [menu]
+nnoremap <LocalLeader> [menu]
 
 let g:unite_source_menu_menus.all = {
       \ 'description' : '           search files
@@ -570,11 +570,11 @@ let g:unite_source_session_enable_auto_save = 1
 augroup prettier
   au!
   " autocmd BufWritePre *.js,*.json,*.css,*.scss,*.less Prettier
-  autocmd Filetype javascript,javascript.jsx,json,css,scss,less nmap <buffer> <leader>f :silent %!prettier --stdin --config ".prettierrc"<CR>
+  autocmd Filetype javascript,javascript.jsx,json,css,scss,less nnoremap <buffer> <leader>f :silent %!prettier --stdin --config ".prettierrc"<CR>
 augroup end
 
 """"""""""" auto format
-nmap <leader>f :Autoformat<cr>
+nnoremap <leader>f :Autoformat<cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " syntastic configuration
@@ -590,7 +590,7 @@ let g:UltiSnipsExpandTrigger = '<c-j>'
 let g:UltiSnipsJumpForwardTrigger = '<tab>'
 let g:UltiSnipsJumpBackwardTrigger = '<s-tab>'
 
-nmap <localleader>p :UltiSnipsEdit<cr>
+nnoremap <localleader>p :UltiSnipsEdit<cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " neocomplete
@@ -636,7 +636,7 @@ let g:scratch_horizontal = 0
 let g:scratch_top = 0
 let g:scratch_height = 100
 let g:scratch_persistence_file = '/tmp/scratch.vim'
-nmap <leader>d :Scratch<cr>
+nnoremap <leader>d :Scratch<cr>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " ranger
@@ -658,9 +658,9 @@ map <leader>x :call RangerChooser()<CR>
 :nnoremap <silent> dse :let _s=@/ <Bar> :%s/\s\+$//e <Bar> :let @/=_s <Bar> :nohl <Bar> :unlet _s <CR>
 :nnoremap <silent> dss :let _s=@/ <Bar> :%s/^\s\+//e <Bar> :let @/=_s <Bar> :nohl <Bar> :unlet _s <CR>
 " quick insert semicolon at the end of the line
-nmap <localleader>; A;<Esc>
+nnoremap <localleader>; A;<Esc>
 " quick indent whole file
-nmap <localleader>i mzgg=G`z
+nnoremap <localleader>i mzgg=G`z
 "upper case Y to copy from cursor to line end
 nnoremap Y v$hy
 " select the whole line
@@ -673,16 +673,17 @@ xnoremap p pgvy
 nnoremap J gJ
 nnoremap gJ J
 " buffer write and quit
-nmap <leader>w :w<CR>
-nmap <leader>q :q<CR>
-nmap <leader>W :wa<CR>
-nmap <leader>Q :qa<CR>
+nnoremap <leader>w :w<CR>
+nnoremap <leader>q :q<CR>
+nnoremap <leader>W :wa<CR>
+nnoremap <leader>Q :qa<CR>
 " define a map to switch to previous active buffer
-nmap gb :b#<CR>
-
+nnoremap gb :b#<CR>
 " 0 to the start of line
 nnoremap 0 ^
 nnoremap ^ 0
+" vertical split
+nnoremap <localleader>v :vs<cr>
 " remap * to not jump to next occurence immediately, instead, stay at where
 " you are, solution posted here:
 " http://stackoverflow.com/a/13682379/2303252
