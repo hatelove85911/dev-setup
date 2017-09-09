@@ -305,17 +305,17 @@ let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
 let g:airline#extensions#tabline#fnamemod = ':t'
 " enable buffer index and quick select buffer
 let g:airline#extensions#tabline#buffer_idx_mode = 1
-nnoremap <localleader>1 <Plug>AirlineSelectTab1
-nnoremap <localleader>2 <Plug>AirlineSelectTab2
-nnoremap <localleader>3 <Plug>AirlineSelectTab3
-nnoremap <localleader>4 <Plug>AirlineSelectTab4
-nnoremap <localleader>5 <Plug>AirlineSelectTab5
-nnoremap <localleader>6 <Plug>AirlineSelectTab6
-nnoremap <localleader>7 <Plug>AirlineSelectTab7
-nnoremap <localleader>8 <Plug>AirlineSelectTab8
-nnoremap <localleader>9 <Plug>AirlineSelectTab9
-nnoremap <localleader>h <Plug>AirlineSelectPrevTab
-nnoremap <localleader>l <Plug>AirlineSelectNextTab
+nmap <localleader>1 <Plug>AirlineSelectTab1
+nmap <localleader>2 <Plug>AirlineSelectTab2
+nmap <localleader>3 <Plug>AirlineSelectTab3
+nmap <localleader>4 <Plug>AirlineSelectTab4
+nmap <localleader>5 <Plug>AirlineSelectTab5
+nmap <localleader>6 <Plug>AirlineSelectTab6
+nmap <localleader>7 <Plug>AirlineSelectTab7
+nmap <localleader>8 <Plug>AirlineSelectTab8
+nmap <localleader>9 <Plug>AirlineSelectTab9
+nmap <localleader>h <Plug>AirlineSelectPrevTab
+nmap <localleader>l <Plug>AirlineSelectNextTab
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " local vimrc
@@ -451,6 +451,9 @@ nnoremap <silent><Leader>k :<C-u>Unite quickfix<CR>
 nnoremap <silent><Leader>l :<C-u>Unite location_list<CR>
 " toggle gundo
 nnoremap <silent><Leader>u :GundoToggle<CR>
+
+" vim bookmarks
+nnoremap <silent><Leader>m :<C-u>Unite vim_bookmarks<CR>
 
 " source file_rec/async
 let g:unite_source_rec_async_command = ['ag', '--nocolor', '--nogroup', '-S', '-g', '']
