@@ -337,10 +337,10 @@ augroup myown
   au VimLeave * call system("xsel -ib", getreg('+'))
   "markdown file extension recognization
   au BufRead,BufNewFile *.md set filetype=markdown
-  "wpy file extension recognization
-  au BufRead,BufNewFile *.wpy set filetype=wpy.html
   "js file extension recognization
   au BufRead,BufNewFile *.js,*.jsx set filetype=javascript.jsx
+  "wepy
+  au BufRead,BufNewFile *.wpy setlocal filetype=vue.html.javascript.css
   "make relative switch on when open any file type
   au Filetype * set relativenumber
   "auto remove trailing space before save buffer

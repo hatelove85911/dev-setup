@@ -225,7 +225,7 @@
     <keybind key="A-j">
       <action name="DirectionalTargetWindow"><direction>south</direction></action>
     </keybind>
-    <keybind key="A-n">
+    <keybind key="A-Tab">
       <action name="NextWindow">
         <raise>yes</raise>
         <finalactions>
@@ -234,7 +234,7 @@
         </finalactions>
       </action>
     </keybind>
-    <keybind key="A-p">
+    <keybind key="A-S-Tab">
       <action name="PreviousWindow">
         <raise>yes</raise>
         <finalactions>
