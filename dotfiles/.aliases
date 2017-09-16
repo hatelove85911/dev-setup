@@ -154,11 +154,11 @@ alias vrcloc="v $HOME/.local.vimrc"
 alias vrcbef="v $HOME/.before.vimrc"
 alias vrc="v $HOME/.vimrc"
 alias vrcoh="v $HOME/.oh-my-vim/vimrc"
-alias nvrc="v $HOME/.config/nvim/init.vim" 
+alias nvrc="v $HOME/.config/nvim/init.vim"
 alias pacr="v $HOME/.pacconfig/user_rule"
 alias rcf="v $HOME/.config/ranger/rc.conf"
 
-# tmux 
+# tmux
 # tmux alias stolen from zsh tmux plugin
 alias ta='tmux attach -t'
 alias ts='tmux new-session -s'
@@ -215,6 +215,7 @@ alias gll="git log --oneline"
 alias gb="git branch"
 alias gba="git branch -a"
 alias gbD="git branch -D"
+alias gbDr="git push origin --delete"
 alias gbr="git branch -M"
 alias gph="git push"
 alias gphf="git push --force"
@@ -294,7 +295,7 @@ alias xclip="xclip -selection clipboard"
 
 # grep
 
-# alias to clear 
+# alias to clear
 alias cl="clear"
 
 # alias to recursively create directory
