@@ -235,6 +235,10 @@ gstp(){
   git stash pop stash@{$ARG1}
 }
 alias gsts="git stash save"
+gstsh(){
+  ARG1=${1:-0}
+  git stash show -p stash@{$ARG1}
+}
 alias gstl="git stash list"
 alias gstd="git stash drop"
 # alias gsta="git stash apply"
