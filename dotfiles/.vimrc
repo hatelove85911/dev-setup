@@ -22,7 +22,7 @@ Plug 'tpope/vim-abolish'
 " expand selection region
 Plug 'terryma/vim-expand-region'
 " accelerated jk move
-Plug 'rhysd/accelerated-jk'
+" Plug 'rhysd/accelerated-jk'
 " vim bookmark
 Plug 'MattesGroeger/vim-bookmarks'
 " line diff
@@ -108,7 +108,7 @@ Plug 'whatyouhide/vim-textobj-xmlattr'
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " small Plugs
 """"""""""""""""""""""""""""""""""""""""""""""""""
-Plug 'yuttie/comfortable-motion.vim'
+" Plug 'yuttie/comfortable-motion.vim'
 " comment out code
 Plug 'tpope/vim-commentary'
 " generate incremental thing, like number, character
@@ -152,6 +152,8 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 " show indent lines
 Plug 'Yggdroot/indentLine'
+" seamless vim tmux pane navigation
+Plug 'christoomey/vim-tmux-navigator'
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " unused Plugs
 """"""""""""""""""""""""""""""""""""""""""""""""""
@@ -325,8 +327,8 @@ let g:localvimrc_ask = 0
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " accelerated jk
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-nmap j <Plug>(accelerated_jk_gj)
-nmap k <Plug>(accelerated_jk_gk)
+" nmap j <Plug>(accelerated_jk_gj)
+" nmap k <Plug>(accelerated_jk_gk)
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " autocommand

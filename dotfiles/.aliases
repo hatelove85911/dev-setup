@@ -157,21 +157,29 @@ alias vrcoh="v $HOME/.oh-my-vim/vimrc"
 alias nvrc="v $HOME/.config/nvim/init.vim"
 alias pacr="v $HOME/.pacconfig/user_rule"
 alias rcf="v $HOME/.config/ranger/rc.conf"
+alias stmconf="tmux source-file ~/.tmux.conf"
+alias tmconf="v ~/.tmux.conf"
 
 # tmux
 # tmux alias stolen from zsh tmux plugin
-alias ta='tmux attach -t'
-alias ts='tmux new-session -s'
-alias tl='tmux list-sessions'
-alias tksv='tmux kill-server'
-alias tkss='tmux kill-session -t'
+alias mx="tmux"
+alias mxa='tmux attach -t'
+alias mxs='tmux new-session -s'
+alias mxl='tmux list-sessions'
+alias mxksv='tmux kill-server'
+alias mxkss='tmux kill-session -t'
 # tmux alias defined by myself
-alias td="tmux detach"
-alias tlc="tmux list-commands"
-alias tlk="tmux list-keys"
-alias ti="tmux info"
-alias stmconf="tmux source-file ~/.tmux.conf"
-alias tmconf="v ~/.tmux.conf"
+alias mxd="tmux detach"
+alias mxlc="tmux list-commands"
+alias mxlk="tmux list-keys"
+alias mxi="tmux info"
+# tmuxinator
+alias mi="tmuxinator"
+alias mis="tmuxinator start"
+alias mist="tmuxinator stop"
+alias mirm="tmuxinator delete"
+alias mie="tmuxinator edit"
+alias mil="tmuxinator list"
 
 # ranger
 alias rr="ranger"
@@ -221,7 +229,19 @@ alias gph="git push"
 alias gphf="git push --force"
 alias gpl="git pull"
 alias gst="git stash"
-alias gstp="git stash pop"
+# alias gstp="git stash pop"
+gstp(){
+  ARG1=${1:-0}
+  git stash pop stash@{$ARG1}
+}
+alias gsts="git stash save"
+alias gstl="git stash list"
+alias gstd="git stash drop"
+# alias gsta="git stash apply"
+gsta(){
+  ARG1=${1:-0}
+  git stash apply stash@{$ARG1}
+}
 
 # node debug
 alias nd="node"
@@ -255,6 +275,8 @@ alias dknrm="docker network rm"
 alias dkni="docker network inspect"
 alias dknc="docker network connect"
 alias dknd="docker network disconnect"
+
+
 
 # fasd interactive file search, selection an edit with vim
 alias vv="sf -e vim"
